@@ -587,3 +587,4 @@ An item to be held by a Pokémon.\nThis single-use bulb boosts Sp. Atk\nif hit w
 An item to be held by a Pokémon.\nThe holder will float in the air until hit.\nOnce hit, this item will burst.
 A rare mushroom that gives off\na nice fragrance. It can be sold at\na high price to shops.
 A big nugget of pure gold that gives\noff a lustrous gleam. It can be sold at\na high price to shops.
+You’ve made a grave mistake.

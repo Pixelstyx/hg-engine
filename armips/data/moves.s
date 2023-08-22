@@ -2805,7 +2805,7 @@ movedata MOVE_CURSE, "Curse"
     appeal 0x15
     contesttype CONTEST_TOUGH
     terminatedata
-    movedescription MOVE_CURSE, "A move that works\ndifferently for the\nGhost type than for\nall the other types.\n"
+    movedescription MOVE_CURSE, "Share your pain."
 
 movedata MOVE_FLAIL, "Flail"
     battleeffect 99

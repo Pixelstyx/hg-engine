@@ -243,6 +243,9 @@ enum
 // items that display messages.
     SWITCH_IN_CHECK_AIR_BALLOON,
 
+    //MAROWAK'S CURSE
+    SWITCH_IN_APPLY_MAROWAKS_CURSE,
+
     SWITCH_IN_CHECK_END,
 };
 
@@ -1070,7 +1073,6 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 break;
 
 
-
             case SWITCH_IN_CHECK_AIR_BALLOON:
                 for(i = 0; i < client_set_max; i++)
                 {
@@ -1089,7 +1091,26 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 if (i == client_set_max) {
                     sp->switch_in_check_seq_no++;
                 }
+                break;
 
+            case SWITCH_IN_APPLY_MAROWAKS_CURSE:
+                for (i = 0; i < client_set_max; i++)
+                {
+                    client_no = sp->turn_order[i];
+                    if ((client_no == 0 || client_no == 2) && (sp->battlemon[client_no].marowak_flag == 0) && (sp->battlemon[client_no].hp)) //CHECK IF PLAYER'S POKEMON
+                    {
+                        sp->battlemon[client_no].marowak_flag = 1;
+                        sp->client_work = client_no;
+                        sp->battlemon[client_no].condition2 |= 0x10000000; //apply status
+                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE; //handle text
+                        ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
+                        break;
+                    }
+                }
+                if (i == client_set_max) {
+                    sp->switch_in_check_seq_no++;
+                }
+                break;
 
                 // 02253D78
             case SWITCH_IN_CHECK_END:
