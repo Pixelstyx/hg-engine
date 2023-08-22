@@ -1,6 +1,6 @@
 # hg-engine
 ## About
- A huge upgrade to the battle engine in HeartGold
+ A huge upgrade to the battle engine in HeartGold, edited for the Marowak's Revenge ROM Hack.
 
 ## Creators
 * [BluRose](https://github.com/BluRosie)
