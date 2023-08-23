@@ -10,7 +10,7 @@
 .create "build/move/battle_sub_seq/1_345", 0
 
 a001_345:
-    printmessage 1387, "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN" //The Curse begins to take its toll...
+    printmessage 1385, TAG_NONE, "NaN", "NaN", "NaN", "NaN", "NaN", "NaN" //The Curse begins to take its toll...
     waitmessage
     wait 0x1E
     endscript

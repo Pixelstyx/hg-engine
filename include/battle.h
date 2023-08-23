@@ -586,7 +586,7 @@ struct __attribute__((packed)) BattlePokemon
                u32 critical_hits : 2; // tracks the amount of critical hits the pokemon has landed while in battle so far
                u32 air_ballon_flag : 1;
                u32 marowak_flag : 1; //CURSE
-               u32 : 11; // need to add to ClearBattleMonFlags when added to here as well
+               u32 : 10; // need to add to ClearBattleMonFlags when added to here as well
     /* 0x2c */ u8 pp[4];
     /* 0x30 */ u8 pp_count[4];
     /* 0x34 */ u8 level;
