@@ -1103,8 +1103,8 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                     {
                         sp->battlemon[client_no].marowak_flag = 1;
                         sp->client_work = client_no;
-                        sp->battlemon[client_no].condition2 |= 0x10000000; //apply status
-                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE; //handle text
+                        sp->marowak_curse |= (1 << client_no);
+                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //handle text
                         ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
                         break;
                     }

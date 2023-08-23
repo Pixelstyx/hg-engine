@@ -918,6 +918,8 @@ struct __attribute__((packed)) BattleStruct
     /*0x317E*/ struct BattleMove moveTbl[MAX_MOVE_NUM + 1];
     /*0x    */ u32 gainedExperience[6]; // possible experience gained per party member in order to get level scaling done right
     /*0x    */ u32 gainedExperienceShare[6]; // possible experience gained per party member in order to get level scaling done right
+
+    /*0x    */ u8 marowak_curse; //marowak's curse flag, legally distinct from regular curse
     /*...*/
 };
 

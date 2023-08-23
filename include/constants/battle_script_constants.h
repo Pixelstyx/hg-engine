@@ -157,7 +157,8 @@
 #define SUB_SEQ_HANDLE_RAISE_SPEED_ON_HIT (343)
 #define SUB_SEQ_HANDLE_RAISE_ATTACK_AND_SP_ATK_ON_HIT (344)
 
-#define SUB_SEQ_HANDLE_MAROWAK_CURSE (345) //MAROWAK'S CURSE
+#define SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT (345) //MAROWAK'S Curse begins to take its toll...
+#define SUB_SEQ_HANDLE_MAROWAK_CURSE_DMG (346) //Curse, but it ignores magic guard.
 
 
 
