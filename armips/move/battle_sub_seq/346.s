@@ -21,7 +21,5 @@ a001_346:
     wait 0x1E
     changevar VAR_OP_SETMASK, VAR_SERVER_STATUS1, 0x40
     jumptosubseq 2
-_0088:
-    endscript
 
 .close

@@ -29,6 +29,7 @@ enum{
     FCC_HAIL,
     FCC_FOG,
     FCC_GRAVITY,
+    FCC_MAROWAK,
     FCC_END
 };
 
@@ -409,6 +410,34 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             }
             sp->fcc_seq_no++;
             break;
+        case FCC_MAROWAK:
+        {
+            if (sp->total_turn == 1) //will eventually be updated to check for Pokemon Skull Key Item
+            {
+                sp->mp.msg_id = 1385; ////MAROWAK'S Curse begins to take its toll...
+                sp->mp.msg_tag = TAG_NONE;
+                LoadBattleSubSeqScript(sp, ARC_SUB_SEQ, SUB_SEQ_PREPARED_MESSAGE);
+                sp->next_server_seq_no = sp->server_seq_no;
+                sp->server_seq_no = 22;
+            }
+
+            for (int i = 0; i < client_set_max; i++)
+            {
+                if ((sp->turn_order[i] == 0 || sp->turn_order[i] == 2)
+                    && (sp->battlemon[sp->turn_order[i]].marowak_flag == 0)
+                    && (sp->battlemon[sp->turn_order[i]].hp)) //CHECK IF PLAYER'S POKEMON
+                {
+                    sp->battlemon[sp->turn_order[i]].marowak_flag = 1;
+                    sp->client_work = sp->turn_order[i];
+                    //sp->marowak_curse |= (1 << client_no);
+                    LoadBattleSubSeqScript(sp, ARC_SUB_SEQ, SUB_SEQ_HANDLE_MAROWAK_CURSE_DMG);
+                    sp->next_server_seq_no = sp->server_seq_no;
+                    sp->server_seq_no = 22;
+                }
+            }
+            sp->fcc_seq_no++;
+            break;
+        }
         case FCC_END:
             ret = 2;
             break;

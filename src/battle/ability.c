@@ -244,7 +244,7 @@ enum
     SWITCH_IN_CHECK_AIR_BALLOON,
 
     //MAROWAK'S CURSE
-    SWITCH_IN_APPLY_MAROWAKS_CURSE,
+    //SWITCH_IN_APPLY_MAROWAKS_CURSE,
 
     SWITCH_IN_CHECK_END,
 };
@@ -1093,7 +1093,7 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 }
                 break;
 
-            case SWITCH_IN_APPLY_MAROWAKS_CURSE:
+            /*case SWITCH_IN_APPLY_MAROWAKS_CURSE:
                 for (i = 0; i < client_set_max; i++)
                 {
                     client_no = sp->turn_order[i];
@@ -1104,7 +1104,6 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                         sp->battlemon[client_no].marowak_flag = 1;
                         sp->client_work = client_no;
                         sp->marowak_curse |= (1 << client_no);
-                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //handle text
                         ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
                         break;
                     }
@@ -1112,7 +1111,7 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 if (i == client_set_max) {
                     sp->switch_in_check_seq_no++;
                 }
-                break;
+                break;*/
 
                 // 02253D78
             case SWITCH_IN_CHECK_END:
