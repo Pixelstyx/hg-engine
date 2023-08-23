@@ -1097,7 +1097,7 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 for (i = 0; i < client_set_max; i++)
                 {
                     client_no = sp->turn_order[i];
-                    if ((client_no == 0) 
+                    if ((client_no == 0 || client_no == 2) 
                      && (sp->battlemon[client_no].marowak_flag == 0) 
                      && (sp->battlemon[client_no].hp)) //CHECK IF PLAYER'S POKEMON
                     {

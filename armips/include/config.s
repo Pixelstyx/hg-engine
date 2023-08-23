@@ -11,7 +11,7 @@ FAIRY_TYPE_IMPLEMENTED equ 0
 
 // ALLOW_SAVE_CHANGES tells the assembler that it can build the code that pertains to expanding the save data for extra fields for our usage.
 // this is required for dex expansion and will break PKHeX compatibility!  comment this line out to prevent save changes from being made.
-//.definelabel ALLOW_SAVE_CHANGES, 0
+.definelabel ALLOW_SAVE_CHANGES, 0
 
 // CRY_PSEUDOBANK_START defines the first pseudobank to be used as cries in the sdat.  cries are loaded differently to save on RAM space
 CRY_PSEUDOBANK_START equ 778
@@ -37,8 +37,8 @@ BATTLES_UNCAPPED_FRAME_RATE equ 0
 // FAST_TEXT_PRINTING will make the text print quickly, almost instantly
 FAST_TEXT_PRINTING equ 0
 
-//REUSABLE_TMS will make TMs infinite and hide the quantity number.
+// REUSABLE_TMS will make TMs infinite and hide the quantity number.
 REUSABLE_TMS equ 0
 
-//DELETABLE_HMS Allows HMs to be forgotten, this also makes their quantity reduce, but the infinite TMs change prevents this.
+// DELETABLE_HMS Allows HMs to be forgotten, this also makes their quantity reduce, but the infinite TMs change prevents this.
 DELETABLE_HMS equ 0
