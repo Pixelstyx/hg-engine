@@ -23,6 +23,7 @@ enum
     SBA_RAGE,
     SBA_RANDOM_SPEED_ROLL,
     SBA_MEGA,
+    SBA_MAROWAK_CURSE,
     SBA_END
 };
 
@@ -160,6 +161,16 @@ void ServerBeforeAct(void *bw, struct BattleStruct *sp)
                         sp->battlemon[client_no].form_no = 1;
                         BattleFormChange(client_no, 1, bw, sp, FALSE);
                     }
+                }
+            }
+            sp->sba_seq_no++;
+            break;
+        case SBA_MAROWAK_CURSE:
+            for (client_no = 0; client_no < client_set_max; client_no++)
+            {
+                if ((sp->marowak_curse & (1 << client_no)) != 0)
+                {
+                    LoadBattleSubSeqScript(sp, FILE_BATTLE_SUB_SCRIPTS, SUB_SEQ_HANDLE_MAROWAK_CURSE_DMG);
                 }
             }
             sp->sba_seq_no++;
