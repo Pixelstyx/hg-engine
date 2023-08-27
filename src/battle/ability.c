@@ -217,7 +217,8 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
 
 enum
 {
-    SWITCH_IN_CHECK_WEATHER = 0,
+    SWITCH_IN_CHECK_MAROWAK_CURSE = 0,
+    SWITCH_IN_CHECK_WEATHER,
     SWITCH_IN_CHECK_PRIMAL_REVERSION,
     SWITCH_IN_CHECK_TRACE,
     SWITCH_IN_CHECK_WEATHER_ABILITY,
@@ -244,7 +245,8 @@ enum
     SWITCH_IN_CHECK_AIR_BALLOON,
 
     //MAROWAK'S CURSE
-    SWITCH_IN_APPLY_MAROWAKS_CURSE,
+    SWITCH_IN_APPLY_MAROWAK_CURSE,
+    SWITCH_IN_ACT_ON_MAROWAK_CURSE,
 
     SWITCH_IN_CHECK_END,
 };
@@ -289,6 +291,15 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
     {
         switch(sp->switch_in_check_seq_no)
         {
+            case SWITCH_IN_CHECK_MAROWAK_CURSE:
+                if (sp->curse_check_flag == 0)
+                {
+                    scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //handle text
+                    ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
+                    sp->curse_check_flag == 1;
+                }
+                sp->switch_in_check_seq_no++;
+                break;
             case SWITCH_IN_CHECK_WEATHER: // 022531DE
                 if (sp->weather_check_flag == 0)
                 {
@@ -1093,23 +1104,45 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 }
                 break;
 
-            case SWITCH_IN_APPLY_MAROWAKS_CURSE:
+            case SWITCH_IN_APPLY_MAROWAK_CURSE:
                 for (i = 0; i < client_set_max; i++)
                 {
                     client_no = sp->turn_order[i];
-                    if ((client_no == 0 || client_no == 2) 
+                    if ((client_no == 0 || client_no == 2) //CHECK IF PLAYER'S POKEMON
                      && (sp->battlemon[client_no].marowak_flag == 0) 
-                     && (sp->battlemon[client_no].hp)) //CHECK IF PLAYER'S POKEMON
+                     && (sp->battlemon[client_no].hp))
                     {
+                        sp->marowak_curse |= (1 << client_no);
                         sp->battlemon[client_no].marowak_flag = 1;
                         sp->client_work = client_no;
-                        sp->marowak_curse |= (1 << client_no);
-                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //handle text
+                        //scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //used to handle text
                         ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
                         break;
                     }
                 }
                 if (i == client_set_max) {
+                    sp->switch_in_check_seq_no++;
+                }
+                break;
+
+            case SWITCH_IN_ACT_ON_MAROWAK_CURSE:
+                for (i = 0; i < client_set_max; i++)
+                {
+                    client_no = sp->turn_order[i];
+                    if ((client_no == 0 || client_no == 2) //CHECK IF PLAYER'S POKEMON
+                        && (sp->marowak_curse & (1 << client_no))
+                        && !(sp->marowak_curse & (1 << (4 + client_no)))
+                        && (sp->battlemon[client_no].hp))
+                    {
+                        sp->marowak_curse & (1 << (4 + client_no)); //set bits to say that marowak's curse has damaged the client_no this turn
+                        sp->client_work = client_no;
+                        scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_DMG; //handle modified curse
+                        ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
+                        break;
+                    }
+                }
+                if (i == client_set_max)
+                {
                     sp->switch_in_check_seq_no++;
                 }
                 break;
@@ -1278,6 +1311,9 @@ u32 TurnEndAbilityCheck(void *bw, struct BattleStruct *sp, int client_no)
         default:
             break;
     }
+
+    // reset marowak_curse tracking bits
+    sp->marowak_curse &= 0xF; // only keep the bits that show that marowak's curse was applied as part of SWITCH_IN_APPLY_MAROWAKS_CURSE
 
     if (ret == TRUE)
     {

@@ -919,7 +919,8 @@ struct __attribute__((packed)) BattleStruct
     /*0x    */ u32 gainedExperience[6]; // possible experience gained per party member in order to get level scaling done right
     /*0x    */ u32 gainedExperienceShare[6]; // possible experience gained per party member in order to get level scaling done right
 
-    /*0x    */ u8 marowak_curse; //marowak's curse flag, legally distinct from regular curse
+    /*0x    */ u8 marowak_curse; //marowak's curse flag, legally distinct from regular curse. currently unsure of what this is doing lol
+    /*0x    */ u8 curse_check_flag; //flag set at start of battle to ensure spooky curse text only plays once
     /*...*/
 };
 
