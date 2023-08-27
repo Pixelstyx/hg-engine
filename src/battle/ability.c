@@ -296,7 +296,7 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                 {
                     scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //handle text
                     ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
-                    sp->curse_check_flag == 1;
+                    sp->curse_check_flag = 1;
                 }
                 sp->switch_in_check_seq_no++;
                 break;
@@ -1115,12 +1115,12 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                         sp->marowak_curse |= (1 << client_no);
                         sp->battlemon[client_no].marowak_flag = 1;
                         sp->client_work = client_no;
-                        //scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_TEXT; //used to handle text
-                        ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
+                        //ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
                         break;
                     }
                 }
-                if (i == client_set_max) {
+                if (i == client_set_max) 
+                {
                     sp->switch_in_check_seq_no++;
                 }
                 break;
@@ -1134,7 +1134,7 @@ int SwitchInAbilityCheck(void *bw, struct BattleStruct *sp)
                         && !(sp->marowak_curse & (1 << (4 + client_no)))
                         && (sp->battlemon[client_no].hp))
                     {
-                        sp->marowak_curse & (1 << (4 + client_no)); //set bits to say that marowak's curse has damaged the client_no this turn
+                        sp->marowak_curse |= (1 << (4 + client_no)); //set bits to say that marowak's curse has damaged the client_no this turn
                         sp->client_work = client_no;
                         scriptnum = SUB_SEQ_HANDLE_MAROWAK_CURSE_DMG; //handle modified curse
                         ret = SWITCH_IN_CHECK_MOVE_SCRIPT;
