@@ -585,8 +585,7 @@ struct __attribute__((packed)) BattlePokemon
                u32 imposter_flag : 1;
                u32 critical_hits : 2; // tracks the amount of critical hits the pokemon has landed while in battle so far
                u32 air_ballon_flag : 1;
-               u32 marowak_flag : 1; //CURSE
-               u32 : 10; // need to add to ClearBattleMonFlags when added to here as well
+               u32 : 11; // need to add to ClearBattleMonFlags when added to here as well
     /* 0x2c */ u8 pp[4];
     /* 0x30 */ u8 pp_count[4];
     /* 0x34 */ u8 level;
@@ -855,7 +854,7 @@ struct __attribute__((packed)) BattleStruct
     /*0x21F0*/ u32 psp_agi_point[4];
     /*0x2200*/ u8 ServerQue[4][4][16];
     /*0x2300*/ u8 server_buffer[4][256];
-    /*0x2700*/ int SkillSeqWork[400];
+    /*0x2700*/ int SkillSeqWorkOld[400];
     /*0x2D40*/ struct BattlePokemon battlemon[CLIENT_MAX]; //0xc0
     /*0x3040*/ u32 waza_no_temp;
     /*0x3044*/ u32 current_move_index;
@@ -918,9 +917,7 @@ struct __attribute__((packed)) BattleStruct
     /*0x317E*/ struct BattleMove moveTbl[MAX_MOVE_NUM + 1];
     /*0x    */ u32 gainedExperience[6]; // possible experience gained per party member in order to get level scaling done right
     /*0x    */ u32 gainedExperienceShare[6]; // possible experience gained per party member in order to get level scaling done right
-
-    /*0x    */ u8 marowak_curse; //marowak's curse flag, legally distinct from regular curse. currently unsure of what this is doing lol
-    /*0x    */ u8 curse_check_flag; //flag set at start of battle to ensure spooky curse text only plays once
+    /*0x    */ int SkillSeqWork[600];
     /*...*/
 };
 
@@ -1226,7 +1223,6 @@ int __attribute__((long_call)) ChooseRandomTarget(void *bw, void *sp, int client
 int __attribute__((long_call)) CountBattlerMoves(void *bw, void *sp, int client_no);
 u32 __attribute__((long_call)) AbilityStatusRecoverCheck(void *bw, void *sp, int client_no, int act_flag);
 u32 __attribute__((long_call)) HeldItemHealCheck(void *bw, void *sp, int client_no, int *seq_no);
-void __attribute__((long_call)) LoadBattleSubSeqScript(void *, int, int);
 int __attribute__((long_call)) HeldItemHoldEffectGet(void *sp, int client_no);
 int __attribute__((long_call)) HeldItemAtkGet(void *sp, int client_no, int flag);
 u32 __attribute__((long_call)) IsMovingAfterClient(void *sp, int client_no);
@@ -1241,9 +1237,9 @@ void __attribute__((long_call)) CT_PokemonEncountSet(void *bw, struct CLIENT_PAR
 void __attribute__((long_call)) CT_PokemonEncountAppearSet(void *bw, struct CLIENT_PARAM *cp, struct POKEMON_APPEAR_PARAM *pap);
 void __attribute__((long_call)) CT_PokemonAppearSet(void *bw, struct CLIENT_PARAM *cp, struct POKEMON_APPEAR_PARAM *pap);
 void __attribute__((long_call)) ClientCommandReset(struct CLIENT_PARAM *cp);
+struct CLIENT_PARAM *__attribute__((long_call)) BattleWorkClientParamGet(void *bw, u32 client);
 struct POKEPARTY *__attribute__((long_call)) BattleWorkPokePartyGet(void *bw, int client_no);
 int __attribute__((long_call)) PokeParty_GetPokeCountMax(const struct POKEPARTY *party); // this function is cursed to be arm for no fucking reason whatsoever
-int __attribute__((long_call)) SideClientNoGet(void *bw, struct BattleStruct *sp, int side);
 int __attribute__((long_call)) BattleWorkPartnerClientNoGet(void *bw, int client_no);
 u16 __attribute__((long_call)) BattleWorkCommIDGet(void *bw);
 int __attribute__((long_call)) BattleWorkCommStandNoGet(void *bw, u16 id);
@@ -1284,6 +1280,9 @@ BOOL __attribute__((long_call)) AI_ShouldUseNormalTypeEffCalc(struct BattleStruc
 void __attribute__((long_call)) IncrementBattleScriptPtr(struct BattleStruct *sp, int count);
 int __attribute__((long_call)) read_battle_script_param(struct BattleStruct *sp);
 void __attribute__((long_call)) JumpToMoveEffectScript(void *sp, int archive, int effect);
+int __attribute__((long_call)) GrabClientFromBattleScriptParam(void *bw, struct BattleStruct *sp, int side);
+void __attribute__((long_call)) LoadBattleSubSeqScript(struct BattleStruct *sp, int kind, int index);
+void __attribute__((long_call)) PushAndLoadBattleScript(struct BattleStruct *sp, int kind, int index);
 
 
 
