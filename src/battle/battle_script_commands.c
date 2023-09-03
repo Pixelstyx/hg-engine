@@ -2257,60 +2257,62 @@ u32 CalculateBallShakes(void *bw, struct BattleStruct *sp)
         captureRate = (0xFFFF << 4) / captureRate;
 
 
-#ifdef IMPLEMENT_CRITICAL_CAPTURE
+        #ifdef IMPLEMENT_CRITICAL_CAPTURE
 
-        u32 criticalCaptureWork, caughtMons, criticalCapture = FALSE;
+            u32 criticalCaptureWork, caughtMons, criticalCapture = FALSE;
 
-        caughtMons = GetCaughtMonCount(SaveData_GetDexPtr(SaveBlock2_get()));
-        if (caughtMons > 600)
-            criticalCaptureWork = 25;
-        else if (caughtMons > 450)
-            criticalCaptureWork = 20;
-        else if (caughtMons > 300)
-            criticalCaptureWork = 15;
-        else if (caughtMons > 150)
-            criticalCaptureWork = 10;
-        else if (caughtMons > 30)
-            criticalCaptureWork = 5;
-        else
-            criticalCaptureWork = 0;
+            caughtMons = GetCaughtMonCount(SaveData_GetDexPtr(SaveBlock2_get()));
+            if (caughtMons > 600)
+                criticalCaptureWork = 25;
+            else if (caughtMons > 450)
+                criticalCaptureWork = 20;
+            else if (caughtMons > 300)
+                criticalCaptureWork = 15;
+            else if (caughtMons > 150)
+                criticalCaptureWork = 10;
+            else if (caughtMons > 30)
+                criticalCaptureWork = 5;
+            else
+                criticalCaptureWork = 0;
 
-        criticalCaptureWork = captureRate * criticalCaptureWork / 10;
+            criticalCaptureWork = captureRate * criticalCaptureWork / 10;
 
-        if (BattleRand(bw) & 0xFF < criticalCaptureWork) // return critical capture number
-            criticalCapture = TRUE;
+            if (BattleRand(bw) & 0xFF < criticalCaptureWork) // return critical capture number
+                criticalCapture = TRUE;
 
-        if (criticalCapture)
-            caughtMons = 1;
-        else
-            caughtMons = 4;
+            if (criticalCapture)
+                caughtMons = 1;
+            else
+                caughtMons = 4;
 
-        for (i = 0; i < caughtMons; i++) // there are 4 shake checks apparently
-        {
-            if (BattleRand(bw) >= captureRate)
+            for (i = 0; i < caughtMons; i++) // there are 4 shake checks apparently
             {
-                break;
+                if (BattleRand(bw) >= captureRate)
+                {
+                    break;
+                }
             }
-        }
 
-        if(sp->item_work == ITEM_FRIEND_BALL && i == caughtMons) // if amount of succeeded captures is the same as necessary for the type of capture
-        {
-            u32 friendship = 200;
-            SetMonData(Battle_GetClientPartyMon(bw,sp->defence_client,0), MON_DATA_FRIENDSHIP, &friendship);
-        }
+            if(sp->item_work == ITEM_FRIEND_BALL && i == caughtMons) // if amount of succeeded captures is the same as necessary for the type of capture
+            {
+                u32 friendship = 200;
+                SetMonData(Battle_GetClientPartyMon(bw,sp->defence_client,0), MON_DATA_FRIENDSHIP, &friendship);
+            }
 
-        if (criticalCapture) // succeeded the one chance it had
-            i = i | 0x80; // change the flow of the ball callback to make sure that critical captures only shake once then succeed.  if it shakes, it succeeds, though
+            if (criticalCapture) // succeeded the one chance it had
+                i = i | 0x80; // change the flow of the ball callback to make sure that critical captures only shake once then succeed.  if it shakes, it succeeds, though
 
-#else
+        #else
 
-        for (i = 0; i < 4; i++)
-        {
-            if (BattleRand(bw) >= captureRate)
-                break;
-        }
+            for (i = 0; i < 4; i++)
+            {
+                if (BattleRand(bw) >= captureRate)
+                {
+                    break;
+                }
+            }
 
-#endif
+        #endif
     }
 
     if (sp->item_work == ITEM_FRIEND_BALL && (i & 0x7F) >= 4)  // 0x80 signifies critical capture, which is already caught above.  this code still necessary for the case that IMPLEMENT_CRITICAL_CAPTURE isn't defined

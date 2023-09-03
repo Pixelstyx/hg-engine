@@ -585,6 +585,7 @@ struct __attribute__((packed)) BattlePokemon
                u32 imposter_flag : 1;
                u32 critical_hits : 2; // tracks the amount of critical hits the pokemon has landed while in battle so far
                u32 air_ballon_flag : 1;
+               u32 marowak_flag : 1; //CURSE
                u32 : 11; // need to add to ClearBattleMonFlags when added to here as well
     /* 0x2c */ u8 pp[4];
     /* 0x30 */ u8 pp_count[4];
@@ -918,6 +919,9 @@ struct __attribute__((packed)) BattleStruct
     /*0x    */ u32 gainedExperience[6]; // possible experience gained per party member in order to get level scaling done right
     /*0x    */ u32 gainedExperienceShare[6]; // possible experience gained per party member in order to get level scaling done right
     /*0x    */ int SkillSeqWork[600];
+
+    /*0x    */ u8 marowak_curse; //marowak's curse flag, legally distinct from regular curse. currently unsure of what this is doing lol
+    /*0x    */ u8 curse_check_flag; //flag set at start of battle to ensure spooky curse text only plays once
     /*...*/
 };
 

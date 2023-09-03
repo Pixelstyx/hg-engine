@@ -59,7 +59,7 @@
 
 // IMPLEMENT_CRITICAL_CAPTURE defines whether or not throwing a poké ball has a certain percent chance of a guaranteed capture called a critical throw
 // commenting this line out disables critical captures
-// #define IMPLEMENT_CRITICAL_CAPTURE
+//#define IMPLEMENT_CRITICAL_CAPTURE
 
 // IMPLEMENT_NEW_EV_IV_VIEWER defines whether or not pressing L, R, or Select in the pokémon summaries will display EV's, IV's, or the raw stat
 // commenting this line out disables the building of the new EV/IV viewing system
@@ -69,7 +69,7 @@
 // if the level is greater than or equal to LEVEL_CAP_VARIABLE, the pokémon will no longer gain experience
 // uncommenting IMPLEMENT_LEVEL_CAP enables the level cap system.  undefining LEVEL_CAP_VARIABLE will just cause compilation errors
 // #define IMPLEMENT_LEVEL_CAP
- #define LEVEL_CAP_VARIABLE 0x64
+#define LEVEL_CAP_VARIABLE 0x64
 
 // UPDATE_OVERWORLD_POISON will remove overworld poison if enabled
 // comment the line out below to retain overworld poison
