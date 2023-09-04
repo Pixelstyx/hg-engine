@@ -821,6 +821,9 @@
 #define ITEM_SYLPH_SCOPE        (ITEM_PIXIE_PLATE + 185)
 #define ITEM_TEA                (ITEM_PIXIE_PLATE + 186)
 
+//MAROWAK's Revenge Key Item
+#define ITEM_POKEMON_SKULL		(ITEM_PIXIE_PLATE + 187)
+
 #define NUM_MEGA_STONES 48 // includes the pixie plate
 
 #define NUM_UNKNOWN_SLOTS 22 // used to adjust in data/itemdata.c
