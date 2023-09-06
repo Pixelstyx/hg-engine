@@ -11,6 +11,7 @@
 
 a001_346:
     //literally just curse subscript but ignores magic guard
+    //needs to be updated to add a new status2 I think?
     setstatus2effect BATTLER_xFF, 0x1E
     waitmessage
     changemondatabyvar VAR_OP_GET_RESULT, BATTLER_xFF, 0x30, VAR_HP_TEMP
