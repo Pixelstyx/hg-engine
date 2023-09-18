@@ -15,7 +15,7 @@ a001_002:
     monflicker 0xFF
     waitmessage
     if IF_EQUAL, VAR_CLIENT_WORKING_COUNT, 0x0, _0044
-    gotosubscript 264
+    gotosubscript SUB_SEQ_TYPE_RESIST_BERRIES
 _0044:
     changevar VAR_OP_CLEARMASK, VAR_SERVER_STATUS1, 0x40
     healthbarupdate BATTLER_xFF
