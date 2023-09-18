@@ -79,4 +79,16 @@
 // uncomment the line out to get this functionality
 //#define DISABLE_END_OF_TURN_WEATHER_MESSAGE
 
+// MODERNIZE_MOVES updates many moves to their Gen IX functionality
+// comment the line out below to revert moves to their Gen IV functionality
+#define MODERNIZE_MOVES
+
+// MODERNIZE_ABILITIES updates many abilities to their Gen IX functionality, or Gen VIII functionality for some overworld abilities due to the lack of random encounters in Gen IX
+// comment the line out below to revert abilities to their Gen IV functionality
+#define MODERNIZE_ABILITIES
+
+// MODERNIZE_LEARNSETS updates the learnsets of many Pokemon to a combination of their Gen VII & VIII states (auto-generated via Porymoves, for those curious)
+// comment the line out below to revert learnsets to their Gen IV states where applicable
+#define MODERNIZE_LEARNSETS
+
 #endif
