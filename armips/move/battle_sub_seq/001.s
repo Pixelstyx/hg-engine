@@ -11,7 +11,7 @@
 
 a001_001:
     if IF_EQUAL, VAR_ADD_EFFECT_TYPE, 0x1, _001C
-    gotosubscript 76
+    gotosubscript SUB_SEQ_MOVE_EFFECT
 _001C:
     endscript
 
