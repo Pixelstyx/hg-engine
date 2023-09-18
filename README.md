@@ -1,6 +1,6 @@
-# hg-engine
+# hg-engine-wayback
 ## About
- A huge upgrade to the battle engine in HeartGold
+ A proposed update to hg-engine that makes modernization fully optional.
 
 ## Creators
 * [BluRose](https://github.com/BluRosie)
@@ -8,6 +8,7 @@
 * [dog-broad](https://github.com/dog-broad)
 * [DavveDP](https://github.com/DavveDP)
 * [Brioche](https://github.com/Brioooche)
+* [Pixelstyx](https://github.com/Pixelstyx) (That's me!)
 
 ## Table of Contents
 - [Features](#features)
