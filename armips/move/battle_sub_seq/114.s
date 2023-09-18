@@ -11,7 +11,7 @@
 
 a001_114:
     tryswitchinmon BATTLER_ATTACKER, 0x1, _0078
-    gotosubscript 76
+    gotosubscript SUB_SEQ_MOVE_EFFECT    //76
     trynaturalcure BATTLER_ATTACKER, _0038
     changemondatabyvalue VAR_OP_SET, BATTLER_ATTACKER, 0x34, 0x0
 _0038:
@@ -21,7 +21,7 @@ _0038:
     waitmessage
     changevar2 VAR_OP_SET, VAR_SWITCHED_BATTLER, VAR_ATTACKER
     changevar VAR_OP_SETMASK, VAR_SERVER_STATUS1, 0x100
-    jumptosubseq 10
+    jumptosubseq SUB_SEQ_PARTY_LIST    //10
 _0078:
     changevar VAR_OP_SETMASK, VAR_MOVE_STATUS, 0x40
     endscript
