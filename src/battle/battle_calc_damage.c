@@ -465,18 +465,15 @@ int CalcBaseDamage(void *bw, struct BattleStruct *sp, int moveno, u32 side_cond,
         if (((AttackingMon.ability == ABILITY_PLUS) || (AttackingMon.ability == ABILITY_MINUS)) &&
             (CheckSideAbility(bw, sp, CHECK_PLAYER_SIDE_ALIVE, attacker, ABILITY_MINUS) ||
             CheckSideAbility(bw, sp, CHECK_PLAYER_SIDE_ALIVE, attacker, ABILITY_PLUS)))
-        {
-            sp_attack = sp_attack * 150 / 100;
-        }
     #else
         if (((AttackingMon.ability == ABILITY_PLUS) &&
             CheckSideAbility(bw, sp, CHECK_PLAYER_SIDE_ALIVE, attacker, ABILITY_MINUS)) ||
             ((AttackingMon.ability == ABILITY_MINUS) &&
             CheckSideAbility(bw, sp, CHECK_PLAYER_SIDE_ALIVE, attacker, ABILITY_PLUS)))
+    #endif
         {
             sp_attack = sp_attack * 150 / 100;
         }
-    #endif
 
     // handle fur coat - double defense
     if ((MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_FUR_COAT) == TRUE))
