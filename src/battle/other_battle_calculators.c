@@ -882,7 +882,14 @@ void ServerHPCalc(void *bw, struct BattleStruct *sp)
             {
                 if ((MoldBreakerAbilityCheck(sp, sp->attack_client, sp->defence_client, ABILITY_STURDY) == TRUE) && (sp->battlemon[sp->defence_client].hp == sp->battlemon[sp->defence_client].maxhp))
                 {
-                    sp->oneTurnFlag[sp->defence_client].prevent_one_hit_ko_ability = 1;
+                    #ifdef MODERNIZE_ABILITIES //Sturdy activates under the same conditions as Focus Sashes as of gen 5
+                        sp->oneTurnFlag[sp->defence_client].prevent_one_hit_ko_ability = 1;
+                    #else
+                        if (sp->moveTbl[sp->current_move_index].effect == MOVE_EFFECT_ONE_HIT_KO)
+                        {
+                            sp->oneTurnFlag[sp->defence_client].prevent_one_hit_ko_ability = 1;
+                        }
+                    #endif
                 }
                 else if ((eqp == HOLD_EFFECT_FOCUS_BAND) && ((BattleRand(bw) % 100) < atk))
                 {
