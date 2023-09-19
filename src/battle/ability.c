@@ -222,23 +222,25 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
         }
     }
 
-    // handle lightning rod
-    if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_LIGHTNING_ROD) == TRUE)
-    {
-        if ((movetype == TYPE_ELECTRIC) && (attacker != defender))
+    #ifdef MODERNIZE_ABILITIES //Lightning Rod & Storm Drain give damage immunity and a special attack boost when triggered as of gen 5, and the boost does not fail on ground types as of gen 7
+        // handle lightning rod
+        if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_LIGHTNING_ROD) == TRUE)
         {
-            scriptnum = SUB_SEQ_HANDLE_LIGHTNING_ROD_RAISE_SPATK;
+            if ((movetype == TYPE_ELECTRIC) && (attacker != defender))
+            {
+                scriptnum = SUB_SEQ_HANDLE_LIGHTNING_ROD_RAISE_SPATK;
+            }
         }
-    }
 
-    // handle storm drain
-    if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_STORM_DRAIN) == TRUE)
-    {
-        if ((movetype == TYPE_WATER) && (attacker != defender))
+        // handle storm drain
+        if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_STORM_DRAIN) == TRUE)
         {
-            scriptnum = SUB_SEQ_HANDLE_LIGHTNING_ROD_RAISE_SPATK;
+            if ((movetype == TYPE_WATER) && (attacker != defender))
+            {
+                scriptnum = SUB_SEQ_HANDLE_LIGHTNING_ROD_RAISE_SPATK;
+            }
         }
-    }
+    #endif
 
     return scriptnum;
 }
