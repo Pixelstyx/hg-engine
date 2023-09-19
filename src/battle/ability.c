@@ -304,7 +304,9 @@ BOOL IntimidateCheckHelper(struct BattleStruct *sp, u32 client)
             switch (ability)
             {
             case ABILITY_INNER_FOCUS:
-            case ABILITY_SCRAPPY:
+            #ifdef MODERNIZE_ABILITIES //Scrappy grants immunity to Intimidate as of Gen 8
+                case ABILITY_SCRAPPY:
+            #endif
             case ABILITY_OBLIVIOUS:
             case ABILITY_OWN_TEMPO:
             case ABILITY_FULL_METAL_BODY:
@@ -2158,12 +2160,14 @@ BOOL ServerFlinchCheck(void *bw, struct BattleStruct *sp)
 
     heldeffect = HeldItemHoldEffectGet(sp, sp->attack_client);
     atk = HeldItemAtkGet(sp, sp->attack_client, 0);
-
-    if (GetBattlerAbility(sp, sp->attack_client) == ABILITY_STENCH) // stench adds 10% flinch chance
-    {
-        atk += 10;
-        heldeffect = HOLD_EFFECT_INCREASE_FLINCH; // doesn't permanently change the hold effect, just for this function
-    }
+    
+    #ifdef MODERNIZE_ABILITIES
+        if (GetBattlerAbility(sp, sp->attack_client) == ABILITY_STENCH) // stench adds 10% flinch chance as of gen 5
+        {
+            atk += 10;
+            heldeffect = HOLD_EFFECT_INCREASE_FLINCH; // doesn't permanently change the hold effect, just for this function
+        }
+    #endif
 
     if (sp->defence_client != 0xFF)
     {
