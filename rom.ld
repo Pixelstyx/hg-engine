@@ -94,6 +94,7 @@ sub_02017FE4 = 0x02017FE4 | 1;
 SetEggStats = 0x0206C8B8 | 1;
 SaveMisc_SetTogepiPersonalityGender = 0x0202ABB0 | 1;
 SaveMisc_GetTogepiPersonalityGender = 0x0202ABBC | 1;
+CalcLevelBySpeciesAndExp = 0x0206FDA8 | 1;
 
 SaveData_GetRepelPtr = 0x0202DB05;
 SaveData_GetEventPtr = 0x020503D0 | 1;
@@ -666,7 +667,6 @@ GetNaturalGiftType = 0x022558A4 | 1;
 
 BattleContext_CheckMoveImprisoned = 0x02252C74 | 1;
 BattleContext_CheckMoveUnuseableInGravity = 0x02252DC4 | 1;
-BattleContext_CheckMoveHealBlocked = 0x02252DF8 | 1;
 
 CanUseItemOnPokemon = 0x0208FD9C | 1;
 
@@ -733,7 +733,6 @@ BattleMessage_BufferFlavorPreference = 0x0223CEA8 | 1;
 BattleMessage_BufferTrainerClass = 0x0223CEB4 | 1;
 BattleMessage_BufferTrainerName = 0x0223CECC | 1;
 BattleMessage_BufferBoxName = 0x0223CEE4 | 1;
-BufferItemNameWithIndefArticle = 0x0200C100 | 1;
 
 _GetNpcTradeName = 0x02259C1C | 1;
 MonSetTrainerMemo = 0x0208F260 | 1;
@@ -751,10 +750,25 @@ QueueEmitterWithCallback = 0x02015494 | 1;
 particleEmitCallback = 0x021E5C28 | 1;
 
 BattleSystem_GetTrainer = 0x0223A9F4 | 1;
+
+BattleController_EmitPlayFaintAnimation = 0x022635E8 | 1;
+InitFaintedWork = 0x022514C4 | 1;
+MaskOfFlagNo = 0x020726C0 | 1;
+
 PartyMenu_PrintMessageOnWindow32 = 0x0207DAC4 | 1;
 
-/* machine move expansion */
-sub_0200CE7C = 0x0200CE7C | 1;
+SetStringAsPlaceholder = 0x0200BDF8 | 1;
+
+PrintUIntOnWindowWithGlyph = 0x0200CE7C | 1;
 ov15_021FE8C4 = 0x021FE8C4 | 1;
-sub_0200CDF0 = 0x0200CDF0 | 1;
-ov15_021FE9B0 = 0x021FE9B0 | 1;
+PrintUIntOnWindow = 0x0200CDF0 | 1;
+Bag_RenderItemSlotIcon = 0x021FE9B0 | 1;
+MonApplyFriendshipMod = 0x0206FE90 | 1;
+GetMoveMaxPP = 0x0207332C | 1;
+ApplyMonMoodModifier = 0x02097F0C | 1;
+PartyMenu_GetCurrentMapSec = 0x020828EC | 1;
+AddTextPrinterParameterizedWithColor = 0x020200FC | 1;
+PrintItemSlotQuantity = 0x021FF66C | 1;
+
+PlayerProfile_TestBadgeFlag = 0x02028F98 | 1;
+InitMartUI = 0x02256D34 | 1;
