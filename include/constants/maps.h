@@ -466,7 +466,7 @@
 #define MAP_D41R0105                          462
 #define MAP_D41R0106                          463
 #define MAP_D41R0107                          464
-#define MAP_D41R0108                          465
+#define MAP_D41R0108                          465 // MAP_MOUNT_SILVER_CAVE_SUMMIT
 #define MAP_R10PC0101                         466
 #define MAP_R10R0201                          467
 #define MAP_R05R0101                          468

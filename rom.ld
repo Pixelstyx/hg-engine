@@ -387,7 +387,6 @@ NNSi_SndArcLoadWaveArc = 0x020CA194;
 LoadSingleWaves = 0x020CA788;
 SND_AssignWaveArc = 0x020D6154;
 
-Fsys_GetWeather_HandleDiamondDust = 0x0203BBB4 | 1;
 sub_0206D038 = 0x0206D038 | 1;
 GetSpeciesNameIntoArray = 0x0200BC28 | 1;
 PlayCry = 0x02006218 | 1;
@@ -781,3 +780,7 @@ BattleSetup_GetWildBattleMusic = 0x020517FC | 1;
 Encounter_New = 0x020506BC | 1;
 TaskManager_Call = 0x02050530 | 1;
 Task_TutorialBattle = 0x0205128C | 1;
+
+MapHeader_GetWeatherType = 0x0203B3E4 | 1;
+Save_SysInfo_RTC_Get = 0x02028D3C | 1;
+FieldSystem_HasPenalty = 0x02055670 | 1;

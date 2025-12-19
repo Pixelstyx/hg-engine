@@ -49,6 +49,39 @@ struct GF_RTC_DateTime {
     struct RTCTime time;
 };
 
+// Originally in field_system_rtc_weather.h
+#define JANUARY   1
+#define FEBRUARY  2
+#define MARCH     3
+#define APRIL     4
+#define MAY       5
+#define JUNE      6
+#define JULY      7
+#define AUGUST    8
+#define SEPTEMBER 9
+#define OCTOBER   10
+#define NOVEMBER  11
+#define DECEMBER  12
+
+#define MAP_WEATHER_DIAMOND_DUST 8
+
+// Used specifically for Diamond Dust dates.
+typedef struct MonthDay {
+    u8 month;
+    u8 day;
+} MonthDay;
+
+// In sav_system_info.h in pokeheartgold.
+typedef struct SysInfo_RTC {
+    BOOL initialized;
+    struct RTCDate date;
+    struct RTCTime time;
+    s32 days_since_nitro_epoch;
+    s64 seconds_since_nitro_epoch;
+    s64 seconds_at_game_clear;
+    u32 penaltyInMinutes;
+} SysInfo_RTC;
+
 void LONG_CALL Party_ResetAllShayminToLandForme(struct Party *party);
 void LONG_CALL GF_RTC_CopyDateTime(struct RTCDate *date, struct RTCTime *time);
 void LONG_CALL GF_RTC_CopyTime(struct RTCTime *time);
@@ -59,5 +92,7 @@ TIMEOFDAY LONG_CALL GF_RTC_GetTimeOfDayByHour(s32 hour);
 TimeOfDayWildParam LONG_CALL GF_RTC_GetTimeOfDayWildParam(void);
 TimeOfDayWildParam LONG_CALL GF_RTC_GetTimeOfDayWildParamByHour(s32 hour);
 // u32 GrabCurrentSeason(void) is in pokemon.h because it is defined there
+// u32 Fsys_GetWeather_HandleDiamondDust(FieldSystem, u32) is already defined in script.h.
+u32 LONG_CALL MapHeader_GetWeatherType(u32 mapId); // TODO: Maybe move this to a more accurate header file.
 
 #endif // RTC_H

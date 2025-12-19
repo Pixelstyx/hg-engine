@@ -109,6 +109,7 @@ void LONG_CALL EventSet_Script(FieldSystem *fsys, u16 scr_id, void* obj);
 void LONG_CALL ScriptJump(SCRIPTCONTEXT* ctx, const u8* ptr); // this is important
 void *LONG_CALL FieldSysGetAttrAddr(FieldSystem *fsys, int field);
 u32 LONG_CALL Fsys_GetWeather_HandleDiamondDust(FieldSystem *fsys, u32 mapID);
+BOOL LONG_CALL FieldSystem_HasPenalty(FieldSystem *fsys);
 
 // there are actual functions for ScriptReadHalfword and ScriptReadWord, but it's whatever
 #define ScriptReadByte(ctx) *(u8*)(ctx->script_ptr++)
