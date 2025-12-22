@@ -19,6 +19,42 @@
 #include "../../include/constants/weather_numbers.h"
 #include "../../include/constants/generated/learnsets.h"
 
+// TODO: Look into check to replace these.
+const u32 CutSpecies[] = {
+};
+
+const u32 FlySpecies[] = {
+    SPECIES_MURKROW,
+};
+
+const u32 SurfSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 StrengthSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 RockSmashSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 WaterfallSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 RockClimbSpecies[] = {
+};
+
+const u32 WhirlpoolSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 FlashSpecies[] = {
+};
+
+BOOL CanDisplayFieldMove_ScrCmd(u32 species, u16 fieldMove, int heapID);
+
 /**
  *  @brief script command to give an egg adapted to set the hidden ability
  *
@@ -321,5 +357,191 @@ BOOL ScrCmd_BufferItemName(SCRIPTCONTEXT *ctx) {
     u8 idx = ScriptReadByte(ctx);
     u16 itemId = ScriptGetVar(ctx);
     BufferItemNameGiveItem(*msgFmt, idx, itemId);
+    return FALSE;
+}
+
+BOOL ScrCmd_GetPartySlotWithMove(SCRIPTCONTEXT *ctx) {
+    FieldSystem *fsys = ctx->fsys;
+    u16 *slot = ScriptGetVarPointer(ctx);
+    u16 move = ScriptGetVar(ctx);
+    u8 i;
+
+    struct Party *party = SaveData_GetPlayerPartyPtr(fsys->savedata);
+    u8 partyCount = party->count;
+
+    for (i = 0, *slot = 6; i < partyCount; i++) {
+        struct PartyPokemon *mon = Party_GetMonByIndex(party, i);
+        if (GetMonData(mon, MON_DATA_IS_EGG, NULL)) {
+            continue;
+        }
+
+        /*if (GetMonData(mon, MON_DATA_MOVE1, NULL) == move || GetMonData(mon, MON_DATA_MOVE2, NULL) == move || GetMonData(mon, MON_DATA_MOVE3, NULL) == move || GetMonData(mon, MON_DATA_MOVE4, NULL) == move) {
+            *slot = i;
+            break;
+        }*/
+
+        if (CanDisplayFieldMove_ScrCmd(GetMonData(mon, MON_DATA_SPECIES, NULL), move, HEAPID_MAIN_HEAP))
+        {
+            *slot = i;
+            break;
+        }
+    }
+
+    return FALSE;
+}
+
+int ScrCmd_GetIdxOfFirstPartyMonWithMove(struct Party *party, u16 move) {
+    struct PartyPokemon *mon;
+    u8 partyCount = party->count;
+    int i;
+
+    for (i = 0; i < partyCount; i++) {
+        mon = Party_GetMonByIndex(party, i);
+        if (GetMonData(mon, MON_DATA_IS_EGG, NULL)) {
+            continue;
+        }
+        /*if (GetMonData(mon, MON_DATA_MOVE1, NULL) == move
+            || GetMonData(mon, MON_DATA_MOVE2, NULL) == move
+            || GetMonData(mon, MON_DATA_MOVE3, NULL) == move
+            || GetMonData(mon, MON_DATA_MOVE4, NULL) == move) {
+            return i;
+        }*/
+        if (CanDisplayFieldMove_ScrCmd(GetMonData(mon, MON_DATA_SPECIES, NULL), move, HEAPID_MAIN_HEAP))
+        {
+            return i;
+        }
+    }
+    return 0xFF;
+}
+
+BOOL CanDisplayFieldMove_ScrCmd(u32 species, u16 fieldMove, int heapID)
+{
+    BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
+    switch (fieldMove)
+    {
+        case MOVE_CUT:
+            if (Bag_HasItem(bag, ITEM_HM01, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(CutSpecies); i++)
+                {
+                    if (species == CutSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_FLY:
+            if (Bag_HasItem(bag, ITEM_HM02, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(FlySpecies); i++)
+                {
+                    if (species == FlySpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_SURF:
+            if (Bag_HasItem(bag, ITEM_HM03, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(SurfSpecies); i++)
+                {
+                    if (species == SurfSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_STRENGTH:
+            if (Bag_HasItem(bag, ITEM_HM04, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(StrengthSpecies); i++)
+                {
+                    if (species == StrengthSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_ROCK_SMASH:
+            if (Bag_HasItem(bag, ITEM_HM06, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(RockSmashSpecies); i++)
+                {
+                    if (species == RockSmashSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_WATERFALL:
+            if (Bag_HasItem(bag, ITEM_HM07, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(WaterfallSpecies); i++)
+                {
+                    if (species == WaterfallSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_ROCK_CLIMB:
+            if (Bag_HasItem(bag, ITEM_HM08, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(RockClimbSpecies); i++)
+                {
+                    if (species == RockClimbSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_WHIRLPOOL:
+            if (Bag_HasItem(bag, ITEM_HM05, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(WhirlpoolSpecies); i++)
+                {
+                    if (species == WhirlpoolSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_FLASH:
+            if (Bag_HasItem(bag, ITEM_TM070, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(FlashSpecies); i++)
+                {
+                    if (species == FlashSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        /*case MOVE_TELEPORT:
+            break;
+        case MOVE_DIG:
+            break;
+        case MOVE_SWEET_SCENT:
+            break;
+        case MOVE_CHATTER:
+            break;
+        case MOVE_HEADBUTT:
+            break;
+        case MOVE_MILK_DRINK:
+            break;
+        case MOVE_SOFT_BOILED:
+            break;*/
+        default: break;
+    }
     return FALSE;
 }

@@ -9,11 +9,47 @@
 #include "../include/constants/file.h"
 #include "../include/party_menu.h"
 
+// TODO: Look into check to replace these.
+const u32 CutSpecies[] = {
+};
+
+const u32 FlySpecies[] = {
+    SPECIES_MURKROW,
+};
+
+const u32 SurfSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 StrengthSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 RockSmashSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 WaterfallSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 RockClimbSpecies[] = {
+};
+
+const u32 WhirlpoolSpecies[] = {
+    SPECIES_FERALIGATR,
+};
+
+const u32 FlashSpecies[] = {
+};
+
+u16 GetFieldEffectMoveID(u8 fieldEffect);
+
 u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 {
     struct PartyPokemon *pp = Party_GetMonByIndex(wk->dat->pp, wk->pos);
     u16 move;
-    u8 fieldMoveIndex = 0;
+    u8 displayedCount = 0;
     u8 i;
     u8 count = 0;
     u8 fieldEffect;
@@ -41,8 +77,9 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
             buf[count] = PARTY_MON_CONTEXT_MENU_QUIT;
             ++count;
 
-            // here is where a custom check would go.  replace the below for loop with your own checks
+            int fieldEffectsToDisplay[] = { 0, 0, 0, 0 };
 
+            // Priority 1: Known field moves.
             for (i = 0; i < MAX_MON_MOVES; ++i)
             {
                 move = GetMonData(pp, MON_DATA_MOVE1 + i, NULL);
@@ -52,13 +89,49 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
                 }
 
                 fieldEffect = MoveId_GetFieldEffectId(move);
-                if (fieldEffect != 0xFF)
+                if (fieldEffect > PARTY_MON_CONTEXT_MENU_FLASH && fieldEffect != 0xFF)
                 {
-                    buf[count] = fieldEffect;
-                    ++count;
-                    PartyMenu_ContextMenuAddFieldMove(wk, move, fieldMoveIndex);
-                    ++fieldMoveIndex;
+                    fieldEffectsToDisplay[displayedCount] = fieldEffect;
+                    ++displayedCount;
                 }
+            }
+
+            // Priority 2: Fly.
+            i = PARTY_MON_CONTEXT_MENU_FLY;
+            if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            && displayedCount < 4)
+            {
+                fieldEffectsToDisplay[displayedCount] = i;
+                ++displayedCount;
+            }
+
+            // Priority 3: Flash.
+            i = PARTY_MON_CONTEXT_MENU_FLASH;
+            if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            && displayedCount < 4)
+            {
+                fieldEffectsToDisplay[displayedCount] = i;
+                ++displayedCount;
+            }
+
+            // Priority 4: Unknown (valid) HM field moves.
+            for (i = PARTY_MON_CONTEXT_MENU_FIELD_MOVES_BEGIN; i <= PARTY_MON_CONTEXT_MENU_MAX; i++)
+            {
+                if (displayedCount == 4) break;
+                if (i == PARTY_MON_CONTEXT_MENU_FLY || i == PARTY_MON_CONTEXT_MENU_FLASH) continue;
+                if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU))
+                {
+                    fieldEffectsToDisplay[displayedCount] = i;
+                    ++displayedCount;
+                }
+            }
+
+            // Loop through fieldEffectsToDisplay and display all selected field moves.
+            for (i = 0; i < displayedCount; i++)
+            {
+                buf[count] = fieldEffectsToDisplay[i];
+                ++count;
+                PartyMenu_ContextMenuAddFieldMove(wk, GetFieldEffectMoveID(fieldEffectsToDisplay[i]), i);
             }
         }
         else
@@ -72,12 +145,182 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
         buf[count] = PARTY_MON_CONTEXT_MENU_QUIT;
         ++count;
     }
-
-
-
+    
     return count;
 }
 
+BOOL CanDisplayFieldMove(u32 species, u16 fieldMove, int heapID)
+{
+    BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
+    switch (fieldMove)
+    {
+        case MOVE_CUT:
+            if (Bag_HasItem(bag, ITEM_HM01, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(CutSpecies); i++)
+                {
+                    if (species == CutSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_FLY:
+            if (Bag_HasItem(bag, ITEM_HM02, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(FlySpecies); i++)
+                {
+                    if (species == FlySpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_SURF:
+            if (Bag_HasItem(bag, ITEM_HM03, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(SurfSpecies); i++)
+                {
+                    if (species == SurfSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_STRENGTH:
+            if (Bag_HasItem(bag, ITEM_HM04, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(StrengthSpecies); i++)
+                {
+                    if (species == StrengthSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_ROCK_SMASH:
+            if (Bag_HasItem(bag, ITEM_HM06, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(RockSmashSpecies); i++)
+                {
+                    if (species == RockSmashSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_WATERFALL:
+            if (Bag_HasItem(bag, ITEM_HM07, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(WaterfallSpecies); i++)
+                {
+                    if (species == WaterfallSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_ROCK_CLIMB:
+            if (Bag_HasItem(bag, ITEM_HM08, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(RockClimbSpecies); i++)
+                {
+                    if (species == RockClimbSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_WHIRLPOOL:
+            if (Bag_HasItem(bag, ITEM_HM05, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(WhirlpoolSpecies); i++)
+                {
+                    if (species == WhirlpoolSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        case MOVE_FLASH:
+            if (Bag_HasItem(bag, ITEM_TM070, 1, heapID))
+            {
+                for (u32 i = 0; i < NELEMS(FlashSpecies); i++)
+                {
+                    if (species == FlashSpecies[i])
+                    {
+                        return TRUE;
+                    }
+                }
+            }
+            break;
+        /*case MOVE_TELEPORT:
+            break;
+        case MOVE_DIG:
+            break;
+        case MOVE_SWEET_SCENT:
+            break;
+        case MOVE_CHATTER:
+            break;
+        case MOVE_HEADBUTT:
+            break;
+        case MOVE_MILK_DRINK:
+            break;
+        case MOVE_SOFT_BOILED:
+            break;*/
+        default: break;
+    }
+    return FALSE;
+}
+
+u16 GetFieldEffectMoveID(u8 fieldEffect)
+{
+    switch (fieldEffect)
+    {
+        case PARTY_MON_CONTEXT_MENU_CUT:
+            return MOVE_CUT;
+        case PARTY_MON_CONTEXT_MENU_FLY:
+            return MOVE_FLY;
+        case PARTY_MON_CONTEXT_MENU_SURF:
+            return MOVE_SURF;
+        case PARTY_MON_CONTEXT_MENU_STRENGTH:
+            return MOVE_STRENGTH;
+        case PARTY_MON_CONTEXT_MENU_ROCK_SMASH:
+            return MOVE_ROCK_SMASH;
+        case PARTY_MON_CONTEXT_MENU_WATERFALL:
+            return MOVE_WATERFALL;
+        case PARTY_MON_CONTEXT_MENU_ROCK_CLIMB:
+            return MOVE_ROCK_CLIMB;
+        case PARTY_MON_CONTEXT_MENU_WHIRLPOOL:
+           return MOVE_WHIRLPOOL;
+        case PARTY_MON_CONTEXT_MENU_FLASH:
+            return MOVE_FLASH;
+        case PARTY_MON_CONTEXT_MENU_TELEPORT:
+            return MOVE_TELEPORT;
+        case PARTY_MON_CONTEXT_MENU_DIG:
+            return MOVE_DIG;
+        case PARTY_MON_CONTEXT_MENU_SWEET_SCENT:
+            return MOVE_SWEET_SCENT;
+        case PARTY_MON_CONTEXT_MENU_CHATTER:
+            return MOVE_CHATTER;
+        case PARTY_MON_CONTEXT_MENU_HEADBUTT:
+            return MOVE_HEADBUTT;
+        case PARTY_MON_CONTEXT_MENU_MILK_DRINK:
+            return MOVE_SWEET_SCENT;
+        case PARTY_MON_CONTEXT_MENU_SOFTBOILED:
+            return MOVE_SOFT_BOILED;
+        default: break;
+    }
+    return MOVE_NONE;
+}
 
 void LONG_CALL sub_0207AFC4(struct PLIST_WORK *wk)
 {

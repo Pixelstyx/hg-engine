@@ -555,3 +555,6 @@ arm9 SetupAndStartTutorialBattle 02051334 1
 0010 TestBattle_AISelectMove 0221BEF4 2
 0010 TestBattle_AIPickCommand 022205BC 2
 #endif
+
+arm9 ScrCmd_GetIdxOfFirstPartyMonWithMove 020542E8 2
+arm9 ScrCmd_GetPartySlotWithMove 0204D3CC 1

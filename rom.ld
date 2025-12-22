@@ -781,3 +781,5 @@ BattleSetup_GetWildBattleMusic = 0x020517FC | 1;
 Encounter_New = 0x020506BC | 1;
 TaskManager_Call = 0x02050530 | 1;
 Task_TutorialBattle = 0x0205128C | 1;
+
+SaveArray_Party_Get = 0x02074904 | 1;

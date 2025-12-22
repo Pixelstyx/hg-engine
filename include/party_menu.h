@@ -180,5 +180,6 @@ void LONG_CALL FreeToHeapExplicit(u32 heapId, void *ptr);
 void LONG_CALL PartyMenu_PrintMessageOnWindow32(struct PLIST_WORK *partyMenu, int msgId, BOOL drawFrame);
 u16 LONG_CALL PartyMenu_GetCurrentMapSec(struct PLIST_WORK *partyMenu);
 BOOL LONG_CALL ShouldTakeMachineMoveItem(u16 itemId);
+BOOL LONG_CALL CanDisplayFieldMove(u32 species, u16 fieldMove, int heapID);
 
 #endif // POKEHEARTGOLD_PARTY_MENU_H
