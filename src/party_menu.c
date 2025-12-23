@@ -8,46 +8,14 @@
 #include "../include/constants/species.h"
 #include "../include/constants/file.h"
 #include "../include/party_menu.h"
-
-// TODO: Look into check to replace these.
-const u32 CutSpecies[] = {
-};
-
-const u32 FlySpecies[] = {
-    SPECIES_MURKROW,
-};
-
-const u32 SurfSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 StrengthSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 RockSmashSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 WaterfallSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 RockClimbSpecies[] = {
-};
-
-const u32 WhirlpoolSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 FlashSpecies[] = {
-};
+#include "../include/constants/generated/learnsets.h"
 
 u16 GetFieldEffectMoveID(u8 fieldEffect);
 
 u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 {
     struct PartyPokemon *pp = Party_GetMonByIndex(wk->dat->pp, wk->pos);
+    //u32 *learnset = GetCompleteLearnset(pp, HEAP_ID_FIELD3);
     u16 move;
     u8 displayedCount = 0;
     u8 i;
@@ -77,7 +45,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
             buf[count] = PARTY_MON_CONTEXT_MENU_QUIT;
             ++count;
 
-            int fieldEffectsToDisplay[] = { 0, 0, 0, 0 };
+            int fieldEffectsToDisplay[4];
 
             // Priority 1: Known field moves.
             for (i = 0; i < MAX_MON_MOVES; ++i)
@@ -98,7 +66,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 
             // Priority 2: Fly.
             i = PARTY_MON_CONTEXT_MENU_FLY;
-            if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
             && displayedCount < 4)
             {
                 fieldEffectsToDisplay[displayedCount] = i;
@@ -107,7 +75,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 
             // Priority 3: Flash.
             i = PARTY_MON_CONTEXT_MENU_FLASH;
-            if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
             && displayedCount < 4)
             {
                 fieldEffectsToDisplay[displayedCount] = i;
@@ -119,7 +87,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
             {
                 if (displayedCount == 4) break;
                 if (i == PARTY_MON_CONTEXT_MENU_FLY || i == PARTY_MON_CONTEXT_MENU_FLASH) continue;
-                if (CanDisplayFieldMove(GetMonData(pp, MON_DATA_SPECIES, NULL), GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU))
+                if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU))
                 {
                     fieldEffectsToDisplay[displayedCount] = i;
                     ++displayedCount;
@@ -149,7 +117,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
     return count;
 }
 
-BOOL CanDisplayFieldMove(u32 species, u16 fieldMove, int heapID)
+BOOL CanDisplayFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
 {
     BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
     switch (fieldMove)
@@ -157,114 +125,94 @@ BOOL CanDisplayFieldMove(u32 species, u16 fieldMove, int heapID)
         case MOVE_CUT:
             if (Bag_HasItem(bag, ITEM_HM01, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(CutSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM01)))
                 {
-                    if (species == CutSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_FLY:
             if (Bag_HasItem(bag, ITEM_HM02, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(FlySpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM02)))
                 {
-                    if (species == FlySpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_SURF:
             if (Bag_HasItem(bag, ITEM_HM03, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(SurfSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM03)))
                 {
-                    if (species == SurfSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_STRENGTH:
             if (Bag_HasItem(bag, ITEM_HM04, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(StrengthSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM04)))
                 {
-                    if (species == StrengthSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_ROCK_SMASH:
             if (Bag_HasItem(bag, ITEM_HM06, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(RockSmashSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM06)))
                 {
-                    if (species == RockSmashSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_WATERFALL:
             if (Bag_HasItem(bag, ITEM_HM07, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(WaterfallSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM07)))
                 {
-                    if (species == WaterfallSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_ROCK_CLIMB:
             if (Bag_HasItem(bag, ITEM_HM08, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(RockClimbSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM08)))
                 {
-                    if (species == RockClimbSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_WHIRLPOOL:
             if (Bag_HasItem(bag, ITEM_HM05, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(WhirlpoolSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM05)))
                 {
-                    if (species == WhirlpoolSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         case MOVE_FLASH:
             if (Bag_HasItem(bag, ITEM_TM070, 1, heapID))
             {
-                for (u32 i = 0; i < NELEMS(FlashSpecies); i++)
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_TM070)))
                 {
-                    if (species == FlashSpecies[i])
-                    {
-                        return TRUE;
-                    }
+                    return TRUE;
                 }
             }
             break;
         /*case MOVE_TELEPORT:
             break;
         case MOVE_DIG:
+            if (Bag_HasItem(bag, ITEM_TM028, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_TM028)))
+                {
+                    return TRUE;
+                }
+            }
             break;
         case MOVE_SWEET_SCENT:
             break;
@@ -320,6 +268,38 @@ u16 GetFieldEffectMoveID(u8 fieldEffect)
         default: break;
     }
     return MOVE_NONE;
+}
+
+u32 *GetCompleteLearnset(struct PartyPokemon *mon, int heapID) {
+    u32 species = (u16)GetMonData(mon, MON_DATA_SPECIES, NULL);
+    u32 form = GetMonData(mon, MON_DATA_FORM, NULL);
+
+    u32 *returnTable = sys_AllocMemory(heapID, MAX_LEVELUP_MOVES * sizeof(u32));
+
+    // Load level up learnset into levelUpTable.
+    u32 *levelUpTable = sys_AllocMemory(heapID, MAX_LEVELUP_MOVES * sizeof(u32));
+    LoadLevelUpLearnset_HandleAlternateForm(species, form, levelUpTable);
+
+    // Add levelUpTable to returnTable.
+
+    // Be sure to dispose of levelUpTable since we had to allocate memory.
+    sys_FreeMemoryEz(levelUpTable);
+
+    // Load TM learnset.
+    u32 machineLearnset[MACHINE_LEARNSETS_BITFIELD_COUNT];
+    ArchiveDataLoadOfs(machineLearnset, ARC_CODE_ADDONS, CODE_ADDON_MACHINE_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32), MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
+
+    // Add TM learnset to returnTable.
+
+    // Load tutor learnset.
+    u32 tutorLearnset[TUTOR_LEARNSETS_BITFIELD_COUNT];
+    ArchiveDataLoadOfs(tutorLearnset, ARC_CODE_ADDONS, CODE_ADDON_TUTOR_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32), TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
+
+    // Add tutorLearnset to returnTable.
+
+    // Load egg moves?
+
+    return returnTable;
 }
 
 void LONG_CALL sub_0207AFC4(struct PLIST_WORK *wk)
