@@ -22,19 +22,7 @@ const MonthDay DiamondDustDates[] = {
 u32 Fsys_GetWeather_HandleDiamondDust(FieldSystem *fieldSystem, u32 mapId) {
     u8 c;
     u32 weatherType = MapHeader_GetWeatherType(mapId);
-    if (mapId != MAP_MOUNT_SILVER_CAVE_SUMMIT) { // MAP_D41R0108
-        return weatherType;
-    }
     SysInfo_RTC *sysinfo_rtc = Save_SysInfo_RTC_Get(fieldSystem->savedata);
-    for (c = 0; c < NELEMS(DiamondDustDates); c++) {
-        u8 month = DiamondDustDates[c].month;
-        u8 day = DiamondDustDates[c].day;
-        if ((sysinfo_rtc->date.month == month) && (sysinfo_rtc->date.day == day)) {
-            if (!FieldSystem_HasPenalty(fieldSystem)) {
-                weatherType = WEATHER_SYS_DIAMOND_DUST;
-            }
-            return weatherType;
-        }
     switch (fieldSystem->location->mapId)
     {
         case MAP_MOUNT_SILVER_CAVE_SUMMIT: // MAP_D41R0108
@@ -54,5 +42,6 @@ u32 Fsys_GetWeather_HandleDiamondDust(FieldSystem *fieldSystem, u32 mapId) {
             break;
         default: break;
     }
+    
     return weatherType;
 }
