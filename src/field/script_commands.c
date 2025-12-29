@@ -19,40 +19,6 @@
 #include "../../include/constants/weather_numbers.h"
 #include "../../include/constants/generated/learnsets.h"
 
-// TODO: Look into check to replace these.
-const u32 CutSpecies[] = {
-};
-
-const u32 FlySpecies[] = {
-    SPECIES_MURKROW,
-};
-
-const u32 SurfSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 StrengthSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 RockSmashSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 WaterfallSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 RockClimbSpecies[] = {
-};
-
-const u32 WhirlpoolSpecies[] = {
-    SPECIES_FERALIGATR,
-};
-
-const u32 FlashSpecies[] = {
-};
-
 BOOL CanDisplayFieldMove_ScrCmd(struct PartyPokemon *mon, u16 fieldMove, int heapID);
 
 /**
