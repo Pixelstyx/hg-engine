@@ -286,4 +286,6 @@ void LONG_CALL RegisteredItem_CreateGoToAppTask(struct ItemFieldUseData *data, F
  */
 void *LONG_CALL ItemDataTableLoad(int heapID);
 
+u16 ItemToMachineMoveIndex(u16 itemId);
+
 #endif //POKEDIAMOND_ITEM_H

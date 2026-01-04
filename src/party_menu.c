@@ -11,6 +11,7 @@
 #include "../include/constants/generated/learnsets.h"
 
 u16 GetFieldEffectMoveID(u8 fieldEffect);
+BOOL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
 
 u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 {
@@ -66,7 +67,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 
             // Priority 2: Fly.
             i = PARTY_MON_CONTEXT_MENU_FLY;
-            if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            if (CanAccessFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
             && displayedCount < 4)
             {
                 fieldEffectsToDisplay[displayedCount] = i;
@@ -75,7 +76,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
 
             // Priority 3: Flash.
             i = PARTY_MON_CONTEXT_MENU_FLASH;
-            if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
+            if (CanAccessFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU)
             && displayedCount < 4)
             {
                 fieldEffectsToDisplay[displayedCount] = i;
@@ -87,7 +88,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
             {
                 if (displayedCount == 4) break;
                 if (i == PARTY_MON_CONTEXT_MENU_FLY || i == PARTY_MON_CONTEXT_MENU_FLASH) continue;
-                if (CanDisplayFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU))
+                if (CanAccessFieldMove(pp, GetFieldEffectMoveID(i), HEAP_ID_PARTY_MENU))
                 {
                     fieldEffectsToDisplay[displayedCount] = i;
                     ++displayedCount;
@@ -117,7 +118,7 @@ u8 LONG_CALL sub_0207B0B0(struct PLIST_WORK *wk, u8 *buf)
     return count;
 }
 
-BOOL CanDisplayFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
+BOOL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
 {
     BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
     switch (fieldMove)
