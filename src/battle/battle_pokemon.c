@@ -468,7 +468,7 @@ void CT_SwitchInMessageParamMake(void *bw, struct CLIENT_PARAM *cp, struct SWITC
             smp->sel_mons_no = party->count - 1;
         }
 
-        if ((BattleTypeGet(bw) & BATTLE_TYPE_WIRELESS) == 0)
+        if ((BattleTypeGet(bw) & BATTLE_TYPE_LINK) == 0)
         {
             mp->msg_id = BATTLE_MSG_SWITCH_IN_ENEMY_MSG;
             mp->msg_tag = TAG_TRCLASS_TRNAME_NICKNAME;
@@ -502,7 +502,7 @@ void CT_SwitchInMessageParamMake(void *bw, struct CLIENT_PARAM *cp, struct SWITC
         }
 
         if (((BattleTypeGet(bw) & BATTLE_TYPE_DOUBLE) == 0)
-         && ((BattleTypeGet(bw) & BATTLE_TYPE_WIRELESS) == 0))
+         && ((BattleTypeGet(bw) & BATTLE_TYPE_LINK) == 0))
         {
             if (smp->rate < 100)
             {
@@ -601,9 +601,9 @@ void CT_EncountSendOutMessageParamMake(void *bw, struct CLIENT_PARAM *cp, struct
         }
 
 
-        if (fight_type & BATTLE_TYPE_WIRELESS)
+        if (fight_type & BATTLE_TYPE_LINK)
         {
-            if (fight_type & BATTLE_TYPE_BATTLE_TOWER)
+            if (fight_type & BATTLE_TYPE_FRONTIER)
             {
                 mp->msg_id = BATTLE_MSG_DOUBLE_TOWER_BATTLE_SEND_OUT;
                 mp->msg_tag = TAG_TRCLASS_TRNAME_NICKNAME_TRCLASS_TRNAME_NICKNAME;
@@ -674,7 +674,7 @@ void CT_EncountSendOutMessageParamMake(void *bw, struct CLIENT_PARAM *cp, struct
     }
     else
     {
-        if (fight_type & BATTLE_TYPE_WIRELESS)
+        if (fight_type & BATTLE_TYPE_LINK)
         {
             u8 sio_id = BattleWorkCommIDGet(bw);
 
@@ -758,7 +758,7 @@ void CT_EncountSendOutMessageParamMake(void *bw, struct CLIENT_PARAM *cp, struct
             }
         }
 
-        if (fight_type & BATTLE_TYPE_WIRELESS)
+        if (fight_type & BATTLE_TYPE_LINK)
         {
             if (fight_type & BATTLE_TYPE_MULTI)
             {

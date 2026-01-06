@@ -456,7 +456,7 @@ BOOL CalcAccuracy(void *bw, struct BattleStruct *sp, int attacker, int defender,
         return FALSE;
     }
 
-    if (BattleTypeGet(bw) & BATTLE_TYPE_CATCHING_DEMO) {
+    if (BattleTypeGet(bw) & BATTLE_TYPE_TUTORIAL) {
         return FALSE;
     }
 

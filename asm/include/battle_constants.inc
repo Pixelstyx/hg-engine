@@ -119,22 +119,23 @@
 .equ BATTLE_SPECIAL_DISTORTION_WORLD, 0x80
 
 
-.equ BATTLE_TYPE_WILD_MON, 0x0
-.equ BATTLE_TYPE_TRAINER, 0x1
-.equ BATTLE_TYPE_DOUBLES, 0x2
-.equ BATTLE_TYPE_LINK, 0x4
-.equ BATTLE_TYPE_MULTI, 0x8
-.equ BATTLE_TYPE_TAG, 0x10
-.equ BATTLE_TYPE_SAFARI, 0x20
-.equ BATTLE_TYPE_AI, 0x40
-.equ BATTLE_TYPE_FRONTIER, 0x80
-.equ BATTLE_TYPE_ROAMER, 0x100
-.equ BATTLE_TYPE_PAL_PARK, 0x200
-.equ BATTLE_TYPE_TUTORIAL, 0x400
-.equ BATTLE_TYPE_CAN_LOSE, 0x800
-.equ BATTLE_TYPE_BUG_CONTEST, 0x1000
-.equ BATTLE_TYPE_13, 0x2000
-.equ BATTLE_TYPE_DEBUG, 0x4000
+.equ BATTLE_TYPE_WILD_MON,      0x0     // (0)
+.equ BATTLE_TYPE_TRAINER,       0x1     // (1 << 0)
+.equ BATTLE_TYPE_DOUBLES,       0x2     // (1 << 1)
+.equ BATTLE_TYPE_LINK,          0x4     // (1 << 2)
+.equ BATTLE_TYPE_MULTI,         0x8     // (1 << 3)
+.equ BATTLE_TYPE_TAG,           0x10    // (1 << 4)
+.equ BATTLE_TYPE_SAFARI,        0x20    // (1 << 5)
+.equ BATTLE_TYPE_AI,            0x40    // (1 << 6)
+.equ BATTLE_TYPE_FRONTIER,      0x80    // (1 << 7)
+.equ BATTLE_TYPE_ROAMER,        0x100   // (1 << 8)
+.equ BATTLE_TYPE_PAL_PARK,      0x200   // (1 << 9)
+.equ BATTLE_TYPE_TUTORIAL,      0x400   // (1 << 10)
+.equ BATTLE_TYPE_NO_WHITEOUT,   0x800   // (1 << 11)
+.equ BATTLE_TYPE_BUG_CONTEST,   0x1000  // (1 << 12)
+.equ BATTLE_TYPE_TRAINER_HOUSE, 0x2000  // (1 << 13)
+
+.equ BATTLE_TYPE_DEBUG,         (1 << 31)
 
 
 .equ BATTLER_CATEGORY_ALL, 0x0

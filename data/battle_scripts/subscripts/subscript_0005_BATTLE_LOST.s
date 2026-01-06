@@ -16,7 +16,7 @@ _Start:
     CompareVarToValue OPCODE_NEQ, BSCRIPT_VAR_MESSAGE, 0, _RecallEnemySlot1
 
 _CheckIfLoseMoney:
-    CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_CAN_LOSE, _EndWithNoWhiteOut
+    CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_NO_WHITEOUT, _EndWithNoWhiteOut
     CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_FRONTIER, _DotsMessage
     PayPrizeMoney 
     CompareVarToValue OPCODE_EQU, BSCRIPT_VAR_MESSAGE, 0, _DotsMessage

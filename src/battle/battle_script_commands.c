@@ -712,7 +712,7 @@ BOOL BattleScriptCommandHandler(void *bw, struct BattleStruct *sp)
         {
             ret = NewBattleScriptCmdTable[command - START_OF_NEW_BTL_SCR_CMDS](bw, sp);
         }
-    } while ((sp->battle_progress_flag == 0) && ((BattleTypeGet(bw) & BATTLE_TYPE_WIRELESS) == 0));
+    } while ((sp->battle_progress_flag == 0) && ((BattleTypeGet(bw) & BATTLE_TYPE_LINK) == 0));
 
     sp->battle_progress_flag = 0;
 
@@ -4084,7 +4084,7 @@ BOOL BtlCmd_TrySwapItems(void* bw, struct BattleStruct *sp)
     int attack = read_battle_script_param(sp);
     int defence = read_battle_script_param(sp);
 
-    int isTrickAllowedInFight = BattleTypeGet(bw) & (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_WIRELESS);
+    int isTrickAllowedInFight = BattleTypeGet(bw) & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK);
 #ifdef AI_CAN_GRAB_ITEMS
     isTrickAllowedInFight = 0;
 #endif

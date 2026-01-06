@@ -57,7 +57,7 @@ struct TestBattlePokemon {
 };
 
 struct TestBattleScenario {
-    u32 battleType;                                        // BATTLE_TYPE_SINGLE, BATTLE_TYPE_DOUBLE, etc.
+    u32 battleType;                                        // BATTLE_TYPE_WILD_MON, BATTLE_TYPE_DOUBLE, etc.
     struct TestBattlePokemon playerParty[MAX_PARTY_SIZE];  // Player party
     struct TestBattlePokemon enemyParty[MAX_PARTY_SIZE];   // Enemy's party
 
@@ -71,7 +71,7 @@ struct TestBattleScenario {
 };
 
 static const struct TestBattleScenario scenario_SinglesTest = {
-    .battleType = BATTLE_TYPE_SINGLE,
+    .battleType = BATTLE_TYPE_WILD_MON,
     .playerParty = {
         {
             .species = SPECIES_ONIX,

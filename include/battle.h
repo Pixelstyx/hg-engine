@@ -179,22 +179,25 @@
  *  @brief battle type flags
  *  access with BattleTypeGet(bw) & BATTLE_TYPE_* to test properly
  */
-#define BATTLE_TYPE_SINGLE 0x00
-#define BATTLE_TYPE_TRAINER 0x01
-#define BATTLE_TYPE_DOUBLE 0x02
-#define BATTLE_TYPE_WIRELESS 0x04
-#define BATTLE_TYPE_MULTI 0x08
-#define BATTLE_TYPE_TAG 0x10
-#define BATTLE_TYPE_SAFARI 0x20
-#define BATTLE_TYPE_NPC_MULTI 0x40
-#define BATTLE_TYPE_BATTLE_TOWER 0x80
-#define BATTLE_TYPE_ROAMER 0x100
-#define BATTLE_TYPE_PAL_PARK 0x200
-#define BATTLE_TYPE_CATCHING_DEMO 0x400
-#define BATTLE_TYPE_CAN_LOSE 0x800
-#define BATTLE_TYPE_BUG_CONTEST 0x1000
+#define BATTLE_TYPE_WILD_MON        0x0     // (0)
+#define BATTLE_TYPE_TRAINER         0x1     // (1 << 0)
+#define BATTLE_TYPE_DOUBLE          0x2     // (1 << 1)
+#define BATTLE_TYPE_LINK            0x4     // (1 << 2) 
+#define BATTLE_TYPE_MULTI           0x8     // (1 << 3)
+#define BATTLE_TYPE_TAG             0x10    // (1 << 4)
+#define BATTLE_TYPE_SAFARI          0x20    // (1 << 5)
+#define BATTLE_TYPE_NPC_MULTI       0x40    // (1 << 6)
+#define BATTLE_TYPE_FRONTIER        0x80    // (1 << 7)
+#define BATTLE_TYPE_ROAMER          0x100   // (1 << 8)
+#define BATTLE_TYPE_PAL_PARK        0x200   // (1 << 9)
+#define BATTLE_TYPE_TUTORIAL        0x400   // (1 << 10)
+#define BATTLE_TYPE_NO_WHITEOUT     0x800   // (1 << 11)
+#define BATTLE_TYPE_BUG_CONTEST     0x1000  // (1 << 12)
+#define BATTLE_TYPE_TRAINER_HOUSE   0x2000  // (1 << 13)
 
-#define BATTLE_TYPE_NO_EXPERIENCE (BATTLE_TYPE_WIRELESS | BATTLE_TYPE_SAFARI | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_PAL_PARK)
+#define BATTLE_TYPE_DEBUG           (1 << 31)
+
+#define BATTLE_TYPE_NO_EXPERIENCE (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_PAL_PARK)
 
 // change the flow of the ball callback to make sure that critical captures only shake once then succeed.  if it shakes, it succeeds, though
 #define CRITICAL_CAPTURE_MASK (0x80)
