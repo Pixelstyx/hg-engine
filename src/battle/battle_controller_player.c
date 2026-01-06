@@ -12,7 +12,7 @@ void overrideItemUsage(struct BattleSystem *bsys, struct BattleStruct *ctx)
 
     for (battlerId = 0; battlerId < bsys->maxBattlers; battlerId++)
     {
-        if (ctx->playerActions[battlerId][0] == CONTROLLER_COMMAND_ITEM_INPUT && ctx->com_seq_no[battlerId] == 7)
+        if (ctx->playerActions[battlerId][0] == CONTROLLER_COMMAND_ITEM_INPUT && ctx->com_seq_no[battlerId] == SSI_STATE_7)
         {
             if (fight_type & BATTLE_TYPE_TRAINER)
             {
