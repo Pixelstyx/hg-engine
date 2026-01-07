@@ -56,7 +56,7 @@
 
 #define NUMBER_OF_MON_TYPES 20
 
-// Type effectiveness
+// Type effectiveness multiplier flags:
 #define TYPE_MUL_NO_EFFECT              0
 // #define TYPE_MUL_QUADRUPLE_NOT_EFFECTIVE   2
 #define TYPE_MUL_TRIPLE_NOT_EFFECTIVE   3
@@ -78,22 +78,22 @@
 #define EFFECTIVENESS_MULT_TRIPLE_SUPER_EFFECTIVE 8000
 // #define EFFECTIVENESS_MULT_QUADRUPLE_SUPER_EFFECTIVE 160000
 
-// Special type table IDs
+// Special type table IDs:
 #define TYPE_FORESIGHT 0xFE
 #define TYPE_ENDTABLE  0xFF
 
-// Contest types
+// Contest types:
 #define COOL   0
 #define BEAUTY 1
 #define CUTE   2
 #define SMART  3
 #define TOUGH  4
 
-#define SELECT_FIGHT_COMMAND 1
-#define SELECT_ITEM_COMMAND 2
-#define SELECT_POKEMON_COMMAND 3
-#define SELECT_ESCAPE_COMMAND 4
-
+// Battle menu commands:
+#define SELECT_FIGHT_COMMAND    1
+#define SELECT_ITEM_COMMAND     2
+#define SELECT_POKEMON_COMMAND  3
+#define SELECT_ESCAPE_COMMAND   4
 
 // Additional (non-damaging) effect sources:
 #define ADD_STATUS_NO_ABILITY   (1 << 27) // 0x08000000
@@ -114,29 +114,29 @@
  *  @brief move status flag defines for the BattleStruct's waza_status_flag field.
  *  name is left as source define if not sure what it defines
  */
-#define MOVE_STATUS_FLAG_MISS                    (0x00000001)
-#define MOVE_STATUS_FLAG_SUPER_EFFECTIVE         (0x00000002)
-#define MOVE_STATUS_FLAG_NOT_VERY_EFFECTIVE      (0x00000004)
-#define MOVE_STATUS_FLAG_NOT_EFFECTIVE           (0x00000008)
-#define WAZA_STATUS_FLAG_CRITICAL                (0x00000010)
-#define MOVE_STATUS_FLAG_OHKO_HIT                (0x00000020)
-#define MOVE_STATUS_FLAG_FAILED                  (0x00000040)
-#define MOVE_STATUS_FLAG_HELD_ON_ABILITY         (0x00000080)
-#define MOVE_STATUS_FLAG_HELD_ON_ITEM            (0x00000100)
-#define WAZA_STATUS_FLAG_PP_NONE                 (0x00000200)
-#define MOVE_STATUS_FLAG_LOCK_ON                 (0x00000400)
-#define MOVE_STATUS_FLAG_LEVITATE_MISS           (0x00000800)
-#define MOVE_STATUS_FLAG_OHKO_HIT_NOHIT          (0x00001000)
-#define WAZA_STATUS_FLAG_NANIMOOKORAN            (0x00002000)
-#define MOVE_STATUS_FLAG_FURY_CUTTER_MISS        (0x00004000)
-#define MOVE_STATUS_FLAG_PROTECTED               (0x00008000)
-#define WAZA_STATUS_FLAG_KIE_NOHIT               (0x00010000)
-#define WAZA_STATUS_FLAG_WAZA_KOYUU_NOHIT        (0x00020000)
-#define MOVE_STATUS_FLAG_MISS_WONDER_GUARD       (0x00040000)
-#define MOVE_STATUS_FLAG_NO_OHKO                 (0x00080000)
-#define MOVE_STATUS_FLAG_MAGNET_RISE_MISS        (0x00100000)
+#define MOVE_STATUS_FLAG_MISS               (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define MOVE_STATUS_FLAG_SUPER_EFFECTIVE    (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define MOVE_STATUS_FLAG_NOT_VERY_EFFECTIVE (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define MOVE_STATUS_FLAG_NOT_EFFECTIVE      (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define WAZA_STATUS_FLAG_CRITICAL           (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define MOVE_STATUS_FLAG_OHKO_HIT           (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define MOVE_STATUS_FLAG_FAILED             (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define MOVE_STATUS_FLAG_HELD_ON_ABILITY    (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define MOVE_STATUS_FLAG_HELD_ON_ITEM       (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000
+#define WAZA_STATUS_FLAG_PP_NONE            (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000
+#define MOVE_STATUS_FLAG_LOCK_ON            (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define MOVE_STATUS_FLAG_LEVITATE_MISS      (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define MOVE_STATUS_FLAG_OHKO_HIT_NOHIT     (1 << 12)   // 0000 0000 0000 0000 0001 0000 0000 0000
+#define WAZA_STATUS_FLAG_NANIMOOKORAN       (1 << 13)   // 0000 0000 0000 0000 0010 0000 0000 0000
+#define MOVE_STATUS_FLAG_FURY_CUTTER_MISS   (1 << 14)   // 0000 0000 0000 0000 0100 0000 0000 0000
+#define MOVE_STATUS_FLAG_PROTECTED          (1 << 15)   // 0000 0000 0000 0000 1000 0000 0000 0000
+#define WAZA_STATUS_FLAG_KIE_NOHIT          (1 << 16)   // 0000 0000 0000 0001 0000 0000 0000 0000
+#define WAZA_STATUS_FLAG_WAZA_KOYUU_NOHIT   (1 << 17)   // 0000 0000 0000 0010 0000 0000 0000 0000
+#define MOVE_STATUS_FLAG_MISS_WONDER_GUARD  (1 << 18)   // 0000 0000 0000 0100 0000 0000 0000 0000
+#define MOVE_STATUS_FLAG_NO_OHKO            (1 << 19)   // 0000 0000 0000 1000 0000 0000 0000 0000
+#define MOVE_STATUS_FLAG_MAGNET_RISE_MISS   (1 << 20)   // 0000 0000 0001 0000 0000 0000 0000 0000
 
-#define MOVE_STATUS_NO_MORE_WORK                 (0x80000000)
+#define MOVE_STATUS_NO_MORE_WORK            (1 << 31)   // 1000 0000 0000 0000 0000 0000 0000 0000
 
 #define WAZA_STATUS_FLAG_NOHIT_OFF      (MOVE_STATUS_FLAG_MISS^0xffffffff)
 #define WAZA_STATUS_FLAG_BATSUGUN_OFF   (WAZA_STATUS_FLAG_BATSUGUN^0xffffffff)
@@ -167,47 +167,47 @@
  *  index BattleStruct's battlemon[battler].states for the stat stages
  *  of the battlemon referenced by battler
  */
-#define STAT_HP             (0x00)
-#define STAT_ATTACK         (0x01)
-#define STAT_DEFENSE        (0x02)
-#define STAT_SPEED          (0x03)
-#define STAT_SPATK          (0x04)
-#define STAT_SPDEF          (0x05)
-#define STAT_ACCURACY       (0x06)
-#define STAT_EVASION        (0x07)
-#define STAT_MAX            (0x08)
+#define STAT_HP         0
+#define STAT_ATTACK     1
+#define STAT_DEFENSE    2
+#define STAT_SPEED      3
+#define STAT_SPATK      4
+#define STAT_SPDEF      5
+#define STAT_ACCURACY   6
+#define STAT_EVASION    7
+#define STAT_MAX        8
 
 /**
  *  @brief battle type flags
  *  access with BattleTypeGet(bw) & BATTLE_TYPE_* to test properly
  */
-#define BATTLE_TYPE_WILD_MON        0x0     // (0)
-#define BATTLE_TYPE_TRAINER         0x1     // (1 << 0)
-#define BATTLE_TYPE_DOUBLE          0x2     // (1 << 1)
-#define BATTLE_TYPE_LINK            0x4     // (1 << 2) 
-#define BATTLE_TYPE_MULTI           0x8     // (1 << 3)
-#define BATTLE_TYPE_TAG             0x10    // (1 << 4)
-#define BATTLE_TYPE_SAFARI          0x20    // (1 << 5)
-#define BATTLE_TYPE_NPC_MULTI       0x40    // (1 << 6)
-#define BATTLE_TYPE_FRONTIER        0x80    // (1 << 7)
-#define BATTLE_TYPE_ROAMER          0x100   // (1 << 8)
-#define BATTLE_TYPE_PAL_PARK        0x200   // (1 << 9)
-#define BATTLE_TYPE_TUTORIAL        0x400   // (1 << 10)
-#define BATTLE_TYPE_NO_WHITEOUT     0x800   // (1 << 11)
-#define BATTLE_TYPE_BUG_CONTEST     0x1000  // (1 << 12)
-#define BATTLE_TYPE_TRAINER_HOUSE   0x2000  // (1 << 13)
+#define BATTLE_TYPE_WILD_MON        0           // 0000 0000 0000 0000 0000 0000 0000 0000
+#define BATTLE_TYPE_TRAINER         (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define BATTLE_TYPE_DOUBLE          (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define BATTLE_TYPE_LINK            (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define BATTLE_TYPE_MULTI           (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define BATTLE_TYPE_TAG             (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define BATTLE_TYPE_SAFARI          (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define BATTLE_TYPE_NPC_MULTI       (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define BATTLE_TYPE_FRONTIER        (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define BATTLE_TYPE_ROAMER          (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000
+#define BATTLE_TYPE_PAL_PARK        (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000
+#define BATTLE_TYPE_TUTORIAL        (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define BATTLE_TYPE_NO_WHITEOUT     (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define BATTLE_TYPE_BUG_CONTEST     (1 << 12)   // 0000 0000 0000 0000 0001 0000 0000 0000
+#define BATTLE_TYPE_TRAINER_HOUSE   (1 << 13)   // 0000 0000 0000 0000 0010 0000 0000 0000
 
-#define BATTLE_TYPE_DEBUG           (1 << 31)
+#define BATTLE_TYPE_DEBUG           (1 << 31)   // 1000 0000 0000 0000 0000 0000 0000 0000
 
-#define BATTLE_TYPE_NO_EXPERIENCE (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_PAL_PARK)
+#define BATTLE_TYPE_NO_EXPERIENCE   (BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_PAL_PARK)
 
-// change the flow of the ball callback to make sure that critical captures only shake once then succeed.  if it shakes, it succeeds, though
-#define CRITICAL_CAPTURE_MASK (0x80)
+// Changes the flow of the ball callback to make sure that critical captures only perform one shake check and then succeed (meaning it will always succeed after one shake).
+#define CRITICAL_CAPTURE_MASK   (1 << 7) // 0x80
 
 
 /**
  *  @brief flags for effect_of_moves
- *  defines for BattleStruct's effect_of_moves field
+ *  defines for BattleStruct's u32 effect_of_moves field
  *  fields that cover multiple fields are often counters, i.e. MOVE_EFFECT_FLAG_LOCK_ON
  *
  *  the following statement:
@@ -216,34 +216,34 @@
  *
  *  seems to be duplicated in battle_moveflag structure (moveeffect field of BattleStruct)
  */
-#define MOVE_EFFECT_LEECH_SEED_BATTLER      (0x00000003) // leech seed battler
-#define MOVE_EFFECT_FLAG_LEECH_SEED_ACTIVE  (0x00000004) // if leech seed is active
-#define MOVE_EFFECT_FLAG_LOCK_ON            (0x00000018) // potentially client locked on to
-#define MOVE_EFFECT_FLAG_PERISH_SONG_ACTIVE (0x00000020)
-#define MOVE_EFFECT_FLAG_FLYING_IN_AIR      (0x00000040) // is currently flying
-#define MOVE_EFFECT_FLAG_DIGGING            (0x00000080) // is currently digging
-#define MOVE_EFFECT_FLAG_MINIMIZED          (0x00000100) // minimized for stomp effectiveness
-#define MOVE_EFFECT_FLAG_CHARGE             (0x00000200)
-#define MOVE_EFFECT_FLAG_INGRAIN            (0x00000400)
-#define MOVE_EFFECT_YAWN_COUNTER            (0x00001800)
-#define MOVE_EFFECT_FLAG_IMPRISONED         (0x00002000)
-#define MOVE_EFFECT_FLAG_GRUDGE             (0x00004000)
-#define MOVE_EFFECT_NO_CRITICAL_HITS        (0x00008000)
-#define MOVE_EFFECT_FLAG_MUD_SPORT          (0x00010000)
-#define MOVE_EFFECT_FLAG_WATER_SPORT        (0x00020000)
-#define MOVE_EFFECT_FLAG_IS_DIVING          (0x00040000)
-#define MOVE_EFFECT_FLAG_INTIMIDATED        (0x00080000)
-#define MOVE_EFFECT_FLAG_TRACED             (0x00100000)
-#define MOVE_EFFECT_FLAG_MIRACLE_EYE        (0x00400000)
-#define MOVE_EFFECT_FLAG_POWER_TRICK        (0x00800000)
-#define MOVE_EFFECT_FLAG_AQUA_RING          (0x01000000)
-#define MOVE_EFFECT_FLAG_HEAL_BLOCK         (0x02000000)
-#define MOVE_EFFECT_FLAG_EMBARGO            (0x04000000)
-#define MOVE_EFFECT_FLAG_MAGNET_RISE        (0x08000000)
-#define MOVE_EFFECT_FLAG_CAMOUFLAGE         (0x10000000) // for trainer ai
-#define MOVE_EFFECT_FLAG_SHADOW_FORCE       (0x20000000)
-#define MOVE_EFFECT_FLAG_TRIED_IMPRISON     (0x40000000) // for trainer ai
+#define MOVE_EFFECT_LEECH_SEED_BATTLER      (3 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0011  // Which opponent(s) the client has seeded.
+#define MOVE_EFFECT_FLAG_LEECH_SEED_ACTIVE  (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100  // Whether the client is currently seeded.
+#define MOVE_EFFECT_FLAG_LOCK_ON            (3 << 3)    // 0000 0000 0000 0000 0000 0000 0001 1000  // Which opponent(s) the client is locked on to.
+#define MOVE_EFFECT_FLAG_PERISH_SONG_ACTIVE (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000  // Whether the client is on a Perish Song countdown.
+#define MOVE_EFFECT_FLAG_FLYING_IN_AIR      (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000  // Whether the client has vanished into the sky (Fly, Bounce, etc.)
+#define MOVE_EFFECT_FLAG_DIGGING            (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000  // Whether the client has vanished underground (Dig).
+#define MOVE_EFFECT_FLAG_MINIMIZED          (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000  // Whether the client should take double damage from Stomp, Body Slam, etc.
+#define MOVE_EFFECT_FLAG_CHARGE             (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000  // Used by Charge & Electromorphosis.
+#define MOVE_EFFECT_FLAG_INGRAIN            (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define MOVE_EFFECT_YAWN_COUNTER            (3 << 11)   // 0000 0000 0000 0000 0001 1000 0000 0000  // Turns remaining on Yawn (starts at 2, reduced by 1 at the end of each turn).
+#define MOVE_EFFECT_FLAG_IMPRISONED         (1 << 13)   // 0000 0000 0000 0000 0010 0000 0000 0000  // Whether the client is imprisoning opponents.
+#define MOVE_EFFECT_FLAG_GRUDGE             (1 << 14)   // 0000 0000 0000 0000 0100 0000 0000 0000  // Whether Grudge should activate when the client faints.
+#define MOVE_EFFECT_NO_CRITICAL_HITS        (1 << 15)   // 0000 0000 0000 0000 1000 0000 0000 0000  // Whether Lucky Chant is affecting the client.
+#define MOVE_EFFECT_FLAG_MUD_SPORT          (1 << 16)   // 0000 0000 0000 0001 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_WATER_SPORT        (1 << 17)   // 0000 0000 0000 0010 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_IS_DIVING          (1 << 18)   // 0000 0000 0000 0100 0000 0000 0000 0000  // Whether the client has vanished underwater (Dive).
+#define MOVE_EFFECT_FLAG_INTIMIDATED        (1 << 19)   // 0000 0000 0000 1000 0000 0000 0000 0000  // Seemingly unused.
+#define MOVE_EFFECT_FLAG_TRACED             (1 << 20)   // 0000 0000 0001 0000 0000 0000 0000 0000  // Prevents Trace from activating more than once per switch-in. // Gen VI: This flag should no longer be in use.
 #define MOVE_EFFECT_FLAG_ABILITY_SUPPRESSED (1 << 21)   // 0000 0000 0010 0000 0000 0000 0000 0000  // Used by Gastro Acid & Core Enforcer.
+#define MOVE_EFFECT_FLAG_MIRACLE_EYE        (1 << 22)   // 0000 0000 0100 0000 0000 0000 0000 0000  // Whether the client is currently vulnerable due to Miracle Eye.
+#define MOVE_EFFECT_FLAG_POWER_TRICK        (1 << 23)   // 0000 0000 1000 0000 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_AQUA_RING          (1 << 24)   // 0000 0001 0000 0000 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_HEAL_BLOCK         (1 << 25)   // 0000 0010 0000 0000 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_EMBARGO            (1 << 26)   // 0000 0100 0000 0000 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_MAGNET_RISE        (1 << 27)   // 0000 1000 0000 0000 0000 0000 0000 0000
+#define MOVE_EFFECT_FLAG_CAMOUFLAGE         (1 << 28)   // 0001 0000 0000 0000 0000 0000 0000 0000  // For trainer AI (to prevent repeated use).
+#define MOVE_EFFECT_FLAG_SHADOW_FORCE       (1 << 29)   // 0010 0000 0000 0000 0000 0000 0000 0000  // Whether the client has vanished into the shadows (Shadow/Phantom Force).
+#define MOVE_EFFECT_FLAG_TRIED_IMPRISON     (1 << 30)   // 0100 0000 0000 0000 0000 0000 0000 0000  // For trainer AI (to prevent repeated use).
 
 #define MOVE_EFFECT_FLAG_SEMI_INVULNERABLE (MOVE_EFFECT_FLAG_FLYING_IN_AIR | MOVE_EFFECT_FLAG_DIGGING | MOVE_EFFECT_FLAG_IS_DIVING | MOVE_EFFECT_FLAG_SHADOW_FORCE)
 
@@ -251,19 +251,19 @@
  *  @brief non-volatile status condition flags
  *  not just valid for battles, also valid outside of battles
  *  in BattleStruct's battlemon[battler].condition field
- *     or GetMonData(mon, MON_DATA_STATUS, NULL);
+ *  or GetMonData(mon, MON_DATA_STATUS, NULL);
  */
 // Status
-#define STATUS_NONE         0
-#define STATUS_SLEEP_0      (1 << 0)
-#define STATUS_SLEEP_1      (1 << 1)
-#define STATUS_SLEEP_2      (1 << 2)
-#define STATUS_POISON       (1 << 3)
-#define STATUS_BURN         (1 << 4)
-#define STATUS_FREEZE       (1 << 5)
-#define STATUS_PARALYSIS    (1 << 6)
-#define STATUS_BAD_POISON   (1 << 7)
-#define STATUS_POISON_COUNT (15 << 8)
+#define STATUS_NONE         0           // 0000 0000 0000 0000 0000 0000 0000 0000
+#define STATUS_SLEEP_0      (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define STATUS_SLEEP_1      (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define STATUS_SLEEP_2      (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define STATUS_POISON       (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define STATUS_BURN         (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define STATUS_FREEZE       (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define STATUS_PARALYSIS    (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define STATUS_BAD_POISON   (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define STATUS_POISON_COUNT (15 << 8)   // 0000 0000 0000 0000 0000 1111 0000 0000
 
 #define CONDITION_NONE      0
 #define CONDITION_SLEEP     1
@@ -283,156 +283,157 @@
 
 #define STATUS_POISON_COUNT_SHIFT 8
 
-// Self Turns Flags
+// Self Turn Flags:
 #define SELF_TURN_FLAG_CLEAR          0
 #define SELF_TURN_FLAG_PLUCK_BERRY    (1 << 1)
 #define SELF_TURN_FLAG_INFATUATED     (1 << 2)
 #define SELF_TURN_FLAG_SUBSTITUTE_HIT (1 << 3)
 
 /**
- *  @brief server status flags (for BattleStruct's server_status_flag)
+ *  @brief server status flags (for BattleStruct's u32 server_status_flag)
  *  flags that signal to the battle server to divert its attention for a moment
- *    or that something else is happening and to not run certain code at any given moment
+ *  or that something else is happening and to not run certain code at any given moment
  */
-#define SERVER_STATUS_FLAG_x20 (0x00000020)
-#define SERVER_STATUS_FLAG_SYNCHRONIZE (0x00000080)
-#define SERVER_STATUS_FLAG_OTHER_ACCURACY_CALC (0x00000400)
-#define SERVER_STATUS_FLAG_TYPE_FLAT (0x00000800)
-#define SERVER_STATUS_FLAG_TYPE_NONE (0x00008000)
-#define SERVER_STATUS_FLAG_MOVE_HIT (0x00002000)
-#define SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING (0x00004000)
-#define SERVER_STATUS_FLAG_BEAT_UP_USED (0x00010000)
-#define SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE (0x00020000)
-#define SERVER_STATUS_FLAG_MOLD_BREAKER (0x00800000)
+#define SERVER_STATUS_FLAG_x20                  0x20        // 0000 0000 0000 0000 0000 0000 0010 0000
+#define SERVER_STATUS_FLAG_SYNCHRONIZE          (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define SERVER_STATUS_FLAG_OTHER_ACCURACY_CALC  (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define SERVER_STATUS_FLAG_TYPE_FLAT            (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define SERVER_STATUS_FLAG_MOVE_HIT             (1 << 13)   // 0000 0000 0000 0000 0010 0000 0000 0000
+#define SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING (1 << 14)   // 0000 0000 0000 0000 0100 0000 0000 0000
+#define SERVER_STATUS_FLAG_TYPE_NONE            (1 << 15)   // 0000 0000 0000 0000 1000 0000 0000 0000
+#define SERVER_STATUS_FLAG_BEAT_UP_USED         (1 << 16)   // 0000 0000 0000 0001 0000 0000 0000 0000
+#define SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE (1 << 17)   // 0000 0000 0000 0010 0000 0000 0000 0000
+#define SERVER_STATUS_FLAG_MOLD_BREAKER         (1 << 23)   // 0000 0000 1000 0000 0000 0000 0000 0000
 
 /**
- *  @brief server status 2 flags (for BattleStruct's server_status_flag2)
+ *  @brief server status 2 flags (for BattleStruct's u32 server_status_flag2)
  *  a continuation of BattleStruct's server_status_flag that do the same type of things
  */
-#define SERVER_STATUS_FLAG2_U_TURN (0x00000010)
-#define SERVER_STATUS_FLAG2_FORM_CHANGE (0x04000000)
+#define SERVER_STATUS_FLAG2_U_TURN      (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define SERVER_STATUS_FLAG2_FORM_CHANGE (1 << 26)   // 0000 0100 0000 0000 0000 0000 0000 0000
 
 /**
  *  @brief volatile status condition flags
  *  accessible in BattleStruct's battlemon[battler].condition2
  */
-#define STATUS2_CONFUSION (0x00000007)
-#define STATUS2_FLINCH (0x00000008)
-#define STATUS2_UPROAR (0x00000070)
-#define STATUS2_RAMPAGE_TURNS (0x00000C00)
-#define STATUS2_LOCKED_INTO_MOVE (0x00001000)
-#define STATUS2_BINDING_TURNS (0x0000E000) // no longer used, see sp->binding_turns
-#define STATUS2_ATTRACT (0x000f0000)
-#define STATUS2_FOCUS_ENERGY (0x00100000)
-#define STATUS2_TRANSFORMED (0x00200000)
-#define STATUS2_RECHARGE (0x00400000)
-#define STATUS2_RAGE (0x00800000)
-#define STATUS2_SUBSTITUTE (0x01000000)
-#define STATUS2_DESTINY_BOND (0x02000000)
-#define STATUS2_MEAN_LOOK (0x04000000)
-#define STATUS2_NIGHTMARE (0x08000000)
-#define STATUS2_CURSE (0x10000000)
-#define STATUS2_FORESIGHT (0x20000000)
-#define STATUS2_DEFENCE_CURL (0x40000000)
-#define STATUS2_TORMENT (0x80000000)
+#define STATUS2_CONFUSION           (7 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0111
+#define STATUS2_FLINCH              (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define STATUS2_UPROAR              (7 << 4)    // 0000 0000 0000 0000 0000 0000 0111 0000
+// Seemingly unused bit (meant for uproar?)     // 0000 0000 0000 0000 0000 0000 1000 0000
+#define STATUS2_BIDE_0              (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000
+#define STATUS2_BIDE_1              (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000
+#define STATUS2_RAMPAGE_TURNS       (3 << 10)   // 0000 0000 0000 0000 0000 1100 0000 0000
+#define STATUS2_LOCKED_INTO_MOVE    (1 << 12)   // 0000 0000 0000 0000 0001 0000 0000 0000
+#define STATUS2_BINDING_TURNS       (7 << 13)   // 0000 0000 0000 0000 1110 0000 0000 0000  // No longer used; see sp->binding_turns.
+#define STATUS2_ATTRACT             (15 << 16)  // 0000 0000 0000 1111 0000 0000 0000 0000
+#define STATUS2_FOCUS_ENERGY        (1 << 20)   // 0000 0000 0001 0000 0000 0000 0000 0000
+#define STATUS2_TRANSFORMED         (1 << 21)   // 0000 0000 0010 0000 0000 0000 0000 0000
+#define STATUS2_RECHARGE            (1 << 22)   // 0000 0000 0100 0000 0000 0000 0000 0000
+#define STATUS2_RAGE                (1 << 23)   // 0000 0000 1000 0000 0000 0000 0000 0000
+#define STATUS2_SUBSTITUTE          (1 << 24)   // 0000 0001 0000 0000 0000 0000 0000 0000
+#define STATUS2_DESTINY_BOND        (1 << 25)   // 0000 0010 0000 0000 0000 0000 0000 0000
+#define STATUS2_MEAN_LOOK           (1 << 26)   // 0000 0100 0000 0000 0000 0000 0000 0000
+#define STATUS2_NIGHTMARE           (1 << 27)   // 0000 1000 0000 0000 0000 0000 0000 0000
+#define STATUS2_CURSE               (1 << 28)   // 0001 0000 0000 0000 0000 0000 0000 0000
+#define STATUS2_FORESIGHT           (1 << 29)   // 0010 0000 0000 0000 0000 0000 0000 0000
+#define STATUS2_DEFENCE_CURL        (1 << 30)   // 0100 0000 0000 0000 0000 0000 0000 0000
+#define STATUS2_TORMENT             (1 << 31)   // 1000 0000 0000 0000 0000 0000 0000 0000
 
+#define STATUS2_BIDE                (STATUS2_BIDE_0 | STATUS2_BIDE_1)
+#define STATUS2_BATON_PASSABLE      (STATUS2_CONFUSION | STATUS2_FOCUS_ENERGY | STATUS2_SUBSTITUTE | STATUS2_MEAN_LOOK | STATUS2_CURSE)
+
+// Volatile status flag offsets (useful shorthand for checking flags that take up more than a single bit):
+// See above flags for reference.
 #define STATUS2_UPROAR_SHIFT  4
 #define STATUS2_BIDE_SHIFT    8
 #define STATUS2_RAMPAGE_SHIFT 10
 #define STATUS2_BINDING_SHIFT 13
 #define STATUS2_ATTRACT_SHIFT 16
 
-#define STATUS2_BATON_PASSABLE (STATUS2_CONFUSION | STATUS2_FOCUS_ENERGY | STATUS2_SUBSTITUTE | STATUS2_MEAN_LOOK | STATUS2_CURSE)
-
-// Status 2
-#define STATUS2_BIDE_0           (1 << 8)
-#define STATUS2_BIDE_1           (1 << 9)
-
-#define STATUS2_BIDE    (STATUS2_BIDE_0 | STATUS2_BIDE_1)
-
-#define HAZARD_IDX_NONE 0
-#define HAZARD_IDX_SPIKES 1
+// Hazard IDs:
+#define HAZARD_IDX_NONE         0
+#define HAZARD_IDX_SPIKES       1
 #define HAZARD_IDX_TOXIC_SPIKES 2
 #define HAZARD_IDX_STEALTH_ROCK 3
-#define HAZARD_IDX_STICKY_WEB 4
-#define HAZARD_IDX_SHARP_STEEL 5
-#define NUM_HAZARD_IDX (HAZARD_IDX_SHARP_STEEL)
+#define HAZARD_IDX_STICKY_WEB   4
+#define HAZARD_IDX_SHARP_STEEL  5
+#define NUM_HAZARD_IDX          (HAZARD_IDX_SHARP_STEEL)
 
 /**
  *  @brief side status flags that apply to one side
- *  accessible in BattleStruct's side_condition[side]
+ *  accessible in BattleStruct's u32 side_condition[side]
  *  seems to be duplicated in the side_condition_work structure bitfield
  */
-#define SIDE_STATUS_REFLECT (0x1)
-#define SIDE_STATUS_LIGHT_SCREEN (0x2)
-#define SIDE_STATUS_SPIKES (0x4)
-#define SIDE_STATUS_SAFEGUARD (0x8)
-#define SIDE_STATUS_FUTURE_SIGHT (0x10)
-#define SIDE_STATUS_WISH (0x20)
-#define SIDE_STATUS_MIST (0x40)
-#define SIDE_STATUS_STEALTH_ROCK (0x80)
-#define SIDE_STATUS_TAILWIND (0x300) // no longer used, see sp->tailwindCount
-#define SIDE_STATUS_TOXIC_SPIKES (0x400)
-#define SIDE_STATUS_STICKY_WEB (0x800)
-#define SIDE_STATUS_LUCKY_CHANT (0x7000)
-#define SIDE_STATUS_AURORA_VEIL (0x8000)
+#define SIDE_STATUS_REFLECT         (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define SIDE_STATUS_LIGHT_SCREEN    (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define SIDE_STATUS_SPIKES          (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define SIDE_STATUS_SAFEGUARD       (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define SIDE_STATUS_FUTURE_SIGHT    (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define SIDE_STATUS_WISH            (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define SIDE_STATUS_MIST            (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define SIDE_STATUS_STEALTH_ROCK    (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define SIDE_STATUS_TAILWIND        (3 << 8)    // 0000 0000 0000 0000 0000 0011 0000 0000  // No longer used; see sp->tailwindCount.
+#define SIDE_STATUS_TOXIC_SPIKES    (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define SIDE_STATUS_STICKY_WEB      (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define SIDE_STATUS_LUCKY_CHANT     (7 << 12)   // 0000 0000 0000 0000 0111 0000 0000 0000
+#define SIDE_STATUS_AURORA_VEIL     (1 << 15)   // 0000 0000 0000 0000 1000 0000 0000 0000
 
 /**
  *  @brief self status flags that apply to BattleStruct's oneSelfFlag[battler].status_flag
- *  aka OneSelfTurnEffect's status_flag
+ *  aka OneSelfTurnEffect's int status_flag
  *
  *  largely handles effects that are supposed to happen for the turn and nothing more
  */
-#define SELF_STATUS_FLAG_HELD_ITEM_POWER_DOWN (0x00000001)
-#define SELF_STATUS_FLAG_PICKUP (0x00000002)
-#define SELF_STATUS_FLAG_ATTRACT (0x00000004) // this is checked for
-#define SELF_STATUS_FLAG_SUBSTITUTE_HIT (0x00000008)
+#define SELF_STATUS_FLAG_HELD_ITEM_POWER_DOWN   (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define SELF_STATUS_FLAG_PICKUP                 (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define SELF_STATUS_FLAG_ATTRACT                (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100  // This is checked for.
+#define SELF_STATUS_FLAG_SUBSTITUTE_HIT         (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
 
 /**
  *  @brief move category constants
  */
-#define SPLIT_PHYSICAL 0
-#define SPLIT_SPECIAL 1
-#define SPLIT_STATUS 2
+#define SPLIT_PHYSICAL  0
+#define SPLIT_SPECIAL   1
+#define SPLIT_STATUS    2
 
 /**
- *  @brief field status constants that apply to BattleStruct's field_condition field
+ *  @brief field status constants that apply to BattleStruct's u32 field_condition field
  *
  *  largely for weathers, but also covers uproar, gravity, fog, etc.
  */
-#define WEATHER_RAIN                        (0x00000001)                                                                    // 0000 0000 0000 0000 0001
-#define WEATHER_RAIN_PERMANENT              (0x00000002)                                                                    // 0000 0000 0000 0000 0010
-#define WEATHER_RAIN_ANY                    (WEATHER_RAIN | WEATHER_RAIN_PERMANENT | WEATHER_HEAVY_RAIN)                    // 0010 0000 0000 0000 0000 0000 0011
-#define WEATHER_SANDSTORM                   (0x00000004)                                                                    // 0000 0000 0000 0000 0100
-#define WEATHER_SANDSTORM_PERMANENT         (0x00000008)                                                                    // 0000 0000 0000 0000 1000
-#define WEATHER_SANDSTORM_ANY               (WEATHER_SANDSTORM | WEATHER_SANDSTORM_PERMANENT)                               // 0000 0000 0000 0000 1100
-#define WEATHER_SUNNY                       (0x00000010)                                                                    // 0000 0000 0000 0001 0000
-#define WEATHER_SUNNY_PERMANENT             (0x00000020)                                                                    // 0000 0000 0000 0010 0000
-#define WEATHER_SUNNY_ANY                   (WEATHER_SUNNY | WEATHER_SUNNY_PERMANENT | WEATHER_EXTREMELY_HARSH_SUNLIGHT)    // 0001 0000 0000 0000 0000 0011 0000
-#define WEATHER_HAIL                        (0x00000040)                                                                    // 0000 0000 0000 0100 0000
-#define WEATHER_HAIL_PERMANENT              (0x00000080)                                                                    // 0000 0000 0000 1000 0000
-#define WEATHER_HAIL_ANY                    (WEATHER_HAIL | WEATHER_HAIL_PERMANENT)                                         // 0000 0000 0000 1100 0000
-#define FIELD_STATUS_UPROAR                 (0x00000f00)                                                                    // 0000 0000 1111 0000 0000
-#define FIELD_CONDITION_GRAVITY_INIT        (0x00005000)                                                                    // 0000 0101 0000 0000 0000
-#define FIELD_STATUS_GRAVITY                (0x00007000)                                                                    // 0000 0111 0000 0000 0000
-#define FIELD_STATUS_FOG                    (0x00008000)                                                                    // 0000 1000 0000 0000 0000
-#define FIELD_CONDITION_TRICK_ROOM_INIT     (0x00050000)                                                                    // 0101 0000 0000 0000 0000
-#define FIELD_STATUS_TRICK_ROOM             (0x00070000)                                                                    // 0111 0000 0000 0000 0000
+#define WEATHER_RAIN                        (1 << 0)                                                                        // 0000 0000 0000 0000 0000 0000 0000 0001
+#define WEATHER_RAIN_PERMANENT              (1 << 1)                                                                        // 0000 0000 0000 0000 0000 0000 0000 0010
+#define WEATHER_RAIN_ANY                    (WEATHER_RAIN | WEATHER_RAIN_PERMANENT | WEATHER_HEAVY_RAIN)                    // 0000 0010 0000 0000 0000 0000 0000 0011
+#define WEATHER_SANDSTORM                   (1 << 2)                                                                        // 0000 0000 0000 0000 0000 0000 0000 0100
+#define WEATHER_SANDSTORM_PERMANENT         (1 << 3)                                                                        // 0000 0000 0000 0000 0000 0000 0000 1000
+#define WEATHER_SANDSTORM_ANY               (WEATHER_SANDSTORM | WEATHER_SANDSTORM_PERMANENT)                               // 0000 0000 0000 0000 0000 0000 0000 1100
+#define WEATHER_SUNNY                       (1 << 4)                                                                        // 0000 0000 0000 0000 0000 0000 0001 0000
+#define WEATHER_SUNNY_PERMANENT             (1 << 5)                                                                        // 0000 0000 0000 0000 0000 0000 0010 0000
+#define WEATHER_SUNNY_ANY                   (WEATHER_SUNNY | WEATHER_SUNNY_PERMANENT | WEATHER_EXTREMELY_HARSH_SUNLIGHT)    // 0000 0001 0000 0000 0000 0000 0011 0000
+#define WEATHER_HAIL                        (1 << 6)                                                                        // 0000 0000 0000 0000 0000 0000 0100 0000
+#define WEATHER_HAIL_PERMANENT              (1 << 7)                                                                        // 0000 0000 0000 0000 0000 0000 1000 0000
+#define WEATHER_HAIL_ANY                    (WEATHER_HAIL | WEATHER_HAIL_PERMANENT)                                         // 0000 0000 0000 0000 0000 0000 1100 0000
+#define FIELD_STATUS_UPROAR                 (15 << 8)                                                                       // 0000 0000 0000 0000 0000 1111 0000 0000
+#define FIELD_CONDITION_GRAVITY_INIT        (5 << 12)                                                                       // 0000 0000 0000 0000 0101 0000 0000 0000
+#define FIELD_STATUS_GRAVITY                (7 << 12)                                                                       // 0000 0000 0000 0000 0111 0000 0000 0000
+#define FIELD_STATUS_FOG                    (1 << 15)                                                                       // 0000 0000 0000 0000 1000 0000 0000 0000
+#define FIELD_CONDITION_TRICK_ROOM_INIT     (5 << 16)                                                                       // 0000 0000 0000 0101 0000 0000 0000 0000
+#define FIELD_STATUS_TRICK_ROOM             (7 << 16)                                                                       // 0000 0000 0000 0111 0000 0000 0000 0000
 
-// New weathers
-#define WEATHER_SNOW                        (0x00100000)                                                          //      0001 0000 0000 0000 0000 0000
-#define WEATHER_SNOW_PERMANENT              (0x00200000)                                                          //      0010 0000 0000 0000 0000 0000
-#define WEATHER_SNOW_ANY                    (WEATHER_SNOW | WEATHER_SNOW_PERMANENT)                               //      0011 0000 0000 0000 0000 0000
-// We have 2 extra bits let's have fun:
-#define WEATHER_SHADOWY_AURA                (0x00400000)                                                          //      0100 0000 0000 0000 0000 0000
-#define WEATHER_SHADOWY_AURA_PERMANENT      (0x00800000)                                                          //      1000 0000 0000 0000 0000 0000
-#define WEATHER_SHADOWY_AURA_ANY            (WEATHER_SHADOWY_AURA | WEATHER_SHADOWY_AURA_PERMANENT)               //      1100 0000 0000 0000 0000 0000
+// New weathers:
+#define WEATHER_SNOW                        (1 << 20)                                                                       // 0000 0000 0001 0000 0000 0000 0000 0000
+#define WEATHER_SNOW_PERMANENT              (1 << 21)                                                                       // 0000 0000 0010 0000 0000 0000 0000 0000
+#define WEATHER_SNOW_ANY                    (WEATHER_SNOW | WEATHER_SNOW_PERMANENT)                                         // 0000 0000 0011 0000 0000 0000 0000 0000
+// We have 2 extra bits, let's have fun:
+#define WEATHER_SHADOWY_AURA                (1 << 22)                                                                       // 0000 0000 0100 0000 0000 0000 0000 0000
+#define WEATHER_SHADOWY_AURA_PERMANENT      (1 << 23)                                                                       // 0000 0000 1000 0000 0000 0000 0000 0000
+#define WEATHER_SHADOWY_AURA_ANY            (WEATHER_SHADOWY_AURA | WEATHER_SHADOWY_AURA_PERMANENT)                         // 0000 0000 1100 0000 0000 0000 0000 0000
 
-#define WEATHER_EXTREMELY_HARSH_SUNLIGHT    (0x01000000)                                                          // 0001 0000 0000 0000 0000 0000 0000
-#define WEATHER_HEAVY_RAIN                  (0x02000000)                                                          // 0010 0000 0000 0000 0000 0000 0000
-#define WEATHER_STRONG_WINDS                (0x04000000)                                                          // 0100 0000 0000 0000 0000 0000 0000
-// Ion Deluge is a strange case, as it is the only field effect that lasts for only a single turn.
-#define FIELD_STATUS_ION_DELUGE             (0x08000000)                                                          // 1000 0000 0000 0000 0000 0000 0000
+#define WEATHER_EXTREMELY_HARSH_SUNLIGHT    (1 << 24)                                                                       // 0000 0001 0000 0000 0000 0000 0000 0000
+#define WEATHER_HEAVY_RAIN                  (1 << 25)                                                                       // 0000 0010 0000 0000 0000 0000 0000 0000
+#define WEATHER_STRONG_WINDS                (1 << 26)                                                                       // 0000 0100 0000 0000 0000 0000 0000 0000
+
+#define FIELD_STATUS_ION_DELUGE             (1 << 27)                                                                       // 0000 1000 0000 0000 0000 0000 0000 0000
 
 #define FIELD_CONDITION_WEATHER_NO_SUN      (WEATHER_RAIN_ANY | WEATHER_SANDSTORM_ANY | WEATHER_HAIL_ANY | FIELD_STATUS_FOG | WEATHER_SNOW_ANY \
                                             | WEATHER_SHADOWY_AURA_ANY | WEATHER_EXTREMELY_HARSH_SUNLIGHT | WEATHER_HEAVY_RAIN | WEATHER_STRONG_WINDS)
@@ -442,11 +443,11 @@
                                             | WEATHER_SNOW_ANY | WEATHER_SHADOWY_AURA_ANY | WEATHER_EXTREMELY_HARSH_SUNLIGHT | WEATHER_HEAVY_RAIN \
                                             | WEATHER_STRONG_WINDS)
 
-
-// weather that has indicators on the bottom screen
+// Weather that has an indicator on the bottom screen:
 #define WEATHER_ANY_ICONS (WEATHER_RAIN_ANY | WEATHER_SANDSTORM_ANY | WEATHER_SUNNY_ANY | WEATHER_HAIL_ANY | FIELD_STATUS_FOG)
 
-#define FIELD_CONDITION_UPROAR_SHIFT         8
+// Field condition flag offsets (useful shorthand for checking flags that take up more than a single bit):
+#define FIELD_CONDITION_UPROAR_SHIFT        8
 #define FIELD_CONDITION_GRAVITY_SHIFT       12
 #define FIELD_CONDITION_TRICK_ROOM_SHIFT    16
 
@@ -463,39 +464,37 @@
 
 /**
  *  @brief move flags for BattleStruct's moveTbl[move_number].flag field
- *  aka BattleMove's flag field
+ *  aka BattleMove's u8 flag field
  *
  *  used to stipulate various move properties without needing to make lists for each property desired to check
  */
-#define FLAG_CONTACT     (0x01)
-#define FLAG_PROTECT     (0x02)
-#define FLAG_MAGIC_COAT  (0x04)
-#define FLAG_SNATCH      (0x08)
-#define FLAG_MIRROR_MOVE (0x10)
-
-#define FLAG_UNUSED_MOVE (0x20) // encompasses FLAG_UNUSABLE_IN_GEN_8, FLAG_UNUSABLE_IN_GEN_9 and FLAG_UNUSABLE_UNIMPLEMENTED as they all share 1 bit
-
-#define FLAG_KEEP_HP_BAR (0x40)
-#define FLAG_HIDE_SHADOW (0x80)
+#define FLAG_CONTACT        (1 << 0)    // 0000 0001
+#define FLAG_PROTECT        (1 << 1)    // 0000 0010
+#define FLAG_MAGIC_COAT     (1 << 2)    // 0000 0100
+#define FLAG_SNATCH         (1 << 3)    // 0000 1000
+#define FLAG_MIRROR_MOVE    (1 << 4)    // 0001 0000
+#define FLAG_UNUSED_MOVE    (1 << 5)    // 0010 0000    // Encompasses FLAG_UNUSABLE_IN_GEN_8, FLAG_UNUSABLE_IN_GEN_9 and FLAG_UNUSABLE_UNIMPLEMENTED as they all share 1 bit.
+#define FLAG_KEEP_HP_BAR    (1 << 6)    // 0100 0000
+#define FLAG_HIDE_SHADOW    (1 << 7)    // 1000 0000
 
 /**
  *  @brief macros to grab certain battlers relative to the one passed in
  *
  *  due to the way that battlers are always loaded in, BATTLER_* macros are convenient to use to grab different battlers
  */
-#define BATTLER_ALLY(client) (client ^ 2)
-#define BATTLER_OPPONENT(client) (client ^ 1)
-#define BATTLER_ACROSS(client) (client ^ 3)
+#define BATTLER_ALLY(client)        (client ^ 2)
+#define BATTLER_OPPONENT(client)    (client ^ 1)
+#define BATTLER_ACROSS(client)      (client ^ 3)
 
-#define BATTLER_IS_ENEMY(client) (client & 1)
-#define BATTLER_IS_PLAYERS(client) !(BATTLER_IS_ENEMY(client))
+#define BATTLER_IS_ENEMY(client)    (client & 1)
+#define BATTLER_IS_PLAYERS(client)  !(BATTLER_IS_ENEMY(client))
 
-// these macros test properties of the battlers passed in
-#define BATTLERS_ON_SAME_SIDE(battler1, battler2) ((battler1 & 1) == (battler2 & 1))
-#define BATTLERS_ON_DIFFERENT_SIDE(battler1, battler2) !BATTLERS_ON_SAME_SIDE(battler1, battler2)
+// These macros test properties of the battlers passed in:
+#define BATTLERS_ON_SAME_SIDE(battler1, battler2)       ((battler1 & 1) == (battler2 & 1))
+#define BATTLERS_ON_DIFFERENT_SIDE(battler1, battler2)  !BATTLERS_ON_SAME_SIDE(battler1, battler2)
 
-#define BATTLER_OPPONENT_SIDE_LEFT(client) (BATTLER_IS_PLAYERS(client) ? (1) : (0))
-#define BATTLER_OPPONENT_SIDE_RIGHT(client) (BATTLER_IS_PLAYERS(client) ? (3) : (2))
+#define BATTLER_OPPONENT_SIDE_LEFT(client)              (BATTLER_IS_PLAYERS(client) ? (1) : (0))
+#define BATTLER_OPPONENT_SIDE_RIGHT(client)             (BATTLER_IS_PLAYERS(client) ? (3) : (2))
 
 /**
  *  @brief message tags to tell the string buffer expander how to expand each string buffer
@@ -579,96 +578,96 @@
 /**
  *  @brief animation constants for statbuffchange
  */
-#define STATUS_EFF_UP (12)
-#define STATUS_EFF_DOWN (13)
+#define STATUS_EFF_UP   12
+#define STATUS_EFF_DOWN 13
 
 
 /**
  *  @brief constants used to change the mode for HeldItemAtkGet
  */
-#define ATK_CHECK_NORMAL    (0)
-#define ATK_CHECK_NONE      (1)
-#define ATK_CHECK_SHUTOUT   (2)
+#define ATK_CHECK_NORMAL    0
+#define ATK_CHECK_NONE      1
+#define ATK_CHECK_SHUTOUT   2
 
 //inc record
-#define CLIENT_BOOT_TYPE_MINE       (0)
-#define CLIENT_BOOT_TYPE_NOMINE     (1)
+#define CLIENT_BOOT_TYPE_MINE   0
+#define CLIENT_BOOT_TYPE_NOMINE 1
 
 //save data
 #define RECID_TEMOTI_MAKIZOE (71+26)
 
-#define SWOAM_NORMAL    (0)
-#define SWOAM_LOOP      (1)
+#define SWOAM_NORMAL    0
+#define SWOAM_LOOP      1
 
 /**
  *  @brief eventually implement difficulty modes
  */
-#define NORMAL_MODE (0)
-#define CHALLENGE_MODE (1)
-#define EASY_MODE (2)
+#define NORMAL_MODE     0
+#define CHALLENGE_MODE  1
+#define EASY_MODE       2
 
-//Battle Status
-#define BATTLE_STATUS_NO_ATTACK_MESSAGE             (1 << 0)
-#define BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE          (1 << 1)
-#define BATTLE_STATUS_HIT_FLY                       (1 << 2)
-#define BATTLE_STATUS_HIT_DIG                       (1 << 3)
-#define BATTLE_STATUS_HIT_DIVE                      (1 << 4)
-#define BATTLE_STATUS_CHARGE_TURN                   (1 << 5)
-#define BATTLE_STATUS_NO_BLINK                      (1 << 6)
-#define BATTLE_STATUS_SYNCRONIZE                    (1 << 7)
-#define BATTLE_STATUS_BATON_PASS                    (1 << 8)
-#define BATTLE_STATUS_CHARGE_MOVE_HIT               (1 << 9)
-#define BATTLE_STATUS_FLAT_HIT_RATE                 (1 << 10)
-#define BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS     (1 << 11)
-#define BATTLE_STATUS_CRASH_DAMAGE                  (1 << 12)
-#define BATTLE_STATUS_MOVE_SUCCESSFUL               (1 << 13)
-#define BATTLE_STATUS_MOVE_ANIMATIONS_OFF           (1 << 14)
-#define BATTLE_STATUS_IGNORE_TYPE_IMMUNITY          (1 << 15)
-#define BATTLE_STATUS_MULTI_HIT_IGNORE_MESSAGE      (1 << 16)
-#define BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE        (1 << 17)
-#define BATTLE_STATUS_MISS_MESSAGE                  (1 << 18)
-#define BATTLE_STATUS_SHADOW_FORCE                  (1 << 19)
-#define BATTLE_STATUS_NO_MOVE_SET                   (1 << 20)
-#define BATTLE_STATUS_MESSAGES_OFF                  (1 << 21)
-#define BATTLE_STATUS_SECONDARY_EFFECT              (1 << 22)
-#define BATTLE_STATUS_MOLD_BREAKER                  (1 << 23)
-#define BATTLE_STATUS_FAINTED                       (15 << 24)
-#define BATTLE_STATUS_SELFDESTRUCTED                (15 << 28)
+// Battle Status:
+#define BATTLE_STATUS_NO_ATTACK_MESSAGE             (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE          (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define BATTLE_STATUS_HIT_FLY                       (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define BATTLE_STATUS_HIT_DIG                       (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define BATTLE_STATUS_HIT_DIVE                      (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define BATTLE_STATUS_CHARGE_TURN                   (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define BATTLE_STATUS_NO_BLINK                      (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define BATTLE_STATUS_SYNCHRONIZE                   (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define BATTLE_STATUS_BATON_PASS                    (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000
+#define BATTLE_STATUS_CHARGE_MOVE_HIT               (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000
+#define BATTLE_STATUS_FLAT_HIT_RATE                 (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS     (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define BATTLE_STATUS_CRASH_DAMAGE                  (1 << 12)   // 0000 0000 0000 0000 0001 0000 0000 0000
+#define BATTLE_STATUS_MOVE_SUCCESSFUL               (1 << 13)   // 0000 0000 0000 0000 0010 0000 0000 0000
+#define BATTLE_STATUS_MOVE_ANIMATIONS_OFF           (1 << 14)   // 0000 0000 0000 0000 0100 0000 0000 0000
+#define BATTLE_STATUS_IGNORE_TYPE_IMMUNITY          (1 << 15)   // 0000 0000 0000 0000 1000 0000 0000 0000
+#define BATTLE_STATUS_MULTI_HIT_IGNORE_MESSAGE      (1 << 16)   // 0000 0000 0000 0001 0000 0000 0000 0000
+#define BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE        (1 << 17)   // 0000 0000 0000 0010 0000 0000 0000 0000
+#define BATTLE_STATUS_MISS_MESSAGE                  (1 << 18)   // 0000 0000 0000 0100 0000 0000 0000 0000
+#define BATTLE_STATUS_SHADOW_FORCE                  (1 << 19)   // 0000 0000 0000 1000 0000 0000 0000 0000
+#define BATTLE_STATUS_NO_MOVE_SET                   (1 << 20)   // 0000 0000 0001 0000 0000 0000 0000 0000
+#define BATTLE_STATUS_MESSAGES_OFF                  (1 << 21)   // 0000 0000 0010 0000 0000 0000 0000 0000
+#define BATTLE_STATUS_SECONDARY_EFFECT              (1 << 22)   // 0000 0000 0100 0000 0000 0000 0000 0000
+#define BATTLE_STATUS_MOLD_BREAKER                  (1 << 23)   // 0000 0000 1000 0000 0000 0000 0000 0000
+#define BATTLE_STATUS_FAINTED                       (15 << 24)  // 0000 1111 0000 0000 0000 0000 0000 0000
+#define BATTLE_STATUS_SELFDESTRUCTED                (15 << 28)  // 1111 0000 0000 0000 0000 0000 0000 0000
 
 #define BATTLE_STATUS_FAINTED_SHIFT                 24
 #define BATTLE_STATUS_SELFDESTRUCTED_SHIFT          28
 
-//Battle Status 2
-#define BATTLE_STATUS2_NO_EXP_GAINED                (1 << 0)
-#define BATTLE_STATUS2_UPDATE_STAT_STAGES           (1 << 1)
-#define BATTLE_STATUS2_DISPLAY_ATTACK_MESSAGE       (1 << 2)
-#define BATTLE_STATUS2_MAGIC_COAT                   (1 << 3)
-#define BATTLE_STATUS2_UTURN                        (1 << 4)
-#define BATTLE_STATUS2_FIRST_DAMAGE_MESSAGE         (1 << 5)
-#define BATTLE_STATUS2_MOVE_SUCCEEDED               (1 << 6)
-#define BATTLE_STATUS2_STAT_STAGE_CHANGE_SHOWN      (1 << 7)
-#define BATTLE_STATUS2_RECOVER_HP_VISUAL            (1 << 8)
-#define BATTLE_STATUS2_20                           (1 << 20)
-#define BATTLE_STATUS2_FORM_CHANGE                  (1 << 26)
-#define BATTLE_STATUS2_RECALC_MON_STATS             (1 << 27)
-#define BATTLE_STATUS2_EXP_GAIN                     (15 << 28)
+// Battle Status 2:
+#define BATTLE_STATUS2_NO_EXP_GAINED                (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define BATTLE_STATUS2_UPDATE_STAT_STAGES           (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define BATTLE_STATUS2_DISPLAY_ATTACK_MESSAGE       (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define BATTLE_STATUS2_MAGIC_COAT                   (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define BATTLE_STATUS2_UTURN                        (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define BATTLE_STATUS2_FIRST_DAMAGE_MESSAGE         (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define BATTLE_STATUS2_MOVE_SUCCEEDED               (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define BATTLE_STATUS2_STAT_STAGE_CHANGE_SHOWN      (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define BATTLE_STATUS2_RECOVER_HP_VISUAL            (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000
+#define BATTLE_STATUS2_20                           (1 << 20)   // 0000 0000 0001 0000 0000 0000 0000 0000
+#define BATTLE_STATUS2_FORM_CHANGE                  (1 << 26)   // 0000 0100 0000 0000 0000 0000 0000 0000
+#define BATTLE_STATUS2_RECALC_MON_STATS             (1 << 27)   // 0000 1000 0000 0000 0000 0000 0000 0000
+#define BATTLE_STATUS2_EXP_GAIN                     (15 << 28)  // 1111 0000 0000 0000 0000 0000 0000 0000
 
 #define BATTLE_STATUS2_EXP_GAIN_SHIFT               28
 
-//Struggle Checks
-#define STRUGGLE_CHECK_NO_MOVES             (1 << 0)
-#define STRUGGLE_CHECK_NO_PP                (1 << 1)
-#define STRUGGLE_CHECK_DISABLED             (1 << 2)
-#define STRUGGLE_CHECK_TORMENT              (1 << 3)
-#define STRUGGLE_CHECK_TAUNT                (1 << 4)
-#define STRUGGLE_CHECK_IMPRISON             (1 << 5)
-#define STRUGGLE_CHECK_GRAVITY              (1 << 6)
-#define STRUGGLE_CHECK_HEAL_BLOCK           (1 << 7)
-#define STRUGGLE_CHECK_ENCORE               (1 << 8) //unused because they straight up forgot
-#define STRUGGLE_CHECK_CHOICED              (1 << 9)
-#define STRUGGLE_CHECK_GORILLA_TACTICS      (1 << 10)
-#define STRUGGLE_CHECK_GIGATON_HAMMER       (1 << 11)
-#define STRUGGLE_CHECK_ASSAULT_VEST         (1 << 12)
+// Struggle Checks (passed as u32):
+#define STRUGGLE_CHECK_NO_MOVES             (1 << 0)    // 0000 0000 0000 0000 0000 0000 0000 0001
+#define STRUGGLE_CHECK_NO_PP                (1 << 1)    // 0000 0000 0000 0000 0000 0000 0000 0010
+#define STRUGGLE_CHECK_DISABLED             (1 << 2)    // 0000 0000 0000 0000 0000 0000 0000 0100
+#define STRUGGLE_CHECK_TORMENT              (1 << 3)    // 0000 0000 0000 0000 0000 0000 0000 1000
+#define STRUGGLE_CHECK_TAUNT                (1 << 4)    // 0000 0000 0000 0000 0000 0000 0001 0000
+#define STRUGGLE_CHECK_IMPRISON             (1 << 5)    // 0000 0000 0000 0000 0000 0000 0010 0000
+#define STRUGGLE_CHECK_GRAVITY              (1 << 6)    // 0000 0000 0000 0000 0000 0000 0100 0000
+#define STRUGGLE_CHECK_HEAL_BLOCK           (1 << 7)    // 0000 0000 0000 0000 0000 0000 1000 0000
+#define STRUGGLE_CHECK_ENCORE               (1 << 8)    // 0000 0000 0000 0000 0000 0001 0000 0000  // Unused because they straight up forgot
+#define STRUGGLE_CHECK_CHOICED              (1 << 9)    // 0000 0000 0000 0000 0000 0010 0000 0000
+#define STRUGGLE_CHECK_GORILLA_TACTICS      (1 << 10)   // 0000 0000 0000 0000 0000 0100 0000 0000
+#define STRUGGLE_CHECK_GIGATON_HAMMER       (1 << 11)   // 0000 0000 0000 0000 0000 1000 0000 0000
+#define STRUGGLE_CHECK_ASSAULT_VEST         (1 << 12)   // 0000 0000 0000 0000 0001 0000 0000 0000
 
 /**
  *  @brief msg work specifically for statuses
@@ -1157,15 +1156,15 @@ enum BattleControlSequence {
     BATTLE_CONTROL_USE_MOVE,
     BATTLE_CONTROL_UPDATE_HP,
     BATTLE_CONTROL_AFTER_MOVE_MESSAGE,
-    // 29 is an unused state
+    // 29 is an unused state.
     BATTLE_CONTROL_AFTER_MOVE_EFFECT = 30,
     BATTLE_CONTROL_LOOP_MULTI_HIT,
-    // 32 is an unused state
+    // 32 is an unused state.
     BATTLE_CONTROL_LOOP_FAINTED = 33,
     BATTLE_CONTROL_LOOP_SPREAD_MOVES,
     BATTLE_CONTROL_FAINT_AFTER_SELFDESTRUCT,
     BATTLE_CONTROL_TRIGGER_AFTER_HIT_EFFECTS,
-    // 37 is an unused state
+    // 37 is an unused state.
     BATTLE_CONTROL_UPDATE_MOVE_BUFFERS = 38,
     BATTLE_CONTROL_MOVE_END,
     BATTLE_CONTROL_CHECK_ANY_FAINTED,
@@ -1611,7 +1610,7 @@ struct BattleSystem {
 };
 
 
-//Ability Checks - values for flag for CheckSideAbility
+// Ability Checks - values for int flag for CheckSideAbility
 #define CHECK_ABILITY_SAME_SIDE             0
 #define CHECK_ABILITY_SAME_SIDE_HP          1
 #define CHECK_ABILITY_OPPOSING_SIDE         2
@@ -3485,39 +3484,39 @@ struct BattleSetupSub_138 {
 };
 
 struct BattleSetup {
-    u32 battleType;                      // 0
-    struct Party *party[4];           // 4
-    int winFlag;                         // 14
-    int trainerId[4];          // 18
-    TRAINER_DATA trainer[4];        // 28
-    void *profile[4]; // f8
-    void *bag;                            // 108
-    void *bagCursor;                // 10c
-    void *pokedex;                    // 110
-    void *storagePC;                // 114
-    void *chatot[4];   // 118
+    u32 battleType;                     // 0
+    struct Party *party[4];             // 0x4
+    int winFlag;                        // 0x14
+    int trainerId[4];                   // 0x18
+    TRAINER_DATA trainer[4];            // 0x28
+    void *profile[4];                   // 0xF8
+    void *bag;                          // 0x108
+    void *bagCursor;                    // 0x10C
+    void *pokedex;                      // 0x110
+    void *storagePC;                    // 0x114
+    void *chatot[4];                    // 0x118
     void *unk_128;
     void *wifiHistory;
-    struct OPTIONS *options; // 130
+    struct OPTIONS *options;            // 0x130
     void *unk_134;
     struct BattleSetupSub_138 unk138;
-    void *gameStats; // 144
-    void *palPad;   // 148
-    BattleBg battleBg;    // 14C
+    void *gameStats;                    // 0x144
+    void *palPad;                       // 0x148
+    BattleBg battleBg;                  // 0x14C
     Terrain terrain;
-    u32 mapSection;        // 154
-    u32 mapNumber;         // 158
-    TIMEOFDAY timeOfDay;   // 15C
-    u32 evolutionLocation; // 160
+    u32 mapSection;                     // 0x154
+    u32 mapNumber;                      // 0x158
+    TIMEOFDAY timeOfDay;                // 0x15C
+    u32 evolutionLocation;              // 0x160
     u32 unk_164;
-    BOOL metBill;          // 168
-    int momsSavingsActive; // 16C
+    BOOL metBill;                       // 0x168
+    int momsSavingsActive;              // 0x16C
     u32 unk_170;
-    u32 weatherType; // 174
-    int levelUpFlag; // 178
+    u32 weatherType;                    // 0x174
+    int levelUpFlag;                    // 0x178
     u8 filler_17C[0x10];
-    u32 battleSpecial; // 18C
-    int safariBalls;   // 190
+    u32 battleSpecial;                  // 0x18C
+    int safariBalls;                    // 0x190
     BOOL fixedDamaageMovesBanned;
     void *evolutionTaskData;
     int unk_19C;
@@ -3528,9 +3527,9 @@ struct BattleSetup {
     int unk1B4;
     void *unk1B8;
     int unk1BC;
-    SaveData *saveData; // 1c0
+    SaveData *saveData;                 // 0x1C0
     int unk1C4;
-    struct PartyPokemon *bugContestMon; // 1c8
+    struct PartyPokemon *bugContestMon; // 0x1C8
     u8 unk1CC[4];
     BOOL unk_1D0;
 };
