@@ -3362,7 +3362,7 @@ BOOL LONG_CALL AbilityNoTransform(int ability) {
 // TODO: Just use this instead of the Mold Breaker one
 u32 LONG_CALL GetBattlerAbility(struct BattleStruct *ctx, int battlerId) {
     u32 ability = ctx->battlemon[battlerId].ability;
-    if ((ctx->battlemon[battlerId].effect_of_moves & MOVE_EFFECT_GASTRO_ACID) && ctx->battlemon[battlerId].ability != ABILITY_MULTITYPE) {
+    if ((ctx->battlemon[battlerId].effect_of_moves & MOVE_EFFECT_FLAG_ABILITY_SUPPRESSED) && ctx->battlemon[battlerId].ability != ABILITY_MULTITYPE) {
         return ABILITY_NONE;
     } else if ((ctx->field_condition & FIELD_STATUS_GRAVITY) && ctx->battlemon[battlerId].ability == ABILITY_LEVITATE) {
         return ABILITY_NONE;
