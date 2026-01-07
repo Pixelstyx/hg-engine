@@ -95,17 +95,19 @@
 #define SELECT_ESCAPE_COMMAND 4
 
 
-// add effect defines
-#define ADD_STATUS_NO_ABILITY (0x08000000)
+// Additional (non-damaging) effect sources:
+#define ADD_STATUS_NO_ABILITY   (1 << 27) // 0x08000000
 
-#define ADD_EFFECT_DIRECT 1
-#define ADD_EFFECT_INDIRECT 2
-#define ADD_EFFECT_ABILITY 3
-#define ADD_EFFECT_MOVE_EFFECT 4
-#define ADD_EFFECT_HELD_ITEM 5
-#define ADD_EFFECT_TOXIC_SPIKES 6
-#define ADD_EFFECT_VARIOUS 7
-// new
+// Sources are the method of application, not the root cause: 
+// This means that contact moves used with Poison Touch or the status given by flung items are considered indirect effects.
+#define ADD_EFFECT_DIRECT       1   // From status moves used against the Pokemon being afflicted (Hypnosis, Thunder Wave, etc.)
+#define ADD_EFFECT_INDIRECT     2   // From damaging moves used against the Pokemon being afflicted (Fire Fang, Blizzard, etc.)
+#define ADD_EFFECT_ABILITY      3   // From abilities triggered by the Pokemon being afflicted (Effect Spore, Static, etc.)
+#define ADD_EFFECT_MOVE_EFFECT  4   // From moves used by the Pokemon being afflicted (Rest, Thrash, etc.)
+#define ADD_EFFECT_HELD_ITEM    5   // From items held by the Pokemon being afflicted (Flame Orb, Toxic Orb, etc.)
+#define ADD_EFFECT_HAZARD       6   // Exclusively used by Toxic Spikes in vanilla gameplay.
+#define ADD_EFFECT_DISOBEDIENCE 7
+// New:
 #define ADD_EFFECT_PRINT_WORK_ABILITY 8
 
 /**

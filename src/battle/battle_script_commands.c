@@ -4392,7 +4392,7 @@ BOOL BtlCmd_CheckToxicSpikes(struct BattleSystem *bsys, struct BattleStruct *ctx
 
     if (ctx->scw[fieldSide].toxicSpikesLayers) {
         ctx->calc_work = ctx->scw[fieldSide].toxicSpikesLayers;
-        ctx->addeffect_type = ADD_EFFECT_TOXIC_SPIKES;
+        ctx->addeffect_type = ADD_EFFECT_HAZARD;
         ctx->state_client = battlerID;
         if (HasType(ctx, battlerID, TYPE_POISON)) {
             ctx->side_condition[fieldSide] &= ~SIDE_STATUS_TOXIC_SPIKES;
