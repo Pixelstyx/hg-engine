@@ -711,7 +711,7 @@ struct __attribute__((packed)) OneTurnEffect
                u32 pp_dec_flag : 1;       /**< pp decreased this turn? */
                u32 protectFlag : 1;       /**< pokémon is currently protecting */
                u32 helping_hand_flag : 1; /**< pokémon is being aided by helping hand */
-               u32 magic_cort_flag : 1;   /**< pokémon has magic coat active */
+               u32 magic_coat_flag : 1;   /**< pokémon has magic coat active */
                u32 snatchFlag : 1;
                u32 haneyasume_flag : 1;
                u32 escape_flag : 2;
@@ -1260,7 +1260,7 @@ struct BattleStruct {
     /*0x78*/ int reshuffle_client;      // battlerIdSwitch
     /*0x7C*/ int reshuffle_client_temp;
     /*0x80*/ int ability_client;
-    /*0x84*/ int magic_cort_client;     // battlerIdMagicCoat
+    /*0x84*/ int magic_coat_client;     // battlerIdMagicCoat
 
     /*0x88*/ int addeffect_type;
     /*0x8C*/ int addeffect_param;
