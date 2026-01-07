@@ -1642,7 +1642,7 @@ BOOL BattlerController_DecrementPP(struct BattleSystem *bsys, struct BattleStruc
     } else if (!ctx->battlemon[ctx->attack_client].pp[index]
                // && !(ctx->server_status_flag & BATTLE_STATUS_CHARGE_MOVE_HIT)
                // && !(ctx->battlemon[ctx->attack_client].condition2 & STATUS2_LOCKED_INTO_MOVE)
-               && !(ctx->battlemon[ctx->attack_client].condition2 & STATUS2_RAMPAGE) && !(ctx->field_condition & (No2Bit(ctx->attack_client) << FIELD_CONDITION_UPROAR_SHIFT)) && index < 4) {
+               && !(ctx->battlemon[ctx->attack_client].condition2 & STATUS2_RAMPAGE_TURNS) && !(ctx->field_condition & (No2Bit(ctx->attack_client) << FIELD_CONDITION_UPROAR_SHIFT)) && index < 4) {
         ctx->waza_status_flag |= WAZA_STATUS_FLAG_PP_NONE;
     }
 
