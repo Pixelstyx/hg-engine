@@ -542,4 +542,8 @@
 #define MAP_R00                               538
 #define MAP_T10R0801                          539
 
+#define MAP_ID_MAX                            540
+
+#define MAP_UNION_TRAIL                       (MAP_ID_MAX + 1)
+
 #endif //POKEHEARTGOLD_CONSTANTS_MAPS_H

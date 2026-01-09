@@ -783,3 +783,4 @@ TaskManager_Call = 0x02050530 | 1;
 Task_TutorialBattle = 0x0205128C | 1;
 
 GetItemAttrSub = 0x02077E48 | 1;
+ReadWholeNarcMemberByIdPair = 0x02007508 | 1;
