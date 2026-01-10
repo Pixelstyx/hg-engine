@@ -557,4 +557,9 @@ arm9 SetupAndStartTutorialBattle 02051334 1
 #endif
 
 arm9 GetItemAttr_PreloadedItemData 02077DAC 2
+
+0001 FieldSystem_RockSmashItemCheck 02204C44 4
+0001 Task_RockSmashItemCheck 02204C80 1
 0001 CheckRockSmashItemDrop 02204CF8 2
+0001 Task_GetRockSmashItem 02204DA0 1
+0001 DrawRockSmashIdx 02204E8C 1

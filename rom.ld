@@ -784,3 +784,9 @@ Task_TutorialBattle = 0x0205128C | 1;
 
 GetItemAttrSub = 0x02077E48 | 1;
 ReadWholeNarcMemberByIdPair = 0x02007508 | 1;
+ov02_022470A0 = 0x022470A0 | 1;
+FieldSystem_StartForcedWildBattle = 0x02050B90 | 1;
+TaskManager_Jump = 0x02050510 | 1;
+ov01_02200540 = 0x02200540 | 1;
+ov01_022003F4 = 0x022003F4 | 1;
+sub_02068B48 = 0x02068B48 | 1;
