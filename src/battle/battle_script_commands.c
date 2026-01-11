@@ -1107,11 +1107,11 @@ BOOL btl_scr_cmd_17_playanimation(void *bw, struct BattleStruct *sp)
     }
 
     // mega evolution is animation 470--force it to play regardless of whether or not animations are on
-    if ((((sp->server_status_flag & SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING) == 0)
+    if ((((sp->server_status_flag & BATTLE_STATUS_MOVE_ANIMATIONS_OFF) == 0)
       && (CheckBattleAnimationsOption(bw) == TRUE))
      || (move == MOVE_TRANSFORM || move == MOVE_470 || move == MOVE_ELECTRIC_TERRAIN || move == MOVE_MISTY_TERRAIN || move == MOVE_GRASSY_TERRAIN || move == MOVE_PSYCHIC_TERRAIN))
     {
-        sp->server_status_flag |= SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING;
+        sp->server_status_flag |= BATTLE_STATUS_MOVE_ANIMATIONS_OFF;
         SCIO_QueueMoveAnimation(bw, sp, move);
     }
     if (CheckBattleAnimationsOption(bw) == FALSE)
@@ -1152,11 +1152,11 @@ BOOL btl_scr_cmd_18_playanimation2(void *bw, struct BattleStruct *sp)
     cli_d = GrabClientFromBattleScriptParam(bw, sp, defence);
 
     // TODO figure out what should actually go here
-    if ((((sp->server_status_flag & SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING) == 0)
+    if ((((sp->server_status_flag & BATTLE_STATUS_MOVE_ANIMATIONS_OFF) == 0)
       && (CheckBattleAnimationsOption(bw) == TRUE))
      || (move == MOVE_TRANSFORM || move == MOVE_470 || move == MOVE_ELECTRIC_TERRAIN || move == MOVE_MISTY_TERRAIN || move == MOVE_GRASSY_TERRAIN || move == MOVE_PSYCHIC_TERRAIN))
     {
-        sp->server_status_flag |= SERVER_STATUS_FLAG_ANIMATION_IS_PLAYING;
+        sp->server_status_flag |= BATTLE_STATUS_MOVE_ANIMATIONS_OFF;
         SCIO_QueueMoveAnimationConsiderAttackerDefender(bw, sp, move, cli_a, cli_d);
     }
     if (CheckBattleAnimationsOption(bw) == FALSE)
@@ -1751,7 +1751,7 @@ BOOL btl_scr_cmd_54_ohko_move_handle(void *bw, struct BattleStruct *sp)
     u16 hit;
     IncrementBattleScriptPtr(sp,1);
 
-    sp->server_status_flag |= SERVER_STATUS_FLAG_OTHER_ACCURACY_CALC;
+    sp->server_status_flag |= BATTLE_STATUS_FLAT_HIT_RATE;
 
     if (MoldBreakerAbilityCheck(sp, sp->attack_client, sp->defence_client, ABILITY_STURDY) == TRUE)
     {
@@ -3065,8 +3065,8 @@ BOOL btl_scr_cmd_FF_checkcanactivatedefiantorcompetitive(void *bsys UNUSED, stru
     && (ctx->oneSelfFlag[ctx->state_client].defiant_flag)
     && (ctx->battlemon[ctx->state_client].states[STAT_ATTACK] < 12)
     && ((ctx->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0)
-    && ((ctx->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
-    && ((ctx->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)) {
+    && ((ctx->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
+    && ((ctx->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)) {
         ctx->oneSelfFlag[ctx->state_client].defiant_flag = 0;
         switch (GetBattlerAbility(ctx, ctx->state_client)) {
             case ABILITY_DEFIANT:

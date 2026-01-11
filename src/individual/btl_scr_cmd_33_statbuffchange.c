@@ -39,7 +39,7 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
 
     flag = 0;
 
-    sp->server_status_flag &= ~(SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE);
+    sp->server_status_flag &= ~(BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE);
 
     // debug_printf("\naddeffect_param: %d\n", sp->addeffect_param);
 
@@ -119,8 +119,8 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
      && sp->state_client != sp->attack_client // can't raise own stats
      && sp->state_client != BattleWorkPartnerClientNoGet(bw, sp->attack_client) // can't raise partner's stats
      && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0)
-     && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
-     && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0))
+     && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
+     && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0))
     {
         sp->oneSelfFlag[sp->state_client].defiant_flag = 1;
     }
@@ -136,7 +136,7 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
     {
         if (battlemon->states[STAT_ATTACK + stattochange] == 12)
         {
-            sp->server_status_flag |= SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE;
+            sp->server_status_flag |= BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE;
 
             if ((sp->addeffect_type == ADD_EFFECT_INDIRECT)
              || (sp->addeffect_type == ADD_EFFECT_ABILITY))
@@ -321,7 +321,7 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
                 }
                 else if (battlemon->states[STAT_ATTACK + stattochange] == 0)
                 {
-                    sp->server_status_flag |= SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE;
+                    sp->server_status_flag |= BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE;
                     if ((sp->addeffect_type == ADD_EFFECT_INDIRECT)
                      || (sp->addeffect_type == ADD_EFFECT_ABILITY))
                     {
@@ -352,7 +352,7 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
             }
             else if (battlemon->states[STAT_ATTACK + stattochange] == 0)
             {
-                sp->server_status_flag |= SERVER_STATUS_FLAG_STAT_CHANGE_NEGATIVE;
+                sp->server_status_flag |= BATTLE_STATUS_FAIL_STAT_STAGE_CHANGE;
                 if ((sp->addeffect_type == ADD_EFFECT_INDIRECT)
                  || (sp->addeffect_type == ADD_EFFECT_ABILITY))
                 {

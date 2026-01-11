@@ -156,7 +156,7 @@ void ServerHPCalc(struct BattleSystem *bw, struct BattleStruct *sp)
             sp->server_seq_no = 22;
             sp->next_server_seq_no = 29;
 
-            sp->server_status_flag |= SERVER_STATUS_FLAG_MOVE_HIT;
+            sp->server_status_flag |= BATTLE_STATUS_MOVE_SUCCESSFUL;
         }
     }
     else

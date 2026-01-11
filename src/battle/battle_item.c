@@ -50,7 +50,7 @@ u32 LONG_CALL MoveHitUTurnHeldItemEffectCheck(void *bw, struct BattleStruct *sp,
     atk_side = IsClientEnemy(bw, sp->attack_client);
 
     if ((atk_hold_eff == HOLD_EFFECT_HP_RESTORE_ON_DMG) // shell bell
-     && (sp->server_status_flag & SERVER_STATUS_FLAG_MOVE_HIT)
+     && (sp->server_status_flag & BATTLE_STATUS_MOVE_SUCCESSFUL)
      && (sp->oneSelfFlag[sp->attack_client].shell_bell_damage)
      && (sp->attack_client != sp->defence_client)
      && (sp->battlemon[sp->attack_client].hp < (s32)sp->battlemon[sp->attack_client].maxhp)
@@ -65,7 +65,7 @@ u32 LONG_CALL MoveHitUTurnHeldItemEffectCheck(void *bw, struct BattleStruct *sp,
 
     if ((atk_hold_eff == HOLD_EFFECT_HP_DRAIN_ON_ATK) // life orb
      && (GetBattlerAbility(sp, sp->attack_client) != ABILITY_MAGIC_GUARD)
-     && (sp->server_status_flag & SERVER_STATUS_FLAG_MOVE_HIT)
+     && (sp->server_status_flag & BATTLE_STATUS_MOVE_SUCCESSFUL)
      && (GetMoveSplit(sp, sp->current_move_index) != SPLIT_STATUS)
      && (sp->battlemon[sp->attack_client].hp)
      && !(GetBattlerAbility(sp, sp->attack_client) == ABILITY_SHEER_FORCE && sp->battlemon[sp->attack_client].sheer_force_flag == 1)) // sheer force prevents life orb from activating
@@ -172,8 +172,8 @@ u32 LONG_CALL ServerWazaHitAfterCheckAct(void *bw, struct BattleStruct *sp)
             if(sp->defence_client != 0xFF)
             {
                 if ((hold_effect == HOLD_EFFECT_HP_RESTORE_ON_DMG)
-                 && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
-                 && (sp->server_status_flag & SERVER_STATUS_FLAG_MOVE_HIT)
+                 && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
+                 && (sp->server_status_flag & BATTLE_STATUS_MOVE_SUCCESSFUL)
                  && (sp->oneSelfFlag[sp->attack_client].shell_bell_damage)
                  && (sp->attack_client != sp->defence_client)
                  && (sp->battlemon[sp->attack_client].hp < (s32)sp->battlemon[sp->attack_client].maxhp)
@@ -192,8 +192,8 @@ u32 LONG_CALL ServerWazaHitAfterCheckAct(void *bw, struct BattleStruct *sp)
         case SWHAC_HELD_ITEM_LIFE_ORB:
             if ((hold_effect == HOLD_EFFECT_HP_DRAIN_ON_ATK)
              && (GetBattlerAbility(sp,sp->attack_client) != ABILITY_MAGIC_GUARD)
-             && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
-             && (sp->server_status_flag & SERVER_STATUS_FLAG_MOVE_HIT)
+             && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
+             && (sp->server_status_flag & BATTLE_STATUS_MOVE_SUCCESSFUL)
              && (GetMoveSplit(sp, sp->current_move_index) != SPLIT_STATUS)
              && (sp->battlemon[sp->attack_client].hp))
             {

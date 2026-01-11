@@ -1177,7 +1177,7 @@ void BattleController_CheckRecharge(struct BattleSystem *bsys, struct BattleStru
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1213,7 +1213,7 @@ void BattleController_CheckSleepOrFrozen(struct BattleSystem *bsys, struct Battl
                     ctx->wb_seq_no = BEFORE_MOVE_START;
                     CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
                     ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-                    ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                    ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                     return;
                 }
             } else {
@@ -1235,7 +1235,7 @@ void BattleController_CheckSleepOrFrozen(struct BattleSystem *bsys, struct Battl
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
                 ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 return;
             }
         } else {
@@ -1262,7 +1262,7 @@ void BattleController_CheckPP(struct BattleSystem *bsys, struct BattleStruct *ct
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1274,7 +1274,7 @@ void BattleController_CheckTruant(struct BattleSystem *bsys, struct BattleStruct
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1291,7 +1291,7 @@ BOOL BattleController_CheckFocusPunch(struct BattleSystem *bsys UNUSED, struct B
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_LOST_FOCUS);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
     }
@@ -1308,7 +1308,7 @@ void BattleController_CheckFlinch(struct BattleSystem *bsys, struct BattleStruct
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1321,7 +1321,7 @@ void BattleController_CheckDisabled(struct BattleSystem *bsys, struct BattleStru
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1335,7 +1335,7 @@ void BattleController_CheckHealBlock(struct BattleSystem *bsys, struct BattleStr
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1349,7 +1349,7 @@ void BattleController_CheckGravityOrThroatChop(struct BattleSystem *bsys, struct
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1362,7 +1362,7 @@ void BattleController_CheckTaunt(struct BattleSystem *bsys, struct BattleStruct 
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1378,7 +1378,7 @@ void BattleController_CheckImprison(struct BattleSystem *bsys, struct BattleStru
         ctx->wb_seq_no = BEFORE_MOVE_START;
         CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
     }
 }
 
@@ -1407,7 +1407,7 @@ void BattleController_CheckConfusion(struct BattleSystem *bsys, struct BattleStr
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 CopyBattleMonToPartyMon(bsys, ctx, attacker);
                 ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             }
         } else {
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CONFUSED_NO_MORE);
@@ -1427,7 +1427,7 @@ void BattleController_CheckParalysis(struct BattleSystem *bsys, struct BattleStr
             ctx->wb_seq_no = BEFORE_MOVE_START;
             CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
             ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         }
     }
 }
@@ -1447,7 +1447,7 @@ void BattleController_CheckInfatuation(struct BattleSystem *bsys, struct BattleS
             ctx->wb_seq_no = BEFORE_MOVE_START;
             CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
             ctx->server_status_flag |= BATTLE_STATUS_CHECK_LOOP_ONLY_ONCE;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         }
     }
 }
@@ -1636,14 +1636,14 @@ BOOL BattlerController_DecrementPP(struct BattleSystem *bsys, struct BattleStruc
             }
             CopyBattleMonToPartyMon(bsys, ctx, ctx->attack_client);
         } else {
-            ctx->waza_status_flag |= WAZA_STATUS_FLAG_PP_NONE;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_PP_NONE;
         }
 
     } else if (!ctx->battlemon[ctx->attack_client].pp[index]
                // && !(ctx->server_status_flag & BATTLE_STATUS_CHARGE_MOVE_HIT)
                // && !(ctx->battlemon[ctx->attack_client].condition2 & STATUS2_LOCKED_INTO_MOVE)
                && !(ctx->battlemon[ctx->attack_client].condition2 & STATUS2_RAMPAGE_TURNS) && !(ctx->field_condition & (No2Bit(ctx->attack_client) << FIELD_CONDITION_UPROAR_SHIFT)) && index < 4) {
-        ctx->waza_status_flag |= WAZA_STATUS_FLAG_PP_NONE;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_PP_NONE;
     }
 
     return FALSE;
@@ -1695,7 +1695,7 @@ BOOL BattleController_CheckPrimalWeather(struct BattleSystem *bsys, struct Battl
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANCEL_WATER_MOVE);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -1704,7 +1704,7 @@ BOOL BattleController_CheckPrimalWeather(struct BattleSystem *bsys, struct Battl
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANCEL_FIRE_MOVE);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -1732,7 +1732,7 @@ BOOL BattleController_CheckBurnUpOrDoubleShock(struct BattleSystem *bsys UNUSED,
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_BUT_IT_FAILED_SPREAD);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }
@@ -1766,7 +1766,7 @@ BOOL BattleController_CheckMoveFailures1(struct BattleSystem *bsys, struct Battl
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANT_USE_MOVE);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }
@@ -1778,7 +1778,7 @@ BOOL BattleController_CheckMoveFailures1(struct BattleSystem *bsys, struct Battl
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANT_USE_MOVE_HOOPA_CONFINED);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }
@@ -1869,7 +1869,7 @@ BOOL BattleController_CheckMoveFailures1(struct BattleSystem *bsys, struct Battl
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANT_USE_MOVE_DYNAMAX_TARGET);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }
@@ -1907,7 +1907,7 @@ BOOL BattleController_CheckMoveFailures1(struct BattleSystem *bsys, struct Battl
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_RESTORE_HP_FULL_FAIL);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -1919,7 +1919,7 @@ BOOL BattleController_CheckMoveFailures1(struct BattleSystem *bsys, struct Battl
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_STAYED_AWAKE);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -1968,7 +1968,7 @@ BOOL BattleController_CheckAbilityFailures1(struct BattleSystem *bsys, struct Ba
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANNOT_USE_MOVE);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -1988,7 +1988,7 @@ BOOL BattleController_CheckAbilityFailures1(struct BattleSystem *bsys, struct Ba
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_CANNOT_USE_MOVE);
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
             return TRUE;
         }
@@ -2105,7 +2105,7 @@ BOOL BattleController_CheckChargeMoves(struct BattleSystem *bsys UNUSED, struct 
             ctx->next_server_seq_no = ctx->server_seq_no;
         } else {
             ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
-            ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+            ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
             ctx->wb_seq_no = BEFORE_MOVE_START;
         }
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
@@ -2216,7 +2216,7 @@ BOOL BattleController_CheckSemiInvulnerability(struct BattleSystem *bsys UNUSED,
         || (!(ctx->server_status_flag & BATTLE_STATUS_HIT_DIVE) && ctx->battlemon[defender].effect_of_moves & MOVE_EFFECT_FLAG_IS_DIVING)
         )) {
         BattleController_ResetGeneralMoveFailureFlags(ctx, ctx->attack_client, TRUE);
-        ctx->moveStatusFlagForSpreadMoves[defender] = WAZA_STATUS_FLAG_KIE_NOHIT;
+        ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_FLAG_SEMI_INVULNERABLE;
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_ATTACK_MISSED);
         ctx->next_server_seq_no = ctx->server_seq_no;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
@@ -2350,7 +2350,7 @@ BOOL BattleController_CheckPsychicTerrain(struct BattleSystem *bsys UNUSED, stru
     && ctx->clientPriority[ctx->attack_client] && CurrentMoveShouldNotBeExemptedFromPriorityBlocking(ctx, ctx->attack_client, defender)) {
         BattleController_ResetGeneralMoveFailureFlags(ctx, ctx->attack_client, TRUE);
         ctx->battlerIdTemp = defender;
-        ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_NO_MORE_WORK;
+        ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_FLAG_NO_MORE_WORK;
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_HANDLE_PSYCHIC_TERRAIN_PROTECTION);
         ctx->next_server_seq_no = ctx->server_seq_no;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
@@ -2564,7 +2564,7 @@ BOOL BattleController_CheckWhirlwindFailures(struct BattleSystem *bsys UNUSED, s
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_FORCE_SWITCH_FAIL_DYNAMAX);
             ctx->next_server_seq_no = ctx->server_seq_no;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_NO_MORE_WORK;
+            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_FLAG_NO_MORE_WORK;
             return TRUE;
         }
 
@@ -2575,7 +2575,7 @@ BOOL BattleController_CheckWhirlwindFailures(struct BattleSystem *bsys UNUSED, s
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_FORCE_SWITCH_FAIL_SUCTION_CUPS);
             ctx->next_server_seq_no = ctx->server_seq_no;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_NO_MORE_WORK;
+            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_FLAG_NO_MORE_WORK;
             return TRUE;
         }
 
@@ -2586,7 +2586,7 @@ BOOL BattleController_CheckWhirlwindFailures(struct BattleSystem *bsys UNUSED, s
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_FORCE_SWITCH_FAIL_INGRAIN);
             ctx->next_server_seq_no = ctx->server_seq_no;
             ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_NO_MORE_WORK;
+            ctx->moveStatusFlagForSpreadMoves[defender] = MOVE_STATUS_FLAG_NO_MORE_WORK;
             return TRUE;
         }
     }
@@ -3152,7 +3152,7 @@ BOOL BattleController_CheckSubstituteBlockingOtherEffects(struct BattleSystem *b
                         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_BUT_IT_FAILED_SPREAD);
                         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                         ctx->wb_seq_no = BEFORE_MOVE_START;
                         return TRUE;
                                         }
@@ -3164,7 +3164,7 @@ BOOL BattleController_CheckSubstituteBlockingOtherEffects(struct BattleSystem *b
                     LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_BUT_IT_FAILED_SPREAD);
                     ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                     ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                    ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                    ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                     ctx->wb_seq_no = BEFORE_MOVE_START;
                     return TRUE;
                     break;
@@ -3255,7 +3255,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_HEAL_TARGET_HP_FULL_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3288,7 +3288,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_HEAL_TARGET_HP_FULL_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3605,7 +3605,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_USE_WEATHER_MOVE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3624,7 +3624,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_USE_WEATHER_MOVE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3643,7 +3643,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_USE_WEATHER_MOVE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3662,7 +3662,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_USE_WEATHER_MOVE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3686,7 +3686,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_USE_WEATHER_MOVE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3830,7 +3830,7 @@ BOOL BattleController_CheckMoveFailures4_SingleTarget(struct BattleSystem *bsys 
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_BUT_IT_FAILED_SPREAD);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }
@@ -3906,7 +3906,7 @@ BOOL BattleController_CheckMoveFailures5(struct BattleSystem *bsys UNUSED, struc
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_DOESNT_AFFECT);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -3920,7 +3920,7 @@ BOOL BattleController_CheckMoveFailures5(struct BattleSystem *bsys UNUSED, struc
                 LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_SUBSTITUTE_FAIL);
                 ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
                 ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+                ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
                 ctx->wb_seq_no = BEFORE_MOVE_START;
                 return TRUE;
             }
@@ -4041,7 +4041,7 @@ BOOL BattleController_CheckMoveFailures3_PerishSong(struct BattleSystem *bsys, s
         LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_BUT_IT_FAILED_SPREAD);
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-        ctx->waza_status_flag |= MOVE_STATUS_NO_MORE_WORK;
+        ctx->waza_status_flag |= MOVE_STATUS_FLAG_NO_MORE_WORK;
         ctx->wb_seq_no = BEFORE_MOVE_START;
         return TRUE;
     }

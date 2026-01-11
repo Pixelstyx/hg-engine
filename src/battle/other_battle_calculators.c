@@ -460,11 +460,11 @@ BOOL CalcAccuracy(void *bw, struct BattleStruct *sp, int attacker, int defender,
         return FALSE;
     }
 
-    if (sp->server_status_flag & SERVER_STATUS_FLAG_x20) {
+    if (sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) {
         return FALSE;
     }
 
-    if (sp->server_status_flag & SERVER_STATUS_FLAG_OTHER_ACCURACY_CALC) {
+    if (sp->server_status_flag & BATTLE_STATUS_FLAT_HIT_RATE) {
         return FALSE;
     }
 
@@ -1630,7 +1630,7 @@ int LONG_CALL ServerDoTypeCalcMod(void *bw UNUSED, struct BattleStruct *sp, int 
 
     u32 item_held_effect = BattleItemDataGet(sp, GetBattleMonItem(sp, defence_client), 1);
 
-    if (((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_FLAT) == 0) && ((attacker_type_1 == move_type) || (attacker_type_2 == move_type) || (attacker_type_3 == move_type)))
+    if (((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS) == 0) && ((attacker_type_1 == move_type) || (attacker_type_2 == move_type) || (attacker_type_3 == move_type)))
     {
         if (GetBattlerAbility(sp,attack_client) == ABILITY_ADAPTABILITY)
         {
@@ -1716,8 +1716,8 @@ int LONG_CALL ServerDoTypeCalcMod(void *bw UNUSED, struct BattleStruct *sp, int 
     }
     else
     {
-        if (((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_FLAT) == 0)
-         && ((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_NONE) == 0))
+        if (((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS) == 0)
+         && ((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_IMMUNITY) == 0))
         {
         }
         else
@@ -2350,7 +2350,7 @@ BOOL LONG_CALL BattleSystem_CheckMoveEffect(void *bw, struct BattleStruct *sp, i
             || (!(sp->server_status_flag & BATTLE_STATUS_SHADOW_FORCE) && sp->battlemon[battlerIdTarget].effect_of_moves & MOVE_EFFECT_FLAG_SHADOW_FORCE)
             || (!(sp->server_status_flag & BATTLE_STATUS_HIT_DIG) && sp->battlemon[battlerIdTarget].effect_of_moves & MOVE_EFFECT_FLAG_DIGGING)
             || (!(sp->server_status_flag & BATTLE_STATUS_HIT_DIVE) && sp->battlemon[battlerIdTarget].effect_of_moves & MOVE_EFFECT_FLAG_IS_DIVING))) {
-        sp->waza_status_flag |= WAZA_STATUS_FLAG_KIE_NOHIT;
+        sp->waza_status_flag |= MOVE_STATUS_FLAG_SEMI_INVULNERABLE;
         return TRUE;
     }
 

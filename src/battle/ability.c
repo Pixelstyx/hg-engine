@@ -70,7 +70,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
     // 02252F24
     if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_WATER_ABSORB) == TRUE)
     {
-        if ((movetype == TYPE_WATER) && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0) && (sp->moveTbl[sp->current_move_index].power))
+        if ((movetype == TYPE_WATER) && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0) && (sp->moveTbl[sp->current_move_index].power))
         {
             sp->hp_calc_work = BattleDamageDivide(sp->battlemon[defender].maxhp, 4);
             scriptnum = SUB_SEQ_ABILITY_HP_RESTORE;
@@ -82,7 +82,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
     {
         if ((movetype == TYPE_FIRE)
          //&& ((sp->battlemon[defender].condition & STATUS_FLAG_FROZEN) == 0) // gen 5 does not prevent flash fire from working
-         && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
+         && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
          && ((sp->moveTbl[sp->current_move_index].power) || (sp->current_move_index == MOVE_WILL_O_WISP)))
         {
             scriptnum = SUB_SEQ_FLASH_FIRE;
@@ -111,7 +111,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
     if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_DRY_SKIN) == TRUE)
     {
         if ((movetype == TYPE_WATER)
-         && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
+         && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
          && (sp->moveTbl[sp->current_move_index].power))
         {
             sp->hp_calc_work = BattleDamageDivide(sp->battlemon[defender].maxhp, 4);
@@ -160,7 +160,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
 
     // Handle Telepathy
     if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_TELEPATHY) == TRUE) {
-        if (((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
+        if (((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
         && ((sp->moveTbl[sp->current_move_index].power))
         && (attacker & 1) == (defender & 1) ) { // attacker and defender are on the same side
             scriptnum = SUB_SEQ_HANDLE_TELEPATHY;
@@ -171,7 +171,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
     // Handle Well Baked Body
     if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_WELL_BAKED_BODY) == TRUE) {
         if ((movetype == TYPE_FIRE)
-        && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
+        && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
         && ((sp->moveTbl[sp->current_move_index].power) || (sp->current_move_index == MOVE_WILL_O_WISP))
         && (attacker != defender)) {
             scriptnum = SUB_SEQ_ABSORB_AND_DEF_UP_2_STAGE;
@@ -182,7 +182,7 @@ int MoveCheckDamageNegatingAbilities(struct BattleStruct *sp, int attacker, int 
     // Handle Earth Eater
     if (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_EARTH_EATER) == TRUE) {
         if ((movetype == TYPE_GROUND)
-        && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
+        && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
         && (sp->moveTbl[sp->current_move_index].power)) {
             sp->hp_calc_work = BattleDamageDivide(sp->battlemon[defender].maxhp, 4);
             scriptnum = SUB_SEQ_ABILITY_HP_RESTORE;
@@ -315,8 +315,8 @@ BOOL MoveHitAttackerAbilityCheck(void *bw, struct BattleStruct *sp, int *seq_no)
             if ((sp->battlemon[sp->defence_client].hp)
                 && (sp->battlemon[sp->defence_client].condition == 0)
                 && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0)
-                && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
-                && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+                && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
+                && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
                 && ((sp->oneSelfFlag[sp->defence_client].physical_damage) ||
                     (sp->oneSelfFlag[sp->defence_client].special_damage))
                 && (IsContactBeingMade(GetBattlerAbility(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->defence_client), sp->current_move_index, sp->moveTbl[sp->current_move_index].flag))
@@ -333,7 +333,7 @@ BOOL MoveHitAttackerAbilityCheck(void *bw, struct BattleStruct *sp, int *seq_no)
         case ABILITY_BEAST_BOOST:
             if ((sp->defence_client == sp->fainting_client)
                 && BATTLERS_ON_DIFFERENT_SIDE(sp->attack_client, sp->fainting_client)
-                && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+                && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
                 && (sp->battlemon[sp->attack_client].hp)
                 && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0))
             {
@@ -350,7 +350,7 @@ BOOL MoveHitAttackerAbilityCheck(void *bw, struct BattleStruct *sp, int *seq_no)
         case ABILITY_AS_ONE_GLASTRIER:
         case ABILITY_MOXIE:
             if ((sp->defence_client == sp->fainting_client)
-                && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+                && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
                 && (sp->battlemon[sp->attack_client].hp)
                 && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0))
             {
@@ -364,7 +364,7 @@ BOOL MoveHitAttackerAbilityCheck(void *bw, struct BattleStruct *sp, int *seq_no)
         case ABILITY_GRIM_NEIGH:
         case ABILITY_AS_ONE_SPECTRIER:
             if ((sp->defence_client == sp->fainting_client)
-                && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+                && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
                 && (sp->battlemon[sp->attack_client].hp)
                 && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0))
             {
@@ -377,7 +377,7 @@ BOOL MoveHitAttackerAbilityCheck(void *bw, struct BattleStruct *sp, int *seq_no)
             break;
         case ABILITY_BATTLE_BOND:
             if ((sp->defence_client == sp->fainting_client)
-                && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+                && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
                 && (sp->battlemon[sp->attack_client].hp)
                 && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0))
             {
@@ -582,7 +582,7 @@ BOOL LONG_CALL SynchroniseAbilityCheck(void *bw, struct BattleStruct *sp, int se
     if((sp->defence_client != 0xFF) && //defense side check
        (GetBattlerAbility(sp,sp->defence_client) == ABILITY_SYNCHRONIZE) &&
        (sp->defence_client == sp->state_client) &&
-       (sp->server_status_flag & SERVER_STATUS_FLAG_SYNCHRONIZE))
+       (sp->server_status_flag & BATTLE_STATUS_SYNCHRONIZE))
     {
         sp->battlerIdTemp = sp->defence_client;
         sp->state_client = sp->attack_client;
@@ -590,7 +590,7 @@ BOOL LONG_CALL SynchroniseAbilityCheck(void *bw, struct BattleStruct *sp, int se
     }
     else if((GetBattlerAbility(sp,sp->attack_client) == ABILITY_SYNCHRONIZE) && //attacker side check
        (sp->attack_client == sp->state_client) &&
-       (sp->server_status_flag & SERVER_STATUS_FLAG_SYNCHRONIZE))
+       (sp->server_status_flag & BATTLE_STATUS_SYNCHRONIZE))
     {
         sp->battlerIdTemp = sp->attack_client;
         sp->state_client = sp->defence_client;
@@ -776,8 +776,8 @@ BOOL LONG_CALL MoveHitDefenderCottonDownCheckHelper(struct BattleStruct* sp, int
     BOOL ret = FALSE;
     if (sp->battlemon[battler].species
         && ((sp->waza_status_flag & WAZA_STATUS_FLAG_NO_OUT) == 0)
-        && ((sp->server_status_flag & SERVER_STATUS_FLAG_x20) == 0)
-        && ((sp->server_status_flag2 & SERVER_STATUS_FLAG2_U_TURN) == 0)
+        && ((sp->server_status_flag & BATTLE_STATUS_CHARGE_TURN) == 0)
+        && ((sp->server_status_flag2 & BATTLE_STATUS2_UTURN) == 0)
         && ((sp->oneSelfFlag[sp->defence_client].physical_damage) ||
             (sp->oneSelfFlag[sp->defence_client].special_damage)))
     {

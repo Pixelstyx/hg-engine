@@ -362,7 +362,7 @@ void CalcDamageOverall(void *bw, struct BattleStruct *sp) {
 
     // 6.6 Same-Type Attack Bonus (STAB) Modifier
 
-    if (((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_FLAT) == 0) && HasType(sp, attacker, type)) {
+    if (((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS) == 0) && HasType(sp, attacker, type)) {
         if (attackerAbility == ABILITY_ADAPTABILITY) {
 #ifdef DEBUG_DAMAGE_ROLLS
         for (int u = 0; u < 16; u++)
@@ -524,7 +524,7 @@ void CalcDamageOverall(void *bw, struct BattleStruct *sp) {
         finalModifier = QMul_RoundUp(finalModifier, UQ412__2_0);
     }
 
-    if (((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_FLAT) == 0) && ((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_NONE) == 0)) {
+    if (((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS) == 0) && ((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_IMMUNITY) == 0)) {
         switch (moveEffectiveness) {
             case TYPE_MUL_SUPER_EFFECTIVE:
             case TYPE_MUL_DOUBLE_SUPER_EFFECTIVE:
@@ -581,7 +581,7 @@ void CalcDamageOverall(void *bw, struct BattleStruct *sp) {
     // All other abilities -- need to sort by raw speed
     SortRawSpeedNonRNGArray(bw, sp);
     for (u32 i = 0; i < maxBattlers; i++) {
-        if (((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_FLAT) == 0) && ((sp->server_status_flag & SERVER_STATUS_FLAG_TYPE_NONE) == 0)) {
+        if (((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS) == 0) && ((sp->server_status_flag & BATTLE_STATUS_IGNORE_TYPE_IMMUNITY) == 0)) {
             switch (moveEffectiveness) {
                 case TYPE_MUL_TRIPLE_NOT_EFFECTIVE:
                 case TYPE_MUL_DOUBLE_NOT_EFFECTIVE:
