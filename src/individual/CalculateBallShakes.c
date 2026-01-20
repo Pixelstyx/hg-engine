@@ -147,8 +147,13 @@ u32 __attribute__((section (".init"))) CalculateBallShakesInternal(void *bw, str
     //
     //    break;
     case ITEM_FAST_BALL:
-        if (PokePersonalParaGet(sp->battlemon[sp->defence_client].species, PERSONAL_BASE_SPEED) >= 100) {
+        if (BattleTypeGet(bw) & BATTLE_TYPE_ROAMER || PokePersonalParaGet(sp->battlemon[sp->defence_client].species, PERSONAL_BASE_SPEED) >= 100) 
+        {
             ballCaptureRatio = 0x4000;
+        }
+        else if (PokePersonalParaGet(sp->battlemon[sp->defence_client].species, PERSONAL_BASE_SPEED) >= 80)
+        {
+            ballCaptureRatio = 0x2000;
         }
         break;
     case ITEM_LEVEL_BALL:
