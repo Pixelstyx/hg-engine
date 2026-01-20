@@ -487,8 +487,7 @@
 
 #define MAX_BASE_SUBSCRIPT_NUM 476
 
-// define your custom subscripts below like this
-// #define MOVE_SUBSCRIPT_CUSTOM_1 (MAX_BASE_SUBSCRIPT_NUM + 1)
+#define BATTLE_SUBSCRIPT_CUSTOM_HEAL_BALL_STATUS_RESTORE (MAX_BASE_SUBSCRIPT_NUM + 1)
 
 
 // add status effect constants--used in battle effect scripts to queue up a subscript through the table in src/moves.c
