@@ -190,13 +190,18 @@ u32 __attribute__((section (".init"))) CalculateBallShakesInternal(void *bw, str
         break;
     case ITEM_LOVE_BALL:
         {
-            u32 gender1 = BattlePokemonParamGet(sp, sp->attack_client, BATTLE_MON_DATA_SEX, NULL);
-            u32 gender2 = BattlePokemonParamGet(sp, sp->defence_client, BATTLE_MON_DATA_SEX, NULL);
+            u32 attackerGender = BattlePokemonParamGet(sp, sp->attack_client, BATTLE_MON_DATA_SEX, NULL);
+            u32 defenderGender = BattlePokemonParamGet(sp, sp->defence_client, BATTLE_MON_DATA_SEX, NULL);
+            
+            u32 attackerEggGroup1 = PokePersonalParaGet(sp->battlemon[sp->attack_client].species, PERSONAL_EGG_GROUP_1);
+            u32 attackerEggGroup2 = PokePersonalParaGet(sp->battlemon[sp->attack_client].species, PERSONAL_EGG_GROUP_2);
+            u32 defenderEggGroup1 = PokePersonalParaGet(sp->battlemon[sp->defence_client].species, PERSONAL_EGG_GROUP_1);
+            u32 defenderEggGroup2 = PokePersonalParaGet(sp->battlemon[sp->defence_client].species, PERSONAL_EGG_GROUP_2);
 
-            if (sp->battlemon[sp->attack_client].species == sp->battlemon[sp->defence_client].species
-             && gender1 != gender2
-             && gender1 != POKEMON_GENDER_UNKNOWN
-             && gender2 != POKEMON_GENDER_UNKNOWN) {
+            if ((attackerEggGroup1 == defenderEggGroup1 || attackerEggGroup1 == defenderEggGroup2 || attackerEggGroup2 == defenderEggGroup1 || attackerEggGroup2 == defenderEggGroup2)
+             && attackerGender != defenderGender
+             && attackerGender != POKEMON_GENDER_UNKNOWN
+             && defenderGender != POKEMON_GENDER_UNKNOWN) {
                 ballCaptureRatio = 0x8000;
              }
         }
