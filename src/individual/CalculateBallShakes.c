@@ -247,6 +247,10 @@ u32 __attribute__((section (".init"))) CalculateBallShakesInternal(void *bw, str
             ballCaptureRatio = 0x19A;
         }
         break;
+    case ITEM_FEATHER_BALL:
+        if (GetMonMachineMoveCompat(BattleWorkPokemonParamGet(bw, sp->defence_client, sp->sel_mons_no[sp->defence_client]), ItemToMachineMoveIndex(ITEM_HM02))) {
+            ballCaptureRatio = 0x4000;
+        }
     }
 
     // https://xcancel.com/Sibuna_Switch/status/1610341810655608833

@@ -513,7 +513,7 @@ void *LONG_CALL ItemDataTableLoad(int heapID)
  * @brief converts an item id to its corresponding TM/HM/TR index within sMachineMoves
  * @see   pret/pokeheartgold ItemToTMHMId
  */
-u16 ItemToMachineMoveIndex(u16 itemId) {
+u16 LONG_CALL ItemToMachineMoveIndex(u16 itemId) {
     if (itemId >= ITEM_TM001 && itemId <= ITEM_HM08) {
         return (itemId - ITEM_TM001);
     }
