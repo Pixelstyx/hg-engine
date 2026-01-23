@@ -1,7 +1,6 @@
 #ifndef RTC_H
 #define RTC_H
 
-#include "pokemon.h"
 #include "types.h"
 
 /* defines all taken from pokeheartgold */
@@ -81,6 +80,8 @@ typedef struct SysInfo_RTC {
     s64 seconds_at_game_clear;
     u32 penaltyInMinutes;
 } SysInfo_RTC;
+
+struct Party; // file too general for pokemon.h to be included
 
 void LONG_CALL Party_ResetAllShayminToLandForme(struct Party *party);
 void LONG_CALL GF_RTC_CopyDateTime(struct RTCDate *date, struct RTCTime *time);
