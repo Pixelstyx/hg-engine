@@ -449,6 +449,6 @@ void LONG_CALL sub_0207E54C(struct PartyMenu *partyMenu, int numItems, int selec
 struct PartyMenuContextMenuCursor *LONG_CALL PartyMenu_CreateContextMenuCursor(struct PartyMenu *partyMenu, const struct PartyMenuContextMenu *template, int selection, int heapID, int state);
 void LONG_CALL PartyMenu_DisableMainScreenBlend_AfterYesNo(void);
 
-BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
+// BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
 
 #endif // POKEHEARTGOLD_PARTY_MENU_H

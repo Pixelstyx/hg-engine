@@ -15,7 +15,7 @@
 #include "../include/constants/generated/learnsets.h"
 
 u16 GetFieldEffectMoveID(u8 fieldEffect);
-BOOL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
+BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
 
 extern const u16 sButtonFrameTileOffsets[];
 extern const u8 sButtonRects[][4];
@@ -34,7 +34,6 @@ static void PartyMenu_ShowRotomCatalogList(struct PartyMenu *partyMenu);
 u8 LONG_CALL sub_0207B0B0(struct PartyMenu *wk, u8 *buf)
 {
     struct PartyPokemon *pp = Party_GetMonByIndex(wk->args->party, wk->partyMonIndex);
-    // struct PartyPokemon *pp = Party_GetMonByIndex(wk->dat->pp, wk->pos);
     // u32 *learnset = GetCompleteLearnset(pp, HEAP_ID_FIELD3);
     u16 move;
     u8 displayedCount = 0;
@@ -137,7 +136,7 @@ u8 LONG_CALL sub_0207B0B0(struct PartyMenu *wk, u8 *buf)
     return count;
 }
 
-BOOL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
+BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
 {
     BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
     switch (fieldMove)

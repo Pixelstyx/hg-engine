@@ -20,6 +20,8 @@
 #include "../../include/constants/weather_numbers.h"
 #include "../../include/constants/generated/learnsets.h"
 
+BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
+
 /**
  *  @brief script command to give an egg adapted to set the hidden ability
  *
@@ -385,4 +387,116 @@ int ScrCmd_GetIdxOfFirstPartyMonWithMove(struct Party *party, u16 move) {
         }
     }
     return 0xFF;
+}
+
+BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID)
+{
+    BAG_DATA *bag = Sav2_Bag_get(SaveBlock2_get());
+    switch (fieldMove)
+    {
+        case MOVE_CUT:
+            if (Bag_HasItem(bag, ITEM_HM01, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM01)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_FLY:
+            if (Bag_HasItem(bag, ITEM_HM02, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM02)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_SURF:
+            if (Bag_HasItem(bag, ITEM_HM03, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM03)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_STRENGTH:
+            if (Bag_HasItem(bag, ITEM_HM04, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM04)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_ROCK_SMASH:
+            if (Bag_HasItem(bag, ITEM_HM06, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM06)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_WATERFALL:
+            if (Bag_HasItem(bag, ITEM_HM07, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM07)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_ROCK_CLIMB:
+            if (Bag_HasItem(bag, ITEM_HM08, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM08)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_WHIRLPOOL:
+            if (Bag_HasItem(bag, ITEM_HM05, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_HM05)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_FLASH:
+            if (Bag_HasItem(bag, ITEM_TM070, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_TM070)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        /*case MOVE_TELEPORT:
+            break;
+        case MOVE_DIG:
+            if (Bag_HasItem(bag, ITEM_TM028, 1, heapID))
+            {
+                if (GetMonMachineMoveCompat(mon, ItemToMachineMoveIndex(ITEM_TM028)))
+                {
+                    return TRUE;
+                }
+            }
+            break;
+        case MOVE_SWEET_SCENT:
+            break;
+        case MOVE_CHATTER:
+            break;
+        case MOVE_HEADBUTT:
+            break;
+        case MOVE_MILK_DRINK:
+            break;
+        case MOVE_SOFT_BOILED:
+            break;*/
+        default: break;
+    }
+    return FALSE;
 }
