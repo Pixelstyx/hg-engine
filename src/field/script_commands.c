@@ -317,6 +317,13 @@ BOOL ScrCmd_DaycareSanitizeMon(SCRIPTCONTEXT *ctx) {
     return FALSE;
 }
 
+/*
+The hook for this is commented out so that the original functionality of buffering 
+just an item name sans-indefinite article is still present.
+Recommended approach for modernization would be to change the script that is asking
+for an item name instead of forcing it to always queue up a/an
+*/
+/*
 BOOL ScrCmd_BufferItemName(SCRIPTCONTEXT *ctx) {
     MessageFormat **msgFmt = FieldSysGetAttrAddr(ctx->fsys, 16);
     u8 idx = ScriptReadByte(ctx);
@@ -324,6 +331,7 @@ BOOL ScrCmd_BufferItemName(SCRIPTCONTEXT *ctx) {
     BufferItemNameGiveItem(*msgFmt, idx, itemId);
     return FALSE;
 }
+*/
 
 BOOL ScrCmd_GetPartySlotWithMove(SCRIPTCONTEXT *ctx) {
     FieldSystem *fsys = ctx->fsys;
