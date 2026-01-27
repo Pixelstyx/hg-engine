@@ -15,7 +15,6 @@
 #include "../include/constants/generated/learnsets.h"
 
 u16 GetFieldEffectMoveID(u8 fieldEffect);
-BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
 
 extern const u16 sButtonFrameTileOffsets[];
 extern const u8 sButtonRects[][4];

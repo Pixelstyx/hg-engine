@@ -1881,4 +1881,6 @@ BOOL LONG_CALL CanUseItemOnMonInParty(struct Party *party, u16 itemID, s32 party
 
 BOOL LONG_CALL GetMonMachineMoveCompat(struct PartyPokemon *pp, u16 machineMoveIndex);
 
+BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int heapID);
+
 #endif
