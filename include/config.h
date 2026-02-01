@@ -194,4 +194,9 @@
 // based on the move having FLAG_UNUSABLE_UNIMPLEMENTED
 #define BLOCK_LEARNING_UNIMPLEMENTED_MOVES
 
+// FRONTIER_POKEMON_HA_CHANCE defines the chance that the randomly generated ability 
+// given to Pokemon in the Battle Frontier is overwritten with their Hidden Ability.
+// The chance is 1/FRONTIER_POKEMON_HA_CHANCE, meaning 2 would be 50% and 20 would be 5%.
+#define FRONTIER_POKEMON_HA_CHANCE 3
+
 #endif
