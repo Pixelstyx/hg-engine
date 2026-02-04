@@ -1,5 +1,6 @@
 #include "../include/types.h"
 #include "../include/battle.h"
+#include "../include/config.h"
 #include "../include/party_menu.h"
 #include "../include/pokemon.h"
 #include "../include/constants/ability.h"
@@ -116,13 +117,13 @@ u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, stru
 
 void LONG_CALL GetFrontierMon(FrontierMon *mon, u32 frontierMonIndex);
 u16 LONG_CALL FrontierRand(FrontierFieldSystem *frontierFsys); // sub_0204B510
-void LONG_CALL MI_CpuFill8(void *dest, u8 data, u32 size);
+void LONG_CALL MI_CpuFill8(void *dest, u8 data, u32 size); // MI_CpuClear8
 
 u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, struct FrontierMonStruct *frontierMonStruct, u16 frontierMonIndex, u32 otID, u32 pid, u8 iv, u8 replacementItemIndex, BOOL replaceItem, u32 heapID)
 {
     s32 i;
     FrontierMon frontierMon;
-    MI_CpuFill8(frontierMonStruct, 0, sizeof(FrontierMonStruct)); // MI_CpuClear8
+    MI_CpuFill8(frontierMonStruct, 0, sizeof(FrontierMonStruct));
     GetFrontierMon(&frontierMon, frontierMonIndex);
     frontierMonStruct->species = frontierMon.species;
     frontierMonStruct->form = frontierMon.form;
@@ -190,7 +191,7 @@ u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, stru
     u32 ability = PokePersonalParaGet(frontierMonStruct->species, PERSONAL_ABILITY_2);
     if (ability != ABILITY_NONE) 
     {
-        if (frontierMonStruct->pid % 2) 
+        if (frontierMonStruct->pid % 2)
         {
             frontierMonStruct->ability = ability;
         }
@@ -205,7 +206,7 @@ u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, stru
     }
 
     #ifdef FRONTIER_POKEMON_HA_CHANCE
-    if (FrontierRand(frontierFsys) % FRONTIER_POKEMON_HA_CHANCE)
+    if ((FrontierRand(frontierFsys) % FRONTIER_POKEMON_HA_CHANCE) == 0)
     {
         u32 hiddenAbility = GetMonHiddenAbility(frontierMonStruct->species, frontierMonStruct->species);
         if (hiddenAbility != ABILITY_NONE)
@@ -345,6 +346,7 @@ MessageFormat *sub_0204B538(SaveData *saveData, u16 numEligiblePokemon, u16 a2, 
     return messageFormat;
 }
 
+// Seemingly unused.
 u32 GetFrontierTrainerOverworld(u8 trainerClass) //sub_0204B5E8
 {
     for (u32 i = 0; i < NELEMS(FrontierTrainerOverworlds); i++)
@@ -610,5 +612,4 @@ void GetFrontierMon(FrontierMon *mon, u32 frontierMonIndex)
 {
     ReadWholeNarcMemberByIdPair(mon, NARC_a_2_0_3, frontierMonIndex);
 }
-
 */
