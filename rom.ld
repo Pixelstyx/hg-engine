@@ -829,3 +829,4 @@ sBattleBgProfileTable = 0x0226E70C;
 MI_CpuFill8 = 0x020D4994;
 GetFrontierMon = 0x0204BC8C | 1;
 FrontierRand = 0x0204B510 | 1;
+GetFrontierTrainerIVs = 0x0204B4D4 | 1;

@@ -114,10 +114,12 @@ typedef struct FrontierFieldSystem { // UnkStruct_Fsys_A0
 } FrontierFieldSystem;
 
 u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, struct FrontierMonStruct *frontierMonStruct, u16 frontierMonIndex, u32 otID, u32 pid, u8 iv, u8 replacementItemIndex, BOOL replaceItem, u32 heapID); // sub_0204B834
+u32 LONG_CALL GenerateFrontierMons(FrontierFieldSystem *a0, u16 *frontierTrainerData, u16 frontierTrainerIndex, FrontierMonStruct *frontierMonStruct, u8 numPokemon, u16 *partySpecies, u16 *partyHeldItems, FrontierTagBattleAlly *tagAlly, u32 heapID); // sub_0204BABC
 
 void LONG_CALL GetFrontierMon(FrontierMon *mon, u32 frontierMonIndex);
 u16 LONG_CALL FrontierRand(FrontierFieldSystem *frontierFsys); // sub_0204B510
 void LONG_CALL MI_CpuFill8(void *dest, u8 data, u32 size); // MI_CpuClear8
+u8 LONG_CALL GetFrontierTrainerIVs(u32 frontierTrainerIndex); // sub_0204B4D4
 
 u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, struct FrontierMonStruct *frontierMonStruct, u16 frontierMonIndex, u32 otID, u32 pid, u8 iv, u8 replacementItemIndex, BOOL replaceItem, u32 heapID)
 {
@@ -222,8 +224,116 @@ u32 LONG_CALL GenerateFrontierMon(struct FrontierFieldSystem *frontierFsys, stru
     return pidGen;
 }
 
+u32 LONG_CALL GenerateFrontierMons(FrontierFieldSystem *frontierFsys, u16 *frontierTrainerData, u16 frontierTrainerIndex, FrontierMonStruct *a3, u8 numPokemon, u16 *partySpecies, u16 *partyHeldItems, FrontierTagBattleAlly *tagAlly, u32 heapID)
+{
+    s32 i;
+    u8 iv;
+    u32 otID;
+    u32 frontierMonIndex;
+    u32 frontierMonIDs[4];
+    u32 frontierMonPIDs[4];
+    BOOL replaceItem = FALSE;
+    FrontierMon frontierMon_1;
+    FrontierMon frontierMon_2;
+    GF_ASSERT(numPokemon <= 4);
+
+    s32 failedItemGenAttempts = 0;
+    s32 count = 0;
+    while (count != numPokemon)
+    {
+        // Get a random frontierMonIndex according to the amount of mons defined for that trainer.
+        u8 index = FrontierRand(frontierFsys) % frontierTrainerData[1];
+        frontierMonIndex = frontierTrainerData[2 + index];
+        GetFrontierMon(&frontierMon_2, frontierMonIndex);
+        for (i = 0; i < count; i++)
+        {
+            GetFrontierMon(&frontierMon_1, frontierMonIDs[i]);
+            // Do not return the same Pokemon twice.
+            if (frontierMon_1.species == frontierMon_2.species)
+            {
+                break;
+            }
+        }
+        if (i != count)
+        {
+            continue;
+        }
+        if (partySpecies)
+        {
+            for (i = 0; i < numPokemon; i++)
+            {
+                if (partySpecies[i] == frontierMon_2.species)
+                {
+                    break;
+                }
+            }
+            if (i != numPokemon)
+            {
+                continue;
+            }
+        }
+        if (failedItemGenAttempts < 50)
+        {
+            // For the amount of Pokemon we have already finished generating:
+            for (i = 0; i < count; i++)
+            {
+                // Get each one and make sure their item does not match the one we are currently working with.
+                GetFrontierMon(&frontierMon_1, frontierMonIDs[i]);
+                if (frontierMon_1.item && frontierMon_1.item == frontierMon_2.item)
+                {
+                    break;
+                }
+            }
+            // If we have a duplicate held item, regenerate the current FrontierMon.
+            if (i != count)
+            {
+                failedItemGenAttempts++;
+                continue;
+            }
+            if (partyHeldItems)
+            {
+                for (i = 0; i < numPokemon; i++)
+                {
+                    if (partyHeldItems[i] == frontierMon_2.item && partyHeldItems[i] != ITEM_NONE)
+                    {
+                        break;
+                    }
+                }
+                if (i != numPokemon) 
+                {
+                    failedItemGenAttempts++;
+                    continue;
+                }
+            }
+        }
+        frontierMonIDs[count] = frontierMonIndex;
+        count++;
+    }
+    iv = GetFrontierTrainerIVs(frontierTrainerIndex); // sub_0204B4D4
+    otID = FrontierRand(frontierFsys) | FrontierRand(frontierFsys) << 16;
+    // If we had 50 or more failed generation attempts:
+    if (failedItemGenAttempts >= 50)
+    {
+        replaceItem = TRUE;
+    }
+    for (i = 0; i < count; i++)
+    {
+        frontierMonPIDs[i] = GenerateFrontierMon(frontierFsys, &a3[i], frontierMonIDs[i], otID, 0, iv, i, replaceItem, heapID);
+    }
+    if (tagAlly == NULL)
+    {
+        return replaceItem;
+    }
+    tagAlly->otID = otID;
+    for (i = 0; i < 2; i++)
+    {
+        tagAlly->frontierMonIDs[i] = frontierMonIDs[i];
+        tagAlly->frontierMonPIDs[i] = frontierMonPIDs[i];
+    }
+    return replaceItem;
+}
+
 /*
-static u32 sub_0204BABC(FrontierFieldSystem *a0, u16 *frontierTrainerData, u16 frontierTrainerIndex, FrontierMonStruct *frontierMonStruct, u8 numPokemon, u16 *partySpecies, u16 *partyHeldItems, FrontierTagBattleAlly *tagAlly, u32 heapID);
 static u16 *GetFrontierTrainerData(u32 frontierTrainerIndex, u32 heapID);
 
 // Frontier Trainer IDs grouped by when they show up normally. IDs 0-99 show up normally in battles 1-7, IDs 80-119 show up normally in battles 8-14, etc.
@@ -492,115 +602,6 @@ void GenerateAllyFrontierMons(FrontierFieldSystem *frontierFsys, FrontierTrainer
         GenerateFrontierMon(frontierFsys, &frontierTrainer->frontierMonStructs[i], tagAlly->frontierMonIDs[i], tagAlly->otID, tagAlly->frontierMonPIDs[i], iv, i, replaceItem, heapID);
     }
     Heap_Free(frontierTrainerData);
-}
-
-static u32 sub_0204BABC(FrontierFieldSystem *frontierFsys, u16 *frontierTrainerData, u16 frontierTrainerIndex, FrontierMonStruct *a3, u8 numPokemon, u16 *partySpecies, u16 *partyHeldItems, FrontierTagBattleAlly *tagAlly, u32 heapID)
-{
-    s32 i;
-    u8 iv;
-    u32 otID;
-    u32 frontierMonIndex;
-    u32 frontierMonIDs[4];
-    u32 frontierMonPIDs[4];
-    BOOL replaceItem = FALSE;
-    FrontierMon frontierMon_1;
-    FrontierMon frontierMon_2;
-    GF_ASSERT(numPokemon <= 4);
-
-    s32 failedItemGenAttempts = 0;
-    s32 count = 0;
-    while (count != numPokemon)
-    {
-        // Get a random frontierMonIndex according to the amount of mons defined for that trainer.
-        u8 index = FrontierRand(frontierFsys) % frontierTrainerData[1];
-        frontierMonIndex = frontierTrainerData[2 + index];
-        GetFrontierMon(&frontierMon_2, frontierMonIndex);
-        for (i = 0; i < count; i++)
-        {
-            GetFrontierMon(&frontierMon_1, frontierMonIDs[i]);
-            // Do not return the same Pokemon twice.
-            if (frontierMon_1.species == frontierMon_2.species)
-            {
-                break;
-            }
-        }
-        if (i != count)
-        {
-            continue;
-        }
-        if (partySpecies)
-        {
-            for (i = 0; i < numPokemon; i++)
-            {
-                if (partySpecies[i] == frontierMon_2.species)
-                {
-                    break;
-                }
-            }
-            if (i != numPokemon)
-            {
-                continue;
-            }
-        }
-        if (failedItemGenAttempts < 50)
-        {
-            // For the amount of Pokemon we have already finished generating:
-            for (i = 0; i < count; i++)
-            {
-                // Get each one and make sure their item does not match the one we are currently working with.
-                GetFrontierMon(&frontierMon_1, frontierMonIDs[i]);
-                if (frontierMon_1.item && frontierMon_1.item == frontierMon_2.item)
-                {
-                    break;
-                }
-            }
-            // If we have a duplicate held item, regenerate the current FrontierMon.
-            if (i != count)
-            {
-                failedItemGenAttempts++;
-                continue;
-            }
-            if (partyHeldItems)
-            {
-                for (i = 0; i < numPokemon; i++)
-                {
-                    if (partyHeldItems[i] == frontierMon_2.item && partyHeldItems[i] != ITEM_NONE)
-                    {
-                        break;
-                    }
-                }
-                if (i != numPokemon) 
-                {
-                    failedItemGenAttempts++;
-                    continue;
-                }
-            }
-        }
-        frontierMonIDs[count] = frontierMonIndex;
-        count++;
-    }
-    iv = GetFrontierTrainerIVs(frontierTrainerIndex); // sub_0204B4D4
-    otID = FrontierRand(frontierFsys) | FrontierRand(frontierFsys) << 16;
-    // If we had 50 or more failed generation attempts:
-    if (failedItemGenAttempts >= 50)
-    {
-        replaceItem = TRUE;
-    }
-    for (i = 0; i < count; i++)
-    {
-        frontierMonPIDs[i] = GenerateFrontierMon(frontierFsys, &a3[i], frontierMonIDs[i], otID, 0, iv, i, replaceItem, heapID);
-    }
-    if (tagAlly == NULL)
-    {
-        return replaceItem;
-    }
-    tagAlly->otID = otID;
-    for (i = 0; i < 2; i++)
-    {
-        tagAlly->frontierMonIDs[i] = frontierMonIDs[i];
-        tagAlly->frontierMonPIDs[i] = frontierMonPIDs[i];
-    }
-    return replaceItem;
 }
 
 static u16 *GetFrontierTrainerData(u32 frontierTrainerIndex, u32 heapID)
