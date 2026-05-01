@@ -1,0 +1,92 @@
+Microphone successfully inited.
+DeSmuME 0.9.12 git#0 x64-JIT SSE2
+SoftRasterizer: Running using 8 additional threads. (Multithreading enabled.)
+
+ROM game code: IPKE
+ROM crc: 97C34165
+ROM serial: NTR-IPKE-USA
+ROM chipID: 0000FFC2
+ROM internal name: POKEMON HG
+ROM developer: Nintendo
+
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+You are challenged by Rival Goobus! 
+Rival Goobus sent out Shuckle!
+Go! Aggron!
+The opposing Shuckle used Sleep Talk!
+But it failed!
+Aggron used Conversion 2!
+Aggron transformed into the Ghost type! ✅
+move 176 damage roll 0
+[92m[Pass] Conversion 2 - Basic test[0m
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+You are challenged by Rival Goobus! 
+Rival Goobus sent out Shuckle!
+Go! Aggron!
+move 55 damage roll -1
+The opposing Shuckle used Water Gun!
+It’s not very effective...
+Aggron used Conversion 2!
+Aggron transformed into the Ghost type! ✅
+move 176 damage roll 0
+[92m[Pass] Conversion 2 - Normalize[0m
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+You are challenged by Rival Goobus! 
+Rival Goobus sent out Shuckle!
+Go! Aggron!
+The opposing Shuckle used Sleep Talk!
+But it failed! ✅
+move 570 damage roll 0
+move 176 damage roll 0
+[92m[Pass] Conversion 2 - Type 3 interaction[0m
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+You are challenged by Rival Goobus! 
+Rival Goobus sent out Shuckle!
+Go! Alakazam!
+move 165 damage roll -10
+The opposing Shuckle used Struggle!
+The opposing Shuckle was damaged by the recoil!
+Alakazam used Conversion 2!
+But it failed! ✅
+[92m[Pass] Conversion 2 - Typeless failure[0m
+Tests complete!
+
+
+Test results:
+Number of tests passed: 4
+Tests failed (0):
+Tests known failing (0):
+

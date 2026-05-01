@@ -101,7 +101,7 @@ u8 LONG_CALL sub_0207B0B0(struct PartyMenu *wk, u8 *buf)
             }
 
             // Priority 4: Unknown (valid) HM field moves.
-            for (i = PARTY_MON_CONTEXT_MENU_FIELD_MOVES_BEGIN; i <= PARTY_MON_CONTEXT_MENU_MAX; i++)
+            for (i = PARTY_MON_CONTEXT_MENU_FIELD_MOVES_BEGIN; i <= PARTY_MON_CONTEXT_MENU_WHIRLPOOL; i++)
             {
                 if (displayedCount == 4) break;
                 if (i == PARTY_MON_CONTEXT_MENU_FLY || i == PARTY_MON_CONTEXT_MENU_FLASH) continue;
@@ -221,6 +221,12 @@ BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int h
                 }
             }
             break;
+        case MOVE_HEADBUTT:
+            if (GetMonData(mon, MON_DATA_MOVE1, NULL) == MOVE_HEADBUTT || GetMonData(mon, MON_DATA_MOVE2, NULL) == MOVE_HEADBUTT || GetMonData(mon, MON_DATA_MOVE3, NULL) == MOVE_HEADBUTT || GetMonData(mon, MON_DATA_MOVE4, NULL) == MOVE_HEADBUTT)
+            {
+                return TRUE;
+            }
+            break;
         /*case MOVE_TELEPORT:
             break;
         case MOVE_DIG:
@@ -235,8 +241,6 @@ BOOL LONG_CALL CanAccessFieldMove(struct PartyPokemon *mon, u16 fieldMove, int h
         case MOVE_SWEET_SCENT:
             break;
         case MOVE_CHATTER:
-            break;
-        case MOVE_HEADBUTT:
             break;
         case MOVE_MILK_DRINK:
             break;
