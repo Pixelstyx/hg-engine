@@ -410,3 +410,18 @@ mov r0, r7
 bl RollMetronomeMove
 ldr r1, =0x022408BA|1
 bx r1
+
+.global GetPokemon_CheckIfTrainer_hook
+GetPokemon_CheckIfTrainer_hook:
+ldr r0, [r4]
+bl ShouldAllowMonCapture
+cmp r0, #0
+beq _returnTo02246728
+ldr r0, =0x02246710 | 1
+bx r0
+
+_returnTo02246728:
+ldr r0, =0x02246728 | 1
+bx r0
+
+.pool

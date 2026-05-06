@@ -1,0 +1,58 @@
+Microphone successfully inited.
+DeSmuME 0.9.12 git#0 x64-JIT SSE2
+SoftRasterizer: Running using 8 additional threads. (Multithreading enabled.)
+
+ROM game code: IPKE
+ROM crc: 238443A7
+ROM serial: NTR-IPKE-USA
+ROM chipID: 0000FFC2
+ROM internal name: POKEMON HG
+ROM developer: Nintendo
+
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+Slot1 auto-selected device type: Retail MC+ROM
+Slot2 auto-selected device type: None (0xFF)
+BackupDevice: size = 4 Mbit
+CPU mode: Interpreter
+Already decrypted.
+WIFI: MAC Address = 00:09:BF:12:34:56
+WIFI: Emulation level is OFF.
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+MC9: Unverified Backup Memory command: 08 FROM 020DDDAC
+MC9: Unverified Backup Memory command: 08 FROM 020DDE54
+You are challenged by Rival Goobus! 
+Rival Goobus sent out Pikachu and Marill!
+Go! Alakazam and Alakazam!
+Alakazam used Growl!
+But it failed!
+Alakazam used Growl!
+But it failed!
+The opposing Pikachu used Dream Eater!
+It doesn’t affect Alakazam...
+The opposing Marill used Dream Eater!
+The opposing Pikachu wasn’t affected!
+expectation[0] ❌
+[93m[Known Failing] Hyper Cutter - Message is accurate to each battler[0m
+Tests complete!
+
+
+Test results:
+Number of tests passed: 0
+Tests failed (0):
+Tests known failing (1):
+	[93mHyper Cutter - Message is accurate to each battler[0m
+

@@ -4060,4 +4060,6 @@ int LONG_CALL GetHeldItemFlingEffect(struct BattleStruct *ctx, int battlerId);
 int LONG_CALL GetHeldItemFlingPower(struct BattleStruct *ctx, int battlerId);
 int LONG_CALL GetHeldItemModifier(struct BattleStruct *ctx, int battlerId, int flag);
 
+BOOL LONG_CALL ShouldAllowMonCapture(struct BattleSystem *bsys);
+
 #endif // BATTLE_H

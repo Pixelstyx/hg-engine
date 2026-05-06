@@ -3637,3 +3637,8 @@ const u8 InternalTypeToHGType[] = {
 int GetSanitisedType(int type) {
     return InternalTypeToHGType[HGTypeToInternalType[type] & 0x1F];
 }
+
+BOOL LONG_CALL ShouldAllowMonCapture(struct BattleSystem *bsys)
+{
+    return !(BattleTypeGet(bsys) & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_TOTEM));
+}
