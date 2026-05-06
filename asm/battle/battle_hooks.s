@@ -411,10 +411,11 @@ bl RollMetronomeMove
 ldr r1, =0x022408BA|1
 bx r1
 
+
 .global GetPokemon_CheckIfTrainer_hook
 GetPokemon_CheckIfTrainer_hook:
 ldr r0, [r4]
-bl ShouldAllowMonCapture
+bl ShouldPreventMonCapture
 cmp r0, #0
 beq _returnTo02246728
 ldr r0, =0x02246710 | 1
@@ -423,5 +424,26 @@ bx r0
 _returnTo02246728:
 ldr r0, =0x02246728 | 1
 bx r0
+
+.pool
+
+
+.global GetPokemon_BallBlocked_hook
+GetPokemon_BallBlocked_hook:
+ldr r0, [r4, #8]
+bl ov07_02233ECC
+ldr r0, [r4, #0]
+bl BattleTypeGet
+movs r1, #1
+lsl r1, r1, #0xe
+tst r0, r1
+beq _returnTo
+add r0, r4, #0
+bl PrintTotemDodgeMessage
+add sp, #0x158
+pop {r3, r4, r5, r6, r7, pc}
+_returnTo:
+ldr r1, =0x0224720A | 1
+bx r1
 
 .pool

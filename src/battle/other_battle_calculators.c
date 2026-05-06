@@ -3638,7 +3638,17 @@ int GetSanitisedType(int type) {
     return InternalTypeToHGType[HGTypeToInternalType[type] & 0x1F];
 }
 
-BOOL LONG_CALL ShouldAllowMonCapture(struct BattleSystem *bsys)
+BOOL LONG_CALL ShouldPreventMonCapture(struct BattleSystem *bsys)
 {
-    return !(BattleTypeGet(bsys) & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_TOTEM));
+    return BattleTypeGet(bsys) & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_TOTEM);
+}
+
+void LONG_CALL PrintTotemDodgeMessage(struct tcb_skill_intp_work *data, MsgData *msgData)
+{
+    MESSAGE_PARAM msg;
+    msg.msg_id = 0x35D; // It dodged your thrown Poké Ball!\nThis Pokémon can’t be caught!
+    msg.msg_tag = TAG_NONE;
+    data->work[0] = BattleMSG_Print(data->bw, msgData, &msg, BattleWorkConfigMsgSpeedGet(data->bw));
+    data->work[1] = 0x1E;
+    data->seq_no = 28; // STATE_GET_POKEMON_DONE_NO_STEALING
 }

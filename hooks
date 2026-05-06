@@ -568,3 +568,4 @@ arm9 PartyMenu_StartContextMenuButtonPressAnim_FromCursorObj 0207CB9C 3
 0012 TryFling 02255F7C 3
 
 0012 GetPokemon_CheckIfTrainer_hook 2246704 0
+0012 GetPokemon_BallBlocked_hook 22471F4 0

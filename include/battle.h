@@ -4060,6 +4060,7 @@ int LONG_CALL GetHeldItemFlingEffect(struct BattleStruct *ctx, int battlerId);
 int LONG_CALL GetHeldItemFlingPower(struct BattleStruct *ctx, int battlerId);
 int LONG_CALL GetHeldItemModifier(struct BattleStruct *ctx, int battlerId, int flag);
 
-BOOL LONG_CALL ShouldAllowMonCapture(struct BattleSystem *bsys);
+BOOL LONG_CALL ShouldPreventMonCapture(struct BattleSystem *bsys);
+void LONG_CALL PrintTotemDodgeMessage(struct tcb_skill_intp_work *data, struct MsgData *msgData);
 
 #endif // BATTLE_H
