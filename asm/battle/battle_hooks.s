@@ -437,12 +437,12 @@ bl BattleTypeGet
 movs r1, #1
 lsl r1, r1, #0xe
 tst r0, r1
-beq _returnTo
+beq _returnTo0224720A
 add r0, r4, #0
 bl PrintTotemDodgeMessage
 add sp, #0x158
 pop {r3, r4, r5, r6, r7, pc}
-_returnTo:
+_returnTo0224720A:
 ldr r1, =0x0224720A | 1
 bx r1
 
