@@ -22,16 +22,17 @@ BOOL ApplyPoisonStep(struct Party *party, u16 location) {
             continue;
         }
         u32 hp = GetMonData(mon, MON_DATA_HP, NULL);
-        if (GetMonData(mon, MON_DATA_ABILITY, NULL) == ABILITY_POISON_HEAL && hp <= GetMonData(mon, MON_DATA_MAXHP, NULL)) {
-            hp++;
+        if (GetMonData(mon, MON_DATA_ABILITY, NULL) == ABILITY_POISON_HEAL) {
+            if (hp < GetMonData(mon, MON_DATA_MAXHP, NULL)) {
+                hp++;
+            }
         }
         else if (hp > 1) {
             hp--;
         }
         SetMonData(mon, MON_DATA_HP, &hp);
         if (GetMonData(mon, MON_DATA_ABILITY, NULL) != ABILITY_POISON_HEAL) {
-            if (hp == 1)
-            {
+            if (hp == 1) {
                 n_survived++;
                 MonApplyFriendshipMod(mon, 7, location); // FRIENDSHIP_EVENT_HEAL_FIELD_PSN
                 ApplyMonMoodModifier(mon, 5); // MON_MOOD_MODIFIER_SURVIVED_PSN
