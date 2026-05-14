@@ -600,3 +600,6 @@ arm9 PartyMenu_StartContextMenuButtonPressAnim_FromCursorObj 0207CB9C 3
 0012 ov12_0224D23C 0224D23C 3
 0012 ov12_0224DD74 0224DD74 3
 0012 GetTypeEffectivenessData 0225260C 3
+
+arm9 ApplyPoisonStep 02054440 2
+arm9 SurvivePoisoning 020544D8 2

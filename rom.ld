@@ -846,3 +846,5 @@ UpdateFriendshipFainted = 0x02248558 | 1;
 StringExpandPlaceholders = 0x0200CBBC | 1;
 
 ov12_02256694 = 0x02256694 | 1;
+
+MonNotFaintedOrEgg = 0x020541B0 | 1;
