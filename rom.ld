@@ -846,3 +846,7 @@ UpdateFriendshipFainted = 0x02248558 | 1;
 StringExpandPlaceholders = 0x0200CBBC | 1;
 
 ov12_02256694 = 0x02256694 | 1;
+
+Daycare_GetBothBoxMonsPtr = 0x0206C1C8 | 1;
+Daycare_TryGetForcedInheritedIV = 0x0206D39C | 1;
+_IVList_Remove = 0x0206C2CC | 1;
