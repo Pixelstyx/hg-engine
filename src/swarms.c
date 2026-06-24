@@ -11,7 +11,6 @@
 void LONG_CALL WildEncounters_ReadFromNarc(EncounterData *encData, u32 mapno);
 
 const u16 sSwarmMapLUT[SWARM_MAP_COUNT][2] = {
-<<<<<<< HEAD
     {MAP_ROUTE_1,                   SWARM_GRASS},
     {MAP_ROUTE_3,                   SWARM_GRASS},
     {MAP_ROUTE_9,                   SWARM_GRASS},
@@ -32,28 +31,6 @@ const u16 sSwarmMapLUT[SWARM_MAP_COUNT][2] = {
     {MAP_VIRIDIAN_FOREST,           SWARM_GRASS},
     {MAP_VERMILION,                 SWARM_SURFING},
     {MAP_VIOLET,                    SWARM_FISHING},
-=======
-    { MAP_R01, SWARM_GRASS },
-    { MAP_R03, SWARM_GRASS },
-    { MAP_R09, SWARM_GRASS },
-    { MAP_R12, SWARM_FISHING },
-    { MAP_R13, SWARM_GRASS },
-    { MAP_W19, SWARM_SURFING },
-    { MAP_R32, SWARM_FISHING },
-    { MAP_R25, SWARM_GRASS },
-    { MAP_R27, SWARM_SURFING },
-    { MAP_R34, SWARM_GRASS },
-    { MAP_R35, SWARM_GRASS },
-    { MAP_R38, SWARM_GRASS },
-    { MAP_R44, SWARM_FISHING },
-    { MAP_R45, SWARM_GRASS },
-    { MAP_R47, SWARM_GRASS },
-    { MAP_D38R0101, SWARM_GRASS },
-    { MAP_D42R0102, SWARM_GRASS },
-    { MAP_D46R0101, SWARM_GRASS },
-    { MAP_T06, SWARM_SURFING },
-    { MAP_T22, SWARM_FISHING },
->>>>>>> upstream/main
 };
 
 BOOL LONG_CALL sub_02097F6C(u32 rand, u16 mapno, u16 swarmValue)
