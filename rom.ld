@@ -870,6 +870,7 @@ UpdateFriendshipFainted = 0x02248558 | 1;
 StringExpandPlaceholders = 0x0200CBBC | 1;
 
 ov12_02256694 = 0x02256694 | 1;
+
 sStarterChoiceCries = 0x021E7398;
 BufferBoxMonNickname = 0x0200BF8C | 1;
 
@@ -880,3 +881,11 @@ SetRoamerData = 0x0202DAB8 | 1;
 Roamers_GetRoamMonStats = 0x0202DA54 | 1;
 Roamer_GetLocation = 0x0202D9F8 | 1;
 ApplyRoamerLocation = 0x02067914 | 1;
+
+ov01_021E7D00 = 0x021E7D00 | 1;
+ov01_021E7D58 = 0x021E7D58 | 1;
+sub_02006088 = 0x02006088 | 1;
+sub_02054874 = 0x02054874 | 1;
+GF_SndHandleMoveVolume = 0x02005408 | 1;
+StopSE = 0x02006154 | 1;
+>>>>>>> Stashed changes

@@ -608,7 +608,10 @@ typedef struct FieldSystem {
     /* 0xAC */ u32 unkAC;
     /* 0xB0 */ u8 unkB0[0x4];
     /* 0xB4 */ s64 unkB4;
-    /* 0xBC */ u8 unkBC[0x28];
+    /* 0xBC */ u8 unkBC[4];
+    /* 0xC0 */ void *unkC0;
+    /* 0xC4 */ int unkC4;
+    /* 0xC8 */ u8 unkC8[0x1C];
     /* 0xE4 */ FollowMon followMon;
     // u8 unk104[4];
     // void *unk108;//struct FieldSystemUnk108 *unk108;
