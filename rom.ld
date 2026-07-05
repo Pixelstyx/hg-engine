@@ -817,10 +817,6 @@ Encounter_New = 0x020506BC | 1;
 TaskManager_Call = 0x02050530 | 1;
 Task_TutorialBattle = 0x0205128C | 1;
 
-MapHeader_GetWeatherType = 0x0203B3E4 | 1;
-Save_SysInfo_RTC_Get = 0x02028D3C | 1;
-FieldSystem_HasPenalty = 0x02055670 | 1;
-
 GetItemAttrSub = 0x02077E48 | 1;
 
 gSystem = 0x021D110C;
@@ -864,13 +860,11 @@ sButtonWindowTemplates = 0x02101654;
 sButtonWindowIDs = 0x021016B4;
 PartyMenu_DisableMainScreenBlend_AfterYesNo = 0x0207CB90 | 1;
 sBattleBgProfileTable = 0x0226E70C;
-
 UpdateFriendshipFainted = 0x02248558 | 1;
 
 StringExpandPlaceholders = 0x0200CBBC | 1;
 
 ov12_02256694 = 0x02256694 | 1;
-
 sStarterChoiceCries = 0x021E7398;
 BufferBoxMonNickname = 0x0200BF8C | 1;
 
@@ -881,6 +875,10 @@ SetRoamerData = 0x0202DAB8 | 1;
 Roamers_GetRoamMonStats = 0x0202DA54 | 1;
 Roamer_GetLocation = 0x0202D9F8 | 1;
 ApplyRoamerLocation = 0x02067914 | 1;
+
+MapHeader_GetWeatherType = 0x0203B3E4 | 1;
+Save_SysInfo_RTC_Get = 0x02028D3C | 1;
+FieldSystem_HasPenalty = 0x02055670 | 1;
 
 GetLocalSoundplateID = 0x021E7D00 | 1;
 ov01_021E7D58 = 0x021E7D58 | 1;

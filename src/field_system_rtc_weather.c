@@ -17,7 +17,7 @@ const MonthDay DiamondDustDates[] = {
     { DECEMBER, 31 },
 }; //_020FA09C
 
-u32 Fsys_GetWeather_HandleDiamondDust(FieldSystem *fieldSystem, u32 mapId) {
+u32 LONG_CALL Fsys_GetWeather_HandleDiamondDust(FieldSystem *fieldSystem, u32 mapId) {
     u8 c;
     u32 weatherType = MapHeader_GetWeatherType(mapId);
     SysInfo_RTC *sysinfo_rtc = Save_SysInfo_RTC_Get(fieldSystem->savedata);
