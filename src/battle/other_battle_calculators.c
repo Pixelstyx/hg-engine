@@ -2910,7 +2910,7 @@ void LONG_CALL SetupCurrentMoveContext(struct BattleSystem *bsys, struct BattleS
  * BattleController_TryMove
  * https://github.com/pret/pokeplatinum/blob/04d9ea4cfad3963feafecf3eb0f4adcbc7aa5063/src/battle/battle_controller.c#L3240
  */
-void LONG_CALL ov12_0224C4D8(struct BattleSystem *bsys, struct BattleStruct *ctx)
+void LONG_CALL ov12_0224C4D8(struct BattleSystem *bsys, struct BattleStruct *ctx) // CONTROLLER_COMMAND_24
 {
     ctx->waza_status_flag = ctx->moveStatusFlagForSpreadMoves[ctx->defence_client];
     int effect = ctx->moveTbl[ctx->current_move_index].effect;
@@ -2919,8 +2919,12 @@ void LONG_CALL ov12_0224C4D8(struct BattleSystem *bsys, struct BattleStruct *ctx
         // Skip vanilla fail message printing
         // ctx->server_seq_no = CONTROLLER_COMMAND_26;
         ctx->server_seq_no = CONTROLLER_COMMAND_35;
-    } else if (effect == MOVE_EFFECT_HIT_IN_3_TURNS && ctx->futureSightHitTurn == TRUE) {
-        LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_FUTURE_SIGHT_DAMAGE);
+    } else if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_HURRICANE) && ctx->futureSightHitTurn == TRUE) {
+        if (effect == MOVE_EFFECT_HIT_IN_3_TURNS) {
+            LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, SUB_SEQ_FUTURE_SIGHT_DAMAGE);
+        } else if (ctx->current_move_index == MOVE_HURRICANE) {
+            LoadBattleSubSeqScript(ctx, ARC_BATTLE_MOVE_SEQ, MOVE_HURRICANE);
+        }
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
     } else {
@@ -2951,7 +2955,7 @@ void LONG_CALL ov12_0224C678(struct BattleSystem *bsys, struct BattleStruct *ctx
     }
 
     int effect = ctx->moveTbl[ctx->current_move_index].effect;
-    if (effect == MOVE_EFFECT_HIT_IN_3_TURNS && ctx->futureSightHitTurn == TRUE) {
+    if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_HURRICANE) && ctx->futureSightHitTurn == TRUE) {
         ctx->server_seq_no = CONTROLLER_COMMAND_HP_CALC;
         ctx->next_server_seq_no = CONTROLLER_COMMAND_HP_CALC;
     } else {

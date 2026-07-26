@@ -12,7 +12,7 @@ void SetupAndStartTotemBattle(TaskManager *taskManager, u16 species, u8 level, u
     FieldSystem *fieldSystem = taskManager->fieldSystem;
     struct BattleSetup *setup = BattleSetup_New(HEAPID_WORLD, BATTLE_TYPE_TOTEM);
     BattleSetup_InitFromFieldSystem(setup, fieldSystem);
-    ov02_02247F30(fieldSystem, species, level, shiny, setup);
+    ov02_02247F30(fieldSystem, species, level, shiny, setup); // FieldSystem_GenerateSingleWildPokemon
 
     struct PartyPokemon *totem = Party_GetMonByIndex(setup->party[BATTLER_ENEMY], 0);
 
@@ -54,7 +54,7 @@ void SetupAndStartTotemBattle(TaskManager *taskManager, u16 species, u8 level, u
             // Move slot 4:
             data_1 = MOVE_DRAGON_DANCE;
             SetMonData(totem, MON_DATA_MOVE4, &data_1);
-            data_1 = GetMoveMaxPP(data_1, 0);
+            data_1 = 1;
             SetMonData(totem, MON_DATA_MOVE4PP, &data_1);
             data_1 = 0;
             SetMonData(totem, MON_DATA_MOVE4PPUP, &data_1);

@@ -23,6 +23,7 @@ enum EndTurnResolutionOrder {
     ENDTURN_AFFECTION_SELF_CURE,
     ENDTURN_TOTEM_TEMPEST,
     ENDTURN_FUTURE_EFFECT,
+    // ENDTURN_TOTEM_TEMPEST_BURN_HEAL,
     ENDTURN_FIRST_EVENT_BLOCK,
     ENDTURN_RESOLVE_SWITCHES_2,
     ENDTURN_AQUA_RING,
@@ -305,46 +306,22 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp) {
                 #endif
 
                 if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
-                && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS)
-                {
-                    switch ((sp->total_turn + 1) % 3)
-                    {
-                        case 1:
-                            LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
-                            sp->next_server_seq_no = sp->server_seq_no;
-                            sp->server_seq_no = 22;
-                            ret = 1;
-                            break;
-                        case 2:
-                            LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
-                            sp->next_server_seq_no = sp->server_seq_no;
-                            sp->server_seq_no = 22;
-                            ret = 1;
-                            break;
-                        case 0:
-                            if (sp->battlemon[BATTLER_PLAYER].hp != 0)
-                            {
-                                ov12_02252D14(bw, sp); //reset damage, status
-                                sp->futureSightHitTurn = TRUE;
-                                sp->futureSightSTAB = TRUE;
-
-                                sp->attack_client = BATTLER_ENEMY;
-                                sp->defence_client = BATTLER_PLAYER;
-                                sp->current_move_index = MOVE_HURRICANE;
-                                sp->damage_power = 70;
-                                sp->move_type = TYPE_FLYING;
-
-                                LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
-                                sp->waza_out_check_on_off |= (SYSCTL_SKIP_STATUS_CHECK | SYSCTL_SKIP_OBEDIENCE_CHECK | SYSCTL_SKIP_PP_DECREMENT);
-                                sp->next_server_seq_no = sp->CONTROLLER_COMMAND_23;
-                                sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                                ret = 1;
+                && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS) {
+                    if ((sp->total_turn + 1) % 3) { // There are turns remaining until tempest hits.
+                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
+                        sp->next_server_seq_no = sp->server_seq_no;
+                        sp->server_seq_no = 22;
+                        ret = 1;
+                    } else { // Add our condition to the queue right before we need it.
+                        for (int i = 0; i < CLIENT_MAX * FUTURE_CONDITION_MAX; i++) {
+                            if (sp->futureConditionQueue[i].conditionType.futureConditionType == FUTURE_CONDITION_NONE && sp->futureConditionQueue[sp->scc_work].defenderSlot == 0) {
+                                sp->futureConditionQueue[i].conditionType.futureConditionType = FUTURE_CONDITION_TOTEM_TEMPEST;
+                                sp->futureConditionQueue[sp->scc_work].defenderSlot = BATTLER_NONE; // This needs to be set or you will get to see an infinite combo.
+                                break;
                             }
-                            break;
-                        default: break;
+                        }
                     }
                 }
-
                 sp->fcc_seq_no++;
                 break;
             }
@@ -365,6 +342,37 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp) {
 
 #endif
                     switch (futureCondition.conditionType.futureConditionType) {
+                        case FUTURE_CONDITION_TOTEM_TEMPEST: {
+                            if (sp->battlemon[BATTLER_PLAYER].hp) { // This condition should only be queued immediately before it happens.
+#ifdef DEBUG_ENDTURN_LOGIC
+                                debug_printf("In Totem Tempest Hit\n");
+#endif
+                                // sp->mp.id = 1752;  // A terrible storm tears into you!
+                                // sp->mp.tag = TAG_NONE;
+
+                                ov12_02252D14(bw, sp); //reset damage, status
+                                sp->futureSightHitTurn = TRUE;
+
+                                // All this stuff is hardcoded for us since it can only happen one way.
+                                sp->defence_client = BATTLER_PLAYER;
+                                sp->attack_client = BATTLER_ENEMY;
+                                sp->current_move_index = MOVE_HURRICANE;
+                                sp->damage_power = 70;
+                                sp->waza_eff_cnt = 100; // effect_chance
+                                sp->move_type = TYPE_FLYING;
+
+                                sp->futureSightSTAB = HasType(sp, sp->attack_client, sp->move_type);
+
+                                LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
+                                sp->waza_out_check_on_off |= (SYSCTL_SKIP_STATUS_CHECK | SYSCTL_SKIP_OBEDIENCE_CHECK | SYSCTL_SKIP_PP_DECREMENT);
+                                sp->next_server_seq_no = CONTROLLER_COMMAND_23;
+                                //sp->wb_seq_no = BEFORE_MOVE_STATE_TYPE_CHART_IMMUNITY;
+                                sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
+                                ret = 1;
+                                sp->futureConditionQueue[sp->scc_work].conditionType.futureConditionType = FUTURE_CONDITION_NONE;
+                            }
+                            break;
+                        }
                         case FUTURE_CONDITION_FUTURE_SIGHT_OR_DOOM_DESIRE: {
                             if (sp->fcc.future_prediction_count[futureCondition.defenderSlot]) {
 #ifdef DEBUG_ENDTURN_LOGIC
@@ -506,6 +514,48 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp) {
                 }
                 break;
             }
+            /*case ENDTURN_TOTEM_TEMPEST_BURN_HEAL: {
+                #ifdef DEBUG_ENDTURN_LOGIC
+                sprintf(buf, "In ENDTURN_TOTEM_TEMPEST_BURN_HEAL\n");
+                debugsyscall(buf);
+                #endif
+
+                if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
+                && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS) {
+                    if (!((sp->total_turn + 1) % 3)) { // Heal all burns immediately after the tempest hits.
+                        BOOL burnHealed = FALSE;
+                        // Heal Burn loop
+                        for (int i = 0; i < client_set_max; i++) {
+                            int client_no = sp->turnOrder[i];
+                            if (sp->battlemon[client_no].hp
+                                && sp->battlemon[client_no].condition & STATUS_BURN) {
+                                if (GetBattlerAbility(sp, client_no) != ABILITY_SHIELD_DUST
+                                    && HeldItemHoldEffectGet(sp, client_no) != HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS)
+                                {
+                                    sp->battlerIdTemp = client_no;
+                                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_HEAL_TARGET_BURN);
+                                    sp->next_server_seq_no = sp->server_seq_no;
+                                    sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
+                                    ret = 1;
+
+                                    burnHealed = TRUE;
+                                }
+                            }
+                        }
+
+                        if (burnHealed) {
+                            // The roaring winds extinguished the burning Pokémon!
+                            // TODO: Fix this.
+                        }
+
+                        sp->next_server_seq_no = sp->server_seq_no;
+                        sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
+                        ret = 1;
+                    }
+                }
+                sp->fcc_seq_no++;
+                break;
+            }*/
             case ENDTURN_FIRST_EVENT_BLOCK: {
 #ifdef DEBUG_ENDTURN_LOGIC
                 debug_printf("In ENDTURN_FIRST_EVENT_BLOCK\n");
@@ -1889,13 +1939,13 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp) {
 
                     if (statsRestored)
                     {
-                        sp->mp.msg_id = 1749;  // The Totem Pokemon's lowered stats have returned to normal!
-                        sp->mp.msg_tag = TAG_NONE; 
+                        sp->mp.id = 1749;  // The Totem Pokemon's lowered stats have returned to normal!
+                        sp->mp.tag = TAG_NONE; 
                         for (int stat = 1; stat < STAT_MAX; stat++)
                         {
                             if (sp->battlemon[BATTLER_ENEMY].states[stat] < targetStatArray[stat])
                             {
-                                sp->mp.msg_id = 1748;  // The Totem Pokemon's lowered stats are returning to normal!
+                                sp->mp.id = 1748;  // The Totem Pokemon's lowered stats are returning to normal!
                                 break;
                             }
                         }
