@@ -881,7 +881,7 @@ Save_SysInfo_RTC_Get = 0x02028D3C | 1;
 FieldSystem_HasPenalty = 0x02055670 | 1;
 
 GetLocalSoundplateID = 0x021E7D00 | 1;
-ov01_021E7D58 = 0x021E7D58 | 1;
+SoundplateIsActive = 0x021E7D58 | 1;
 sub_02006088 = 0x02006088 | 1;
 sub_02054874 = 0x02054874 | 1;
 GF_SndHandleMoveVolume = 0x02005408 | 1;

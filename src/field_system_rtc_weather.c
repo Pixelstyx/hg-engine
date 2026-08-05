@@ -32,7 +32,7 @@ u32 LONG_CALL Fsys_GetWeather_HandleDiamondDust(FieldSystem *fieldSystem, u32 ma
             {
                 u8 month = DiamondDustDates[c].month;
                 u8 day = DiamondDustDates[c].day;
-                if ((sysinfo_rtc->date.month == month) && (sysinfo_rtc->date.day == day)) 
+                if (sysinfo_rtc->date.month == month && sysinfo_rtc->date.day == day)
                 {
                     if (!FieldSystem_HasPenalty(fieldSystem)) 
                     {

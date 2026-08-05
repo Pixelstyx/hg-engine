@@ -112,7 +112,7 @@ void LONG_CALL ov01_021E7DFC(FieldSystem *fieldSystem, int x, int z) {
                         PlaySE(sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_SEQ]);
                     }
                 }
-                fieldSystem->unkC4 = sSoundplateSounds[soundplateStruct->soundplates[z].soundplateSoundID][SOUNDPLATE_SOUND_SEQ];
+                // fieldSystem->unkC4 = sSoundplateSounds[soundplateStruct->soundplates[z].soundplateSoundID][SOUNDPLATE_SOUND_SEQ];
                 u8 volumeIndex = soundplateStruct->soundplates[z].volumeIndex;
                 if (volumeIndex < 3) {
                     GF_SndHandleMoveVolume(0, sBGMVolume[volumeIndex], 15);
@@ -124,7 +124,7 @@ void LONG_CALL ov01_021E7DFC(FieldSystem *fieldSystem, int x, int z) {
         if (fieldSystem->unkC4 != -1) {
             StopSE(fieldSystem->unkC4, 10);
             GF_SndHandleMoveVolume(0, 128, 15);
-            fieldSystem->unkC4 = -1;
+            // fieldSystem->unkC4 = -1;
         }
     }
 }

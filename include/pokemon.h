@@ -6,6 +6,7 @@
 #include "constants/pokemon.h"
 
 #include "party_menu.h"
+#include "task.h"
 #include "trainer_data.h"
 #include "types.h"
 #include "window.h"
@@ -590,35 +591,78 @@ typedef struct FollowMon {
 } FollowMon;
 
 typedef struct FieldSystem {
-    /*  0x0 */ u8 unk0[0x8];
-    /*  0x8 */ void *bg_config;
-    /*  0xc */ void *savedata; // SAVEDATA* savedata;
-    /* 0x10 */ void *taskman; // TaskManager* taskman;
-    /* 0x14 */ MAP_EVENTS *map_events; // what we are here for
-    /* 0x18 */ u8 unk18[0x8];
+    /*  0x0 */ void *fieldProcessManager; // FieldProcessManager
+    /*  0x4 */ void *unk4; // FieldSystemUnkSub4
+    /*  0x8 */ void *bg_config; // BgConfig
+    /*  0xC */ void *savedata; // SaveData
+    /* 0x10 */ void *taskman; // TaskManager
+    /* 0x14 */ MAP_EVENTS *map_events; // MapEvents
+    /* 0x18 */ int bottomScreenType;
+    /* 0x1C */ int unk1C;
     /* 0x20 */ Location *location;
-    /* 0x24 */ u8 unk24[0xC];
-    /* 0x30 */ void * /*MAPMATRIX**/ map_matrix;
-    /* 0x34 */ u8 unk34[0x8];
-    /* 0x3C */ void * /*MapObjectMan**/ mapObjectMan;
+    /* 0x24 */ void *camera; // Camera
+    /* 0x28 */ void *unk28;
+    /* 0x2C */ void *mapLoadManager; // MapLoadManager
+    /* 0x30 */ void *map_matrix; // MapMatrix
+    /* 0x34 */ void *areaDataManager; // AreaDataManager
+    /* 0x38 */ void *mapObjectsToPreload; // MapObjectsToPreload
+    /* 0x3C */ void *mapObjectMan; // MapObjectManager
     /* 0x40 */ FIELD_PLAYER_AVATAR *playerAvatar;
-    /* 0x44 */ u8 unk44[0x8];
-    /* 0x4C */ void *fog_data;
-    /* 0x50 */ u8 unk50[0x5C];
+    /* 0x44 */ void *fieldEffectManager; // FieldEffectManager
+    /* 0x48 */ void *modelAttributes; // ModelAttributes
+    /* 0x4C */ void *fog_data; // FogData
+    /* 0x50 */ void *areaLightManager; // AreaLightManager
+    /* 0x54 */ void *mapPropAnimationManager; // MapPropAnimationManager
+    /* 0x58 */ void *mapPropOneShotAnimationManager; // MapPropOneShotAnimationManager
+    /* 0x5C */ void *terrainAttributes; // TerrainAttributes
+    /* 0x60 */ u32 unk60;
+    /* 0x64 */ BOOL skipMapAttributes;
+    /* 0x68 */ void *signpost; // Signpost
+    /* 0x6C */ BOOL runningFieldMap;
+    /* 0x70 */ int mapLoadType;
+    /* 0x74 */ void *mapLoadMode; // const struct MapLoadMode
+    /* 0x78 */ u16 unk78;
+    /* 0x7A */ u16 lastFacingDirection;
+    /* 0x7C */ u16 reverseTurnFrameSteps;
+    /* 0x7E */ u16 encounterInhibitSteps;
+    /* 0x80 */ void *unk80; // UnkStruct_02059E1C
+    /* 0x84 */ void *unk84; // UnkStruct_0205AC88
+    /* 0x88 */ u8 filler_88[0x8];
+    /* 0x90 */ int unk90;
+    /* 0x94 */ void *bagCursor; // BagCursor
+    /* 0x98 */ void *dynamicTerrainHeightManager; // DynamicTerrainHeightManager
+    /* 0x9C */ void *mapPropManager; // MapPropManager
+    /* 0xA0 */ void *frontierFsys; // FrontierFieldSystem
+    /* 0xA4 */ void *linkBattleRuleset; // Save_LinkBattleRuleset
+    /* 0xA8 */ void *unkA8; // UnkStruct_02092BB8
     /* 0xAC */ u32 unkAC;
-    /* 0xB0 */ u8 unkB0[0x4];
+    /* 0xB0 */ void *unkB0;
     /* 0xB4 */ s64 unkB4;
-    /* 0xBC */ u8 unkBC[4];
-    /* 0xC0 */ void *unkC0;
+    /* 0xBC */ int unkBC;
+    /* 0xC0 */ void *unkC0; // UnkStruct_FieldSysC0
     /* 0xC4 */ int unkC4;
-    /* 0xC8 */ u8 unkC8[0x1C];
+    /* 0xC8 */ void *unkC8; // FieldSystemUnkSubC8
+    /* 0xCC */ void *unkCC;
+    /* 0xD0 */ u16 lastTouchMenuInput;
+    /* 0xD2 */ u8 unkD2_0 : 6;
+               u8 unkD2_6 : 1;
+               u8 unkD2_7 : 1;
+    /* 0xD3 */ u8 unkD3;
+    /* 0xD4 */ u8 filler_D4[0x4];
+    /* 0xD8 */ SysTask *unk_D8;
+    /* 0xDC */ void *viewPhotoTask; // FieldViewPhoto
+    /* 0xE0 */ int lastStartMenuAction;
     /* 0xE4 */ FollowMon followMon;
-    // u8 unk104[4];
-    // void *unk108;//struct FieldSystemUnk108 *unk108;
-    // u8 filler_10C[8];
-    // void *unk114;//struct UnkFsysSub_114* unk114;
-    // void *bugContest;//BUGCONTEST* bugContest;
-    // u8 unk11C[0xC];
+    void *unk104;
+    void *unk108; // FieldSystemUnkSub108
+    int menuInputState; // MenuInputStateMgr
+    u8 unk_110;
+    u8 unk_111[3];
+    void *phoneRingManager; // GearPhoneRingManager
+    void *bugContest; // BugContest
+    fx32 unk11C;
+    void *unk120; // FieldSystemUnkSub120
+    u32 judgeStatPosition;
 } FieldSystem; // size: 0x128
 
 struct IconFormChangeData {
