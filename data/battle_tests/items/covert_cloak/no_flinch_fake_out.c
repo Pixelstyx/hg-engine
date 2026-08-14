@@ -2,8 +2,8 @@
 #include "../../battle_tests.h"
 BEGIN_TEST
 {
-    .battleType = BATTLE_TYPE_SINGLE,
-    .weather = WEATHER_NONE,
+    .battleType = BATTLE_TYPE_TRAINER,
+    .weather = FIELD_CONDITION_NONE,
     .fieldCondition = 0,
     .terrain = TERRAIN_NONE,
 
@@ -91,6 +91,5 @@ BEGIN_TEST
         { .expectationType = EXPECTATION_TYPE_MESSAGE, .expectationValue.message = "The opposing Zigzagoon endured the hit!" },
         { .expectationType = EXPECTATION_TYPE_MESSAGE_DOES_NOT_CONTAIN, .expectationValue.message = "The opposing Zigzagoon flinched" }
     },
-    .knownFailing = TRUE
 }
 END_TEST

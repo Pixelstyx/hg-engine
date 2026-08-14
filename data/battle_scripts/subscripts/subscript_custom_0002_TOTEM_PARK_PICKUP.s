@@ -1,4 +1,5 @@
-.include "asm/include/battle_commands.inc"
+#include "constants/battle_constants.h"
+.include "battle_commands.inc"
 
 .data
 
@@ -25,77 +26,77 @@ _Start:
 
 _DefaultMessage:
     // An Aipom hands {0} a {1}!
-    PrintMessage 1754, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1786, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _CrispMessage:
     // An Aipom hands {0} a perfectly crisp {1}!
-    PrintMessage 1755, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1787, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _GlitteringMessage:
     // An Aipom hands {0} a glittering {1}!
-    PrintMessage 1756, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1788, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _MeltingMessage:
     // An Aipom hands {0} a {1}! Hurry, or it’ll melt!
-    PrintMessage 1757, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1789, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _CautiousMessage:
     // An Aipom cautiously hands {0} a {1}!
-    PrintMessage 1758, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1790, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _OutOfSeasonMessage:
     // An Aipom hands {0} a {1}! At this time of year?
-    PrintMessage 1759, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1791, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _BrightMessage:
     // An Aipom hands {0} a blindingly bright {1}!
-    PrintMessage 1760, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1792, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _LeakMessage:
     // An Aipom hands {0} a {1}! Watch your step!
-    PrintMessage 1761, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1793, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _WeatherMessage:
     // An Aipom hands {0} a {1}! How’s the weather over there?
-    PrintMessage 1762, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1794, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _WarmMessage:
     // An Aipom hands {0} a pleasantly warm {1}!
-    PrintMessage 1763, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1795, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _PointyMessage:
     // An Aipom hands {0} a {1}! Pointy!
-    PrintMessage 1764, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1796, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _WellChewedMessage:
     // An Aipom hands {0} a well-chewed {1}!
-    PrintMessage 1765, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1797, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _SurprisingMessage:
     // An Aipom hands {0} an... {1}? Where did they get that?!
-    PrintMessage 1766, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1798, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _HeftyMessage:
     // An Aipom hands {0} a hefty {1}!
-    PrintMessage 1767, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1799, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     GoTo _Cleanup
 
 _VeryHeavyMessage:
     // An Aipom, with considerable strain, hoists an {1} into {0}’s hands!
-    PrintMessage 1768, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1800, TAG_NICKNAME_ITEM, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
 
 _Cleanup: 
     Wait 

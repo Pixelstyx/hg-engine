@@ -1,4 +1,5 @@
-.include "asm/include/battle_commands.inc"
+#include "constants/battle_constants.h"
+.include "battle_commands.inc"
 
 .data
 
@@ -9,7 +10,7 @@ _Start:
     PlayBattleAnimation BATTLER_CATEGORY_MSG_TEMP, BATTLE_ANIMATION_STAT_DROP
     Wait 
     // The {1} lowered {0}’s {2}!
-    PrintMessage 1770, TAG_NICKNAME_ITEM_STAT, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
+    PrintMessage 1802, TAG_NICKNAME_ITEM_STAT, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     Wait 
     WaitButtonABTime 30
     UpdateVar OPCODE_SET, BSCRIPT_VAR_TEMP_DATA, 18

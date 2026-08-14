@@ -14,8 +14,8 @@ const struct TestBattleScenario BattleTests[] = {
 
 #endif
 
-    {   .battleType = BATTLE_TYPE_SINGLE,
-        .weather = WEATHER_NONE,
+    {   .battleType = BATTLE_TYPE_TRAINER,
+        .weather = FIELD_CONDITION_NONE,
         .fieldCondition = 0,
         .terrain = TERRAIN_NONE,
         .playerParty = {
@@ -102,7 +102,7 @@ const struct TestBattleScenario BattleTests[] = {
         },
         .expectations = {
             { .expectationType = EXPECTATION_TYPE_HP_BAR, .battlerIDOrPartySlot = BATTLER_ENEMY_FIRST, .expectationValue.hpTaken = { 29, 29, 30, 30, 31, 31, 31, 31, 31, 31, 32, 32, 32, 34, 34, 35 } },
-            { .expectationType = EXPECTATION_TYPE_MESSAGE, .expectationValue.message = "The opposing Garchomp's Rough Skin hurt Golem!" },
+            { .expectationType = EXPECTATION_TYPE_MESSAGE, .expectationValue.message = "Garchomp's Rough Skin" },
             { .expectationType = EXPECTATION_TYPE_MESSAGE, .expectationValue.message = "Pointed stones float in the air around the opposing side!" },
             { .expectationType = EXPECTATION_TYPE_MESSAGE, .expectationValue.message = "Golem lost some of its HP!" },
         },

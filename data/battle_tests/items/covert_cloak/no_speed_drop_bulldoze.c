@@ -2,8 +2,8 @@
 #include "../../battle_tests.h"
 BEGIN_TEST
 {
-    .battleType = BATTLE_TYPE_DOUBLE,
-    .weather = WEATHER_NONE,
+    .battleType = BATTLE_TYPE_DOUBLES,
+    .weather = FIELD_CONDITION_NONE,
     .fieldCondition = 0,
     .terrain = TERRAIN_NONE,
 
@@ -117,6 +117,5 @@ BEGIN_TEST
         { .expectationType = EXPECTATION_TYPE_NOT_MESSAGE, .expectationValue.message = "The opposing Pawniard's Speed fell!" },
         { .expectationType = EXPECTATION_TYPE_NOT_MESSAGE, .expectationValue.message = "The opposing Pawniard's Defiant raised its Attack sharply!" },
     },
-    .knownFailing = TRUE
 }
 END_TEST

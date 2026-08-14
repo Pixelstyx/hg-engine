@@ -1,4 +1,5 @@
-.include "asm/include/battle_commands.inc"
+#include "constants/battle_constants.h"
+.include "battle_commands.inc"
 
 .data
 
@@ -17,7 +18,7 @@ _CheckTempestRemainder:
 
 _HandleTempestBuildup:
     // A wicked gust starts to stir!
-    PrintMessage 1750, TAG_NONE
+    PrintMessage 1782, TAG_NONE
     // UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_TAILWIND
     // PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     Wait
@@ -26,7 +27,7 @@ _HandleTempestBuildup:
 
 _HandleTempestBuildup_Strong:
     // A horrible wind is howling!
-    PrintMessage 1751, TAG_NONE
+    PrintMessage 1783, TAG_NONE
     // UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_TAILWIND
     // PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     Wait
@@ -37,10 +38,10 @@ _HandleTempestMove:
     UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_HURRICANE
     PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     // A terrible storm tears into you!
-    PrintMessage 1752, TAG_NONE
+    PrintMessage 1784, TAG_NONE
     Wait
     WaitButtonABTime 30
 /*
     // The roaring winds extinguished the burning Pokémon!
-    PrintMessage 1753, TAG_NONE*/
+    PrintMessage 1785, TAG_NONE*/
     End
