@@ -1874,106 +1874,106 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                         }
                     }
 
-                sp->endTurnEventBlockSequenceNumber++;
-                break;
-            }
-            case THIRD_EVENT_BLOCK_END: {
-                if (sp->scc_work >= client_set_max) {
-                    sp->scc_work = 0;
-                    sp->fcc_seq_no++;
+                    sp->endTurnEventBlockSequenceNumber++;
+                    break;
                 }
+                case THIRD_EVENT_BLOCK_END: {
+                    if (sp->scc_work >= client_set_max) {
+                        sp->scc_work = 0;
+                        sp->fcc_seq_no++;
+                    }
 
-                break;
-            }
-            case ENDTURN_TOTEM_STAT_RESTORE:
-            {
-                #ifdef DEBUG_ENDTURN_LOGIC
-                sprintf(buf, "In ENDTURN_TOTEM_STAT_RESTORE\n");
-                debugsyscall(buf);
-                #endif
-
-                if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM)
+                    break;
+                }
+                case ENDTURN_TOTEM_STAT_RESTORE:
                 {
-                    int targetStatArray[8] = {6, 6, 6, 6, 6, 6, 6, 6};
-                    switch (sp->battlemon[BATTLER_ENEMY].species)
-                    {
-                        case SPECIES_GYARADOS:
-                            targetStatArray[STAT_SPECIAL_DEFENSE]++; // +1 Special Defense
-                            targetStatArray[STAT_SPEED]++; // +1 Speed
-                            break;
-                        case SPECIES_AMBIPOM:
-                            targetStatArray[STAT_ATTACK]++; // +1 Attack
-                            targetStatArray[STAT_DEFENSE]++; // +1 Defense
-                            targetStatArray[STAT_SPECIAL_DEFENSE]++; // +1 Special Defense
-                        default: break;
-                    }
+                    #ifdef DEBUG_ENDTURN_LOGIC
+                    sprintf(buf, "In ENDTURN_TOTEM_STAT_RESTORE\n");
+                    debugsyscall(buf);
+                    #endif
 
-                    BOOL statsRestored = FALSE;
-                    // Skip STAT_HP (0)
-                    for (int stat = 1; stat < STAT_MAX; stat++)
+                    if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM)
                     {
-                        if (sp->battlemon[BATTLER_ENEMY].states[stat] < targetStatArray[stat])
+                        int targetStatArray[8] = {6, 6, 6, 6, 6, 6, 6, 6};
+                        switch (sp->battlemon[BATTLER_ENEMY].species)
                         {
-                            sp->battlemon[BATTLER_ENEMY].states[stat]++;
-                            statsRestored = TRUE;
+                            case SPECIES_GYARADOS:
+                                targetStatArray[STAT_SPECIAL_DEFENSE]++; // +1 Special Defense
+                                targetStatArray[STAT_SPEED]++; // +1 Speed
+                                break;
+                            case SPECIES_AMBIPOM:
+                                targetStatArray[STAT_ATTACK]++; // +1 Attack
+                                targetStatArray[STAT_DEFENSE]++; // +1 Defense
+                                targetStatArray[STAT_SPECIAL_DEFENSE]++; // +1 Special Defense
+                            default: break;
                         }
-                    }
 
-                    if (statsRestored)
-                    {
-                        sp->mp.id = 1781;  // The Totem Pokemon's lowered stats have returned to normal!
-                        sp->mp.tag = TAG_NONE; 
+                        BOOL statsRestored = FALSE;
+                        // Skip STAT_HP (0)
                         for (int stat = 1; stat < STAT_MAX; stat++)
                         {
                             if (sp->battlemon[BATTLER_ENEMY].states[stat] < targetStatArray[stat])
                             {
-                                sp->mp.id = 1780;  // The Totem Pokemon's lowered stats are returning to normal!
-                                break;
+                                sp->battlemon[BATTLER_ENEMY].states[stat]++;
+                                statsRestored = TRUE;
                             }
                         }
-                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_STAT_RESTORE);
+
+                        if (statsRestored)
+                        {
+                            sp->mp.id = 1781;  // The Totem Pokemon's lowered stats have returned to normal!
+                            sp->mp.tag = TAG_NONE; 
+                            for (int stat = 1; stat < STAT_MAX; stat++)
+                            {
+                                if (sp->battlemon[BATTLER_ENEMY].states[stat] < targetStatArray[stat])
+                                {
+                                    sp->mp.id = 1780;  // The Totem Pokemon's lowered stats are returning to normal!
+                                    break;
+                                }
+                            }
+                            LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_STAT_RESTORE);
+                            sp->next_server_seq_no = sp->server_seq_no;
+                            sp->server_seq_no = 22;
+                            ret = 1;
+                        }
+                    }
+                    sp->fcc_seq_no++;
+                    break;
+                }
+                case ENDTURN_TOTEM_PARK_PICKUP:
+                {
+                    #ifdef DEBUG_ENDTURN_LOGIC
+                    sprintf(buf, "In ENDTURN_TOTEM_PARK_PICKUP\n");
+                    debugsyscall(buf);
+                    #endif
+
+                    if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
+                    && sp->battlemon[BATTLER_ENEMY].species == SPECIES_AMBIPOM
+                    && sp->battlemon[BATTLER_ENEMY].item == ITEM_NONE)
+                    {
+                        // If the Totem Pokemon is badly poisoned, set our held item to be a Lum Berry.
+                        // If the Totem Pokemon has any other non-volatile status, there is a 1 in 3 chance instead.
+                        if ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_BAD_POISON)
+                        || ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_ANY_PERSISTENT) && (BattleRand(bw) % 3 == 0)))
+                        {
+                            sp->item_work = ITEM_LUM_BERRY;
+                        }
+                        else // Otherwise, pick a random item from a set list.
+                        {
+                            int parkItems[22] = {ITEM_LUM_BERRY, ITEM_FANCY_APPLE, ITEM_COMET_SHARD, ITEM_RARE_CANDY, ITEM_CASTELIACONE, ITEM_HEART_SCALE, ITEM_TOXIC_ORB, ITEM_SNOWBALL, ITEM_KINGS_ROCK, ITEM_LIGHT_BALL, ITEM_DUBIOUS_DISC, ITEM_LEEK, ITEM_UTILITY_UMBRELLA, ITEM_HEAT_ROCK, ITEM_POISON_BARB, ITEM_TIN_OF_BEANS, ITEM_ODD_KEYSTONE, ITEM_CHIPPED_POT, ITEM_THICK_CLUB, ITEM_RARE_BONE, ITEM_HARD_STONE, ITEM_IRON_BALL};
+                            sp->item_work = parkItems[BattleRand(bw) % 22];
+                        }
+                        sp->battlemon[BATTLER_ENEMY].item = sp->item_work;
+                        sp->battlerIdTemp = BATTLER_ENEMY; // TODO: Check if this one is necessary.
+                        sp->state_client = BATTLER_ENEMY; 
+                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_PARK_PICKUP);
                         sp->next_server_seq_no = sp->server_seq_no;
                         sp->server_seq_no = 22;
                         ret = 1;
                     }
+                    sp->fcc_seq_no++;
+                    break;
                 }
-                sp->fcc_seq_no++;
-                break;
-            }
-            case ENDTURN_TOTEM_PARK_PICKUP:
-            {
-                #ifdef DEBUG_ENDTURN_LOGIC
-                sprintf(buf, "In ENDTURN_TOTEM_PARK_PICKUP\n");
-                debugsyscall(buf);
-                #endif
-
-                if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
-                && sp->battlemon[BATTLER_ENEMY].species == SPECIES_AMBIPOM
-                && sp->battlemon[BATTLER_ENEMY].item == ITEM_NONE)
-                {
-                    // If the Totem Pokemon is badly poisoned, set our held item to be a Lum Berry.
-                    // If the Totem Pokemon has any other non-volatile status, there is a 1 in 3 chance instead.
-                    if ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_BAD_POISON)
-                    || ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_ANY_PERSISTENT) && (BattleRand(bw) % 3 == 0)))
-                    {
-                        sp->item_work = ITEM_LUM_BERRY;
-                    }
-                    else // Otherwise, pick a random item from a set list.
-                    {
-                        int parkItems[22] = {ITEM_LUM_BERRY, ITEM_FANCY_APPLE, ITEM_COMET_SHARD, ITEM_RARE_CANDY, ITEM_CASTELIACONE, ITEM_HEART_SCALE, ITEM_TOXIC_ORB, ITEM_SNOWBALL, ITEM_KINGS_ROCK, ITEM_LIGHT_BALL, ITEM_DUBIOUS_DISC, ITEM_LEEK, ITEM_UTILITY_UMBRELLA, ITEM_HEAT_ROCK, ITEM_POISON_BARB, ITEM_TIN_OF_BEANS, ITEM_ODD_KEYSTONE, ITEM_CHIPPED_POT, ITEM_THICK_CLUB, ITEM_RARE_BONE, ITEM_HARD_STONE, ITEM_IRON_BALL};
-                        sp->item_work = parkItems[BattleRand(bw) % 22];
-                    }
-                    sp->battlemon[BATTLER_ENEMY].item = sp->item_work;
-                    sp->battlerIdTemp = BATTLER_ENEMY; // TODO: Check if this one is necessary.
-                    sp->state_client = BATTLER_ENEMY; 
-                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_PARK_PICKUP);
-                    sp->next_server_seq_no = sp->server_seq_no;
-                    sp->server_seq_no = 22;
-                    ret = 1;
-                }
-                sp->fcc_seq_no++;
-                break;
-            }
             // TODO
             case ENDTURN_RESOLVE_SWITCHES_4: {
                 #ifdef DEBUG_ENDTURN_LOGIC
