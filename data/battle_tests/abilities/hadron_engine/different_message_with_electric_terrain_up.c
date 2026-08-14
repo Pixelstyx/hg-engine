@@ -2,8 +2,8 @@
 #include "../../battle_tests.h"
 BEGIN_TEST
 {
-    .battleType = BATTLE_TYPE_SINGLE,
-    .weather = WEATHER_NONE,
+    .battleType = BATTLE_TYPE_TRAINER,
+    .weather = FIELD_CONDITION_NONE,
     .fieldCondition = 0,
     .terrain = ELECTRIC_TERRAIN,
 
@@ -15,7 +15,7 @@ BEGIN_TEST
             .ability = ABILITY_HADRON_ENGINE,
             .item = ITEM_NONE,
             .moves = {MOVE_SLEEP_TALK, MOVE_NONE, MOVE_NONE, MOVE_NONE},
-            .hp = 0,
+            .hp = FULL_HP,
             .status = 0,
             .condition2 = 0,
             .moveEffectFlags = 0,
@@ -35,7 +35,7 @@ BEGIN_TEST
             .ability = ABILITY_SNOW_CLOAK,
             .item = ITEM_NONE,
             .moves = {MOVE_SLEEP_TALK, MOVE_NONE, MOVE_NONE, MOVE_NONE},
-            .hp = 0,
+            .hp = FULL_HP,
             .status = 0,
             .condition2 = 0,
             .moveEffectFlags = 0,
