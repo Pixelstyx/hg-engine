@@ -59,20 +59,13 @@ u8 LONG_CALL sub_0207B0B0(struct PartyMenu *wk, u8 *buf)
 
             int fieldEffectsToDisplay[4];
 
-<<<<<<< HEAD
-            // Priority 1: Known field moves.
-            for (i = 0; i < MAX_MON_MOVES; ++i)
-            {
-=======
             for (i = 0; i < MAX_MON_MOVES; ++i) {
->>>>>>> upstream/main
                 move = GetMonData(pp, MON_DATA_MOVE1 + i, NULL);
                 if (move == MOVE_NONE) {
                     break;
                 }
 
                 fieldEffect = MoveId_GetFieldEffectId(move);
-<<<<<<< HEAD
                 if (fieldEffect > PARTY_MON_CONTEXT_MENU_FLASH && fieldEffect != 0xFF)
                 {
                     fieldEffectsToDisplay[displayedCount] = fieldEffect;
@@ -120,16 +113,6 @@ u8 LONG_CALL sub_0207B0B0(struct PartyMenu *wk, u8 *buf)
         }
         else
         {
-=======
-                if (fieldEffect != 0xFF) {
-                    buf[count] = fieldEffect;
-                    ++count;
-                    PartyMenu_ContextMenuAddFieldMove(wk, move, fieldMoveIndex);
-                    ++fieldMoveIndex;
-                }
-            }
-        } else {
->>>>>>> upstream/main
             buf[count] = PARTY_MON_CONTEXT_MENU_QUIT;
             ++count;
         }
@@ -315,13 +298,13 @@ u32 *GetCompleteLearnset(struct PartyPokemon *mon, int heapID) {
 
     // Load TM learnset.
     u32 machineLearnset[MACHINE_LEARNSETS_BITFIELD_COUNT];
-    ArchiveDataLoadOfs(machineLearnset, ARC_CODE_ADDONS, CODE_ADDON_MACHINE_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32), MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
+    ReadFromNarcMemberByIdPair(machineLearnset, ARC_CODE_ADDONS, CODE_ADDON_MACHINE_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32), MACHINE_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
 
     // Add TM learnset to returnTable.
 
     // Load tutor learnset.
     u32 tutorLearnset[TUTOR_LEARNSETS_BITFIELD_COUNT];
-    ArchiveDataLoadOfs(tutorLearnset, ARC_CODE_ADDONS, CODE_ADDON_TUTOR_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32), TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
+    ReadFromNarcMemberByIdPair(tutorLearnset, ARC_CODE_ADDONS, CODE_ADDON_TUTOR_LEARNSETS, PokeOtherFormMonsNoGet(species, form) * TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32), TUTOR_LEARNSETS_BITFIELD_COUNT * sizeof(u32));
 
     // Add tutorLearnset to returnTable.
 
