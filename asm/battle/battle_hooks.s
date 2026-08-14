@@ -768,3 +768,15 @@ ldr r5, = 0x022470CA | 1 // near end of case. r0 and r4 are still in use
 bx r5
 
 .pool
+
+.global TrainerAI_Init_AssignAIFlags_hook
+TrainerAI_Init_AssignAIFlags_hook:
+// no need to preserve original instructions.
+mov r0, r6 // Move battleSystem into r0
+mov r1, r5 // Move ctx into r1
+ldr r2, [sp, #4] // Store battlerID in r2
+bl AssignAIFlags
+ldr r0, =0x0221BEEE | 1 // We are right at the end of the function, no registers need preserving.
+bx r0
+
+.pool

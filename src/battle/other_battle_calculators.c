@@ -4433,3 +4433,24 @@ void LONG_CALL PrintBallBlockedMessage(struct tcb_skill_intp_work *data)
         // debug_printf("Case: %d\n", data->seq_no);
     }
 }
+
+#define AI_FLAG_BASIC           (1 << 0)
+#define AI_FLAG_EVAL_ATTACK     (1 << 1)
+#define AI_FLAG_EXPERT          (1 << 2)
+#define AI_FLAG_DOUBLES         (1 << 7)
+#define AI_FLAG_ROAMING_POKEMON (1 << 29)
+
+void LONG_CALL AssignAIFlags(struct BattleSystem *battleSystem, struct BattleStruct *ctx, u8 battlerID) {
+    if (battleSystem->battleType & BATTLE_TYPE_ROAMER) {
+        ctx->aiWorkTable.ai_think_bit = AI_FLAG_ROAMING_POKEMON;
+    } else if (battleSystem->battleType & BATTLE_TYPE_TOTEM) {
+        ctx->aiWorkTable.ai_think_bit = (AI_FLAG_BASIC | AI_FLAG_EVAL_ATTACK | AI_FLAG_EXPERT);
+    } else {
+        ctx->aiWorkTable.ai_think_bit = battleSystem->trainers[battlerID].aibit;
+    }
+
+    // Force double-battle strategies, if applicable.
+    if (battleSystem->battleType & BATTLE_TYPE_DOUBLE) {
+        ctx->aiWorkTable.ai_think_bit |= AI_FLAG_DOUBLES;
+    }
+}

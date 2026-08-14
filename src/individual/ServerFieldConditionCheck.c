@@ -328,18 +328,15 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp) {
             case ENDTURN_FUTURE_EFFECT: {
 #ifdef DEBUG_ENDTURN_LOGIC
                 debug_printf("In ENDTURN_FUTURE_EFFECT\n");
-
 #endif
 
                 while (sp->scc_work < CLIENT_MAX * FUTURE_CONDITION_MAX) {
 #ifdef DEBUG_ENDTURN_LOGIC
                     debug_printf("scc_work: %d\n", sp->scc_work);
-
 #endif
                     futureCondition = sp->futureConditionQueue[sp->scc_work];
 #ifdef DEBUG_ENDTURN_LOGIC
                     debug_printf("Client: %d, Condition: %d\n", futureCondition.defenderSlot, futureCondition.conditionType.futureConditionType);
-
 #endif
                     switch (futureCondition.conditionType.futureConditionType) {
                         case FUTURE_CONDITION_TOTEM_TEMPEST: {
