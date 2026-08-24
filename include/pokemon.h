@@ -638,10 +638,10 @@ typedef struct FieldSystem {
     /* 0xA8 */ void *unkA8; // UnkStruct_02092BB8
     /* 0xAC */ u32 unkAC;
     /* 0xB0 */ void *unkB0;
-    /* 0xB4 */ s64 unkB4;
+    /* 0xB4 */ s64 unkB4 __attribute__((packed, aligned(4)));
     /* 0xBC */ int unkBC;
     /* 0xC0 */ void *unkC0; // UnkStruct_FieldSysC0
-    /* 0xC4 */ int unkC4;
+    /* 0xC4 */ int environmentSoundState;
     /* 0xC8 */ void *unkC8; // FieldSystemUnkSubC8
     /* 0xCC */ void *unkCC;
     /* 0xD0 */ u16 lastTouchMenuInput;

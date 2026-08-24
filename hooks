@@ -654,4 +654,4 @@ arm9 EncounterSlot_WildMonSlotRoll_Headbutt 022477C0 0
 0012 PlayerTrainerVictoryBGM_hook 0224DA9E 3
 
 arm9 Fsys_GetWeather_HandleDiamondDust 0203BBB4 2
-0001 ov01_021E7DFC 021E7DFC 3
+0001 FieldSystem_ProcessSoundplateAtCoords 021E7DFC 3

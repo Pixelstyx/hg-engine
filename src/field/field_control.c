@@ -89,13 +89,13 @@ static BOOL WeatherMakesNoise(u32 weather) {
     || weather == WEATHER_SYS_STORM;
 };
 
-void LONG_CALL ov01_021E7DFC(FieldSystem *fieldSystem, int x, int z) {
+void LONG_CALL FieldSystem_ProcessSoundplateAtCoords(FieldSystem *fieldSystem, int x, int z) {
     SoundplateStruct *soundplateStruct = sub_02054874(fieldSystem, x, z);
     
-    if (fieldSystem->unkC4 == -2) {
-        fieldSystem->unkC4 = -1;
-    } else if (fieldSystem->unkC4 == -3) {
-        fieldSystem->unkC4 = -1;
+    if (fieldSystem->environmentSoundState == -2) {
+        fieldSystem->environmentSoundState = -1;
+    } else if (fieldSystem->environmentSoundState == -3) {
+        fieldSystem->environmentSoundState = -1;
     }
 
     if (WeatherMakesNoise(Fsys_GetWeather_HandleDiamondDust(fieldSystem, fieldSystem->location->mapId))) return;
@@ -105,14 +105,14 @@ void LONG_CALL ov01_021E7DFC(FieldSystem *fieldSystem, int x, int z) {
         if (SoundplateIsActive(fieldSystem, soundplateStruct, z)) {
             u8 soundplateSoundID = soundplateStruct->soundplates[z].soundplateSoundID;
             if (soundplateSoundID < 16) {
-                if (fieldSystem->unkC4 != sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_SEQ]) {
+                if (fieldSystem->environmentSoundState != sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_SEQ]) {
                     if (sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_UNK_BOOL] == TRUE) {
                         sub_02006088(sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_SEQ]);
                     } else {
                         PlaySE(sSoundplateSounds[soundplateSoundID][SOUNDPLATE_SOUND_SEQ]);
                     }
                 }
-                // fieldSystem->unkC4 = sSoundplateSounds[soundplateStruct->soundplates[z].soundplateSoundID][SOUNDPLATE_SOUND_SEQ];
+                fieldSystem->environmentSoundState = sSoundplateSounds[soundplateStruct->soundplates[z].soundplateSoundID][SOUNDPLATE_SOUND_SEQ];
                 u8 volumeIndex = soundplateStruct->soundplates[z].volumeIndex;
                 if (volumeIndex < 3) {
                     GF_SndHandleMoveVolume(0, sBGMVolume[volumeIndex], 15);
@@ -121,10 +121,10 @@ void LONG_CALL ov01_021E7DFC(FieldSystem *fieldSystem, int x, int z) {
             }
         }
     } else {
-        if (fieldSystem->unkC4 != -1) {
-            StopSE(fieldSystem->unkC4, 10);
+        if (fieldSystem->environmentSoundState != -1) {
+            StopSE(fieldSystem->environmentSoundState, 10);
             GF_SndHandleMoveVolume(0, 128, 15);
-            // fieldSystem->unkC4 = -1;
+            fieldSystem->environmentSoundState = -1;
         }
     }
 }
