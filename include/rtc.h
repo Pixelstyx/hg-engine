@@ -57,7 +57,7 @@ void LONG_CALL GF_RTC_CopyDate(struct RTCDate *date);
 s32 LONG_CALL GF_RTC_TimeToSec(void);
 BOOL LONG_CALL IsNighttime(void);
 TIMEOFDAY LONG_CALL GF_RTC_GetTimeOfDay(void);
-TIMEOFDAY LONG_CALL GF_RTC_GetTimeOfDayByHour(s32 hour);
+TIMEOFDAY LONG_CALL GF_RTC_GetTimeOfDayByHour(UNUSED s32 hour);
 TimeOfDayWildParam LONG_CALL GF_RTC_GetTimeOfDayWildParam(void);
 TimeOfDayWildParam LONG_CALL GF_RTC_GetTimeOfDayWildParamByHour(s32 hour);
 // u32 GrabCurrentSeason(void) is in pokemon.h because it is defined there
