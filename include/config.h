@@ -273,8 +273,8 @@
 // #define PLAY_MON_VICTORY_POSE
 
 // Increasing DAY_TIMESCALE will cause the in-game timeslot tracker to speed up.
-// 2.5x will cause one day to pass every hour.
+// Setting it to 250% will cause one day to pass every hour.
 // Timescales below 1 will not work due to the Nitro clock seconds rolling over to 0 at midnight.
-#define DAY_TIMESCALE 1
+#define DAY_TIMESCALE 100
 
 #endif
