@@ -194,4 +194,9 @@
 // based on the move having FLAG_UNUSABLE_UNIMPLEMENTED
 #define BLOCK_LEARNING_UNIMPLEMENTED_MOVES
 
+// Increasing DAY_TIMESCALE will cause the in-game timeslot tracker to speed up.
+// 2.5x will cause one day to pass every hour.
+// Timescales below 1 will not work due to the Nitro clock seconds rolling over to 0 at midnight.
+#define DAY_TIMESCALE 1
+
 #endif
