@@ -2,16 +2,20 @@
 #include "../include/save.h"
 #include "../include/script.h"
 
-// Altered to account for timescale config.
+// Altered to account for timescale config and decoupled from RTC.
 s32 GF_RTC_TimeToSec(void) {
-    struct RTCTime time;
-    GF_RTC_CopyTime(&time);
-    return (((60 * time.minute + 3600 * time.hour + time.second) * DAY_TIMESCALE) / 100) % 86400;
+    struct IGT *playTime = Save_PlayerData_GetIGTAddr(gFieldSysPtr->savedata);
+    u32 playTimeSeconds = 60 * playTime->minutes + 3600 * (playTime->hours + STARTING_HOUR) + playTime->seconds;
+    playTimeSeconds = (playTimeSeconds * DAY_TIMESCALE) / 100;
+    playTimeSeconds %= 86400;
+    // debug_printf("Timescaled seconds today: %d\n", playTimeSeconds);
+    // debug_printf("Timescaled hour today: %d\n\n", playTimeSeconds / 3600);
+    return (((60 * playTime->minutes + 3600 * (playTime->hours + STARTING_HOUR) + playTime->seconds) * DAY_TIMESCALE) / 100) % 86400;
 }
 
 // Return a time slot according to the timescaled hour.
 TIMEOFDAY GF_RTC_GetTimeOfDayByHour(UNUSED s32 hour) {
-    s32 scaledHour = (GF_RTC_TimeToSec() / 60) / 24;
+    s32 scaledHour = GF_RTC_TimeToSec() / 3600;
 
     if (scaledHour < 4)
     {

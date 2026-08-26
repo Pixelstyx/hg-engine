@@ -272,9 +272,11 @@
 // Comment out this define if you want to disable this feature.
 // #define PLAY_MON_VICTORY_POSE
 
-// Increasing DAY_TIMESCALE will cause the in-game timeslot tracker to speed up.
+// Increasing DAY_TIMESCALE will cause the in-game timeslot tracker to speed up (or slow down).
 // Setting it to 250% will cause one day to pass every hour.
-// Timescales below 1 will not work due to the Nitro clock seconds rolling over to 0 at midnight.
-#define DAY_TIMESCALE 100
+#define DAY_TIMESCALE 250
+
+// STARTING_HOUR defines the time at which the game begins when decoupled from the RTC.
+#define STARTING_HOUR 0
 
 #endif
