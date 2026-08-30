@@ -274,7 +274,7 @@
 
 // Increasing DAY_TIMESCALE will cause the in-game timeslot tracker to speed up (or slow down).
 // Setting it to 250% will cause one day to pass every hour.
-#define DAY_TIMESCALE 250
+#define DAY_TIMESCALE 500000
 
 // STARTING_HOUR defines the time at which the game begins when decoupled from the RTC.
 #define STARTING_HOUR 0
