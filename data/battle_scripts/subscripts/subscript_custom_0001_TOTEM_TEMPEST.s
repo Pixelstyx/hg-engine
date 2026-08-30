@@ -4,15 +4,6 @@
 .data
 
 _Start:
-    UpdateVarFromVar OPCODE_SET, BSCRIPT_VAR_TEMP_DATA, BSCRIPT_VAR_TOTAL_TURNS
-    UpdateVar OPCODE_ADD, BSCRIPT_VAR_TEMP_DATA, 1
-
-_FakeModuloLoop:
-    CompareVarToValue OPCODE_LTE, BSCRIPT_VAR_TEMP_DATA, 2, _CheckTempestRemainder
-    UpdateVar OPCODE_SUB, BSCRIPT_VAR_TEMP_DATA, 3
-    GoTo _FakeModuloLoop
-
-_CheckTempestRemainder:
     CompareVarToValue OPCODE_EQU, BSCRIPT_VAR_TEMP_DATA, 0, _HandleTempestMove
     CompareVarToValue OPCODE_EQU, BSCRIPT_VAR_TEMP_DATA, 2, _HandleTempestBuildup_Strong
 

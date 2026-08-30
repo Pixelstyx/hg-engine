@@ -314,7 +314,8 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 
             if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
             && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS) {
-                if ((sp->total_turn + 1) % 3) { // There are turns remaining until tempest hits.
+                sp->temp_work = (sp->total_turn + 1) % 3;
+                if (sp->temp_work) { // There are turns remaining until tempest hits.
                     LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
                     sp->next_server_seq_no = sp->server_seq_no;
                     sp->server_seq_no = 22;
