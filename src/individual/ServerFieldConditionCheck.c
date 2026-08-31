@@ -336,13 +336,11 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
         case ENDTURN_FUTURE_EFFECT: {
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_FUTURE_EFFECT\n");
-
 #endif
 
             while (sp->scc_work < CLIENT_MAX * FUTURE_CONDITION_MAX) {
 #ifdef DEBUG_ENDTURN_LOGIC
                 debug_printf("scc_work: %d\n", sp->scc_work);
-
 #endif
                 futureCondition = sp->futureConditionQueue[sp->scc_work];
 #ifdef DEBUG_ENDTURN_LOGIC
@@ -351,7 +349,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 #endif
                 switch (futureCondition.conditionType.futureConditionType) {
                     case FUTURE_CONDITION_TOTEM_TEMPEST: {
-                        if (sp->battlemon[BATTLER_PLAYER].hp) { // This condition should only be queued immediately before it happens.
+                        if (sp->battlemon[BATTLER_PLAYER].hp && (sp->total_turn + 1) % 3 == 0) { // This condition should only be queued immediately before it happens.
 #ifdef DEBUG_ENDTURN_LOGIC
                             debug_printf("In Totem Tempest Hit\n");
 #endif
@@ -1900,10 +1898,10 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             break;
         }
         case ENDTURN_TOTEM_STAT_RESTORE: {
-            #ifdef DEBUG_ENDTURN_LOGIC
+#ifdef DEBUG_ENDTURN_LOGIC
             sprintf(buf, "In ENDTURN_TOTEM_STAT_RESTORE\n");
             debugsyscall(buf);
-            #endif
+#endif
 
             if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM) {
                 int targetStatArray[8] = {6, 6, 6, 6, 6, 6, 6, 6};
@@ -1978,18 +1976,18 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
         }
         // TODO
         case ENDTURN_RESOLVE_SWITCHES_4: {
-            #ifdef DEBUG_ENDTURN_LOGIC
+#ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_RESOLVE_SWITCHES_4\n");
-            #endif
+#endif
 
             sp->fcc_seq_no++;
             break;
         }
         // TODO
         case ENDTURN_FORM_CHANGE: {
-            #ifdef DEBUG_ENDTURN_LOGIC
+#ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_FORM_CHANGE\n");
-            #endif
+#endif
 
             sp->fcc_seq_no++;
             break;
