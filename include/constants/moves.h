@@ -940,13 +940,10 @@
 
 #define NUM_OF_CANONICAL_MOVES 923
 
-// define your new moves below like this
-// #define MOVE_CUSTOM_MOVE_1 (NUM_OF_CANONICAL_MOVES)
-// #define MOVE_CUSTOM_MOVE_2 (NUM_OF_CANONICAL_MOVES + 1)
-// ...
+#define MOVE_TOTEM_TEMPEST (NUM_OF_CANONICAL_MOVES)
 
 // update this number yourself manually
-#define NUM_OF_CUSTOM_MOVES 0
+#define NUM_OF_CUSTOM_MOVES 1
 
 #define NUM_OF_MOVES (NUM_OF_CANONICAL_MOVES + NUM_OF_CUSTOM_MOVES)
 

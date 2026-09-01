@@ -177,6 +177,7 @@ const u16 WindMoveTable[] = {
     MOVE_TWISTER,
     MOVE_WHIRLWIND,
     MOVE_WILDBOLT_STORM,
+    MOVE_TOTEM_TEMPEST,
 };
 
 // List of multi-strike moves
@@ -1771,7 +1772,7 @@ int CalcCritical(void *bw, struct BattleStruct *sp, int attacker, int defender, 
             && (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_SHELL_ARMOR) == FALSE)
             && ((side_condition & SIDE_STATUS_LUCKY_CHANT) == 0)
             && ((move_effect & MOVE_EFFECT_FLAG_NO_CRITICAL) == 0)
-            && (sp->futureSightHitTurn == FALSE || sp->current_move_index != MOVE_HURRICANE)) {
+            && (sp->futureSightHitTurn == FALSE || sp->current_move_index != MOVE_TOTEM_TEMPEST)) {
             multiplier = 2;
         }
     }
@@ -3189,11 +3190,11 @@ void LONG_CALL ov12_0224C4D8(struct BattleSystem *bsys, struct BattleStruct *ctx
         // Skip vanilla fail message printing
         // ctx->server_seq_no = CONTROLLER_COMMAND_26;
         ctx->server_seq_no = CONTROLLER_COMMAND_35;
-    } else if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_HURRICANE) && ctx->futureSightHitTurn == TRUE) {
+    } else if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_TOTEM_TEMPEST) && ctx->futureSightHitTurn == TRUE) {
         if (effect == MOVE_EFFECT_HIT_IN_3_TURNS) {
             LoadBattleSubSeqScript(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_FUTURE_SIGHT_DAMAGE);
-        } else if (ctx->current_move_index == MOVE_HURRICANE) {
-            LoadBattleSubSeqScript(ctx, ARC_BATTLE_MOVE_SEQ, MOVE_HURRICANE);
+        } else if (ctx->current_move_index == MOVE_TOTEM_TEMPEST) {
+            LoadBattleSubSeqScript(ctx, ARC_BATTLE_MOVE_SEQ, MOVE_TOTEM_TEMPEST);
         }
         ctx->next_server_seq_no = CONTROLLER_COMMAND_25;
         ctx->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
@@ -3225,7 +3226,7 @@ void LONG_CALL ov12_0224C678(struct BattleSystem *bsys, struct BattleStruct *ctx
     }
 
     int effect = ctx->moveTbl[ctx->current_move_index].effect;
-    if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_HURRICANE) && ctx->futureSightHitTurn == TRUE) {
+    if ((effect == MOVE_EFFECT_HIT_IN_3_TURNS || ctx->current_move_index == MOVE_TOTEM_TEMPEST) && ctx->futureSightHitTurn == TRUE) {
         ctx->server_seq_no = CONTROLLER_COMMAND_HP_CALC;
         ctx->next_server_seq_no = CONTROLLER_COMMAND_HP_CALC;
     } else {

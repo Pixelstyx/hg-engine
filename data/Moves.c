@@ -24922,6 +24922,33 @@ const MoveSourceEntry sMoveSource[NUM_OF_MOVES + 1] = {
         .description = "The user pours toxins\\ninto the target through\\na corrosive chain. This\\nmay also leave the\\ntarget badly poisoned.",
     },
 
+    [MOVE_TOTEM_TEMPEST] = {
+        .names = {
+            .name = "Totem Tempest",
+            .capsName = "TOTEM TEMPEST",
+            .fullName = "Totem Tempest",
+        },
+        .data = {
+            .effect = MOVE_EFFECT_HURRICANE,
+            .split = SPLIT_SPECIAL,
+            .power = 70,
+            .type = TYPE_FLYING,
+            .accuracy = 100,
+            .pp = 10,
+            .effectChance = 100,
+        },
+        .battle = {
+            .target = RANGE_SINGLE_TARGET,
+            .priority = 0,
+            .flags = 0,
+        },
+        .contest = {
+            .appeal = 0,
+            .contestType = CONTEST_TOUGH,
+        },
+        .description = "",
+    },
+
     [NUM_OF_MOVES] = {
         .names = {
             .name = "",

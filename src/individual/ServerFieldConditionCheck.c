@@ -351,21 +351,15 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 #ifdef DEBUG_ENDTURN_LOGIC
                             debug_printf("In Totem Tempest Hit\n");
 #endif
-                            // sp->mp.id = 1752;  // A terrible storm tears into you!
-                            // sp->mp.tag = TAG_NONE;
-
                             ov12_02252D14(bw, sp); //reset damage, status
                             sp->futureSightHitTurn = TRUE;
 
                             // All this stuff is hardcoded for us since it can only happen one way.
                             sp->defence_client = BATTLER_PLAYER;
                             sp->attack_client = BATTLER_ENEMY;
-                            sp->current_move_index = MOVE_HURRICANE;
-                            sp->damage_power = 70;
-                            sp->waza_eff_cnt = 100; // effect_chance
-                            sp->move_type = TYPE_FLYING;
+                            sp->current_move_index = MOVE_TOTEM_TEMPEST;
 
-                            sp->futureSightSTAB = HasType(sp, sp->attack_client, sp->move_type);
+                            sp->futureSightSTAB = HasType(sp, sp->attack_client, TYPE_FLYING);
 
                             LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
                             sp->waza_out_check_on_off |= (SYSCTL_SKIP_STATUS_CHECK | SYSCTL_SKIP_OBEDIENCE_CHECK | SYSCTL_SKIP_PP_DECREMENT);
