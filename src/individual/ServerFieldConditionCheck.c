@@ -1924,11 +1924,11 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                 }
 
                 if (statsRestored) {
-                    sp->mp.id = 1781;  // The Totem Pokemon's lowered stats have returned to normal!
+                    sp->mp.id = BATTLE_MSG_TOTEM_STATS_RETURNED_TO_NORMAL;  // The Totem Pokemon's lowered stats have returned to normal!
                     sp->mp.tag = TAG_NONE; 
                     for (int stat = 1; stat < STAT_MAX; stat++) {
                         if (sp->battlemon[BATTLER_ENEMY].states[stat] < targetStatArray[stat]) {
-                            sp->mp.id = 1780;  // The Totem Pokemon's lowered stats are returning to normal!
+                            sp->mp.id = BATTLE_MSG_TOTEM_STATS_RETURNING_TO_NORMAL;  // The Totem Pokemon's lowered stats are returning to normal!
                             break;
                         }
                     }
@@ -2003,12 +2003,24 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                 // }
 
                 switch (sp->endTurnEventBlockSequenceNumber) {
-                // TODO
                 case FOURTH_EVENT_BLOCK_HUNGER_SWITCH: {
 #ifdef DEBUG_ENDTURN_LOGIC
                     debug_printf("In FOURTH_EVENT_BLOCK_HUNGER_SWITCH\n", NULL);
 #endif
 
+                    if (sp->battlemon[battlerId].species == SPECIES_MORPEKO
+                        && sp->battlemon[battlerId].hp
+                        && GetBattlerAbility(sp, battlerId) == ABILITY_HUNGER_SWITCH
+                        && !sp->battlemon[battlerId].is_currently_terastallized
+                        && !(sp->battlemon[battlerId].condition2 & STATUS2_TRANSFORM)) {
+                        sp->battlemon[battlerId].form_no ^= 1;
+                        BattleFormChange(battlerId, sp->battlemon[battlerId].form_no, bw, sp, FALSE);
+                        sp->battlerIdTemp = battlerId;
+                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_FORM_CHANGE);
+                        sp->next_server_seq_no = sp->server_seq_no;
+                        sp->server_seq_no = 22;
+                        ret = 1;
+                    }
                     sp->endTurnEventBlockSequenceNumber++;
 
                     break;

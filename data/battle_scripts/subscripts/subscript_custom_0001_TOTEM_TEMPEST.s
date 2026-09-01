@@ -1,4 +1,5 @@
 #include "constants/battle_constants.h"
+#include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
 
 .data
@@ -9,7 +10,7 @@ _Start:
 
 _HandleTempestBuildup:
     // A wicked gust starts to stir!
-    PrintMessage 1782, TAG_NONE
+    PrintMessage BATTLE_MSG_TOTEM_TEMPEST_WICKED_GUST, TAG_NONE
     // UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_TAILWIND
     // PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     Wait
@@ -18,7 +19,7 @@ _HandleTempestBuildup:
 
 _HandleTempestBuildup_Strong:
     // A horrible wind is howling!
-    PrintMessage 1783, TAG_NONE
+    PrintMessage BATTLE_MSG_TOTEM_TEMPEST_HOWLING_WIND, TAG_NONE
     // UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_TAILWIND
     // PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     Wait
@@ -29,7 +30,7 @@ _HandleTempestMove:
     UpdateVar OPCODE_SET, BSCRIPT_VAR_MSG_MOVE_TEMP, MOVE_HURRICANE
     PlayMoveAnimation BATTLER_CATEGORY_MSG_TEMP
     // A terrible storm tears into you!
-    PrintMessage 1784, TAG_NONE
+    PrintMessage BATTLE_MSG_TOTEM_TEMPEST_TERRIBLE_STORM, TAG_NONE
     Wait
     WaitButtonABTime 30
     End
