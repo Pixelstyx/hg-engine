@@ -290,7 +290,6 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
         case ENDTURN_RESOLVE_SWITCHES_1: {
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_RESOLVE_SWITCHES_1\n");
-
 #endif
 
             sp->fcc_seq_no++;
@@ -300,7 +299,6 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
         case ENDTURN_AFFECTION_SELF_CURE: {
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_AFFECTION_SELF_CURE\n");
-
 #endif
 
             sp->fcc_seq_no++;

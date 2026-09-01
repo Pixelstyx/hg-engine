@@ -1770,7 +1770,8 @@ int CalcCritical(void *bw, struct BattleStruct *sp, int attacker, int defender, 
         if ((MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_BATTLE_ARMOR) == FALSE)
             && (MoldBreakerAbilityCheck(sp, attacker, defender, ABILITY_SHELL_ARMOR) == FALSE)
             && ((side_condition & SIDE_STATUS_LUCKY_CHANT) == 0)
-            && ((move_effect & MOVE_EFFECT_FLAG_NO_CRITICAL) == 0)) {
+            && ((move_effect & MOVE_EFFECT_FLAG_NO_CRITICAL) == 0)
+            && (sp->futureSightHitTurn == FALSE || sp->current_move_index != MOVE_HURRICANE)) {
             multiplier = 2;
         }
     }
