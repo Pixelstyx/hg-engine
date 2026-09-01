@@ -32,7 +32,4 @@ _HandleTempestMove:
     PrintMessage 1784, TAG_NONE
     Wait
     WaitButtonABTime 30
-/*
-    // The roaring winds extinguished the burning Pokémon!
-    PrintMessage 1785, TAG_NONE*/
     End

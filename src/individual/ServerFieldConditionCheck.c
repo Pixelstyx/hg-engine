@@ -29,7 +29,7 @@ enum EndTurnResolutionOrder {
     ENDTURN_AFFECTION_SELF_CURE,
     ENDTURN_TOTEM_TEMPEST,
     ENDTURN_FUTURE_EFFECT,
-    // ENDTURN_TOTEM_TEMPEST_BURN_HEAL,
+    ENDTURN_TOTEM_TEMPEST_BURN_HEAL,
     ENDTURN_FIRST_EVENT_BLOCK,
     ENDTURN_RESOLVE_SWITCHES_2,
     ENDTURN_AQUA_RING,
@@ -515,48 +515,53 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             }
             break;
         }
-        /*case ENDTURN_TOTEM_TEMPEST_BURN_HEAL: {
+        case ENDTURN_TOTEM_TEMPEST_BURN_HEAL: {
             #ifdef DEBUG_ENDTURN_LOGIC
             sprintf(buf, "In ENDTURN_TOTEM_TEMPEST_BURN_HEAL\n");
             debugsyscall(buf);
             #endif
 
             if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
-            && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS) {
-                if (!((sp->total_turn + 1) % 3)) { // Heal all burns immediately after the tempest hits.
-                    BOOL burnHealed = FALSE;
-                    // Heal Burn loop
-                    for (int i = 0; i < client_set_max; i++) {
-                        int client_no = sp->turnOrder[i];
-                        if (sp->battlemon[client_no].hp
-                            && sp->battlemon[client_no].condition & STATUS_BURN) {
-                            if (GetBattlerAbility(sp, client_no) != ABILITY_SHIELD_DUST
-                                && HeldItemHoldEffectGet(sp, client_no) != HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS)
-                            {
-                                sp->battlerIdTemp = client_no;
-                                LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_HEAL_TARGET_BURN);
-                                sp->next_server_seq_no = sp->server_seq_no;
-                                sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                                ret = 1;
+            && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS
+            && (sp->total_turn + 1) % 3 == 0) { // Heal all burns immediately after the tempest occurs.
+                // Heal Burn loop
+                while ((sp->scc_work & ((1 << 3) - 1)) < CLIENT_MAX) { // Access the lowest 3 bits only when checking our client loop.
+                    int client_no = sp->turnOrder[sp->scc_work];
+                    sp->scc_work++;
+                    if (sp->battlemon[client_no].hp
+                    && sp->battlemon[client_no].condition & STATUS_BURN
+                    && GetBattlerAbility(sp, client_no) != ABILITY_SHIELD_DUST
+                    && HeldItemHoldEffectGet(sp, client_no) != HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS) {
+                        sp->battlerIdTemp = client_no;
+                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_HEAL_TARGET_BURN);
+                        sp->next_server_seq_no = sp->server_seq_no;
+                        sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
+                        ret = 1;
 
-                                burnHealed = TRUE;
-                            }
-                        }
+                        sp->scc_work |= (1 << 3); // Set an unused bit in scc_work to keep track of whether a burn has been healed.
+                        break;
                     }
-
-                    if (burnHealed) {
-                        // The roaring winds extinguished the burning Pokémon!
-                        // TODO: Fix this.
-                    }
-
-                    sp->next_server_seq_no = sp->server_seq_no;
-                    sp->server_seq_no = CONTROLLER_COMMAND_RUN_SCRIPT;
-                    ret = 1;
                 }
+
+                if ((sp->scc_work & ((1 << 3) - 1)) >= CLIENT_MAX) {
+                    if (sp->scc_work & (1 << 3)) {
+                        sp->mp.id = 1785;  // The roaring winds extinguished the burning Pokémon!
+                        sp->mp.tag = TAG_NONE;
+                        LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_SHOW_PREPARED_MESSAGE);
+
+                        sp->next_server_seq_no = sp->server_seq_no;
+                        sp->server_seq_no = 22;
+                        ret = 1;
+                    }
+                    sp->scc_work = 0;
+                    sp->fcc_seq_no++;
+                }
+            } else {
+                sp->fcc_seq_no++;
             }
-            sp->fcc_seq_no++;
+            
             break;
-        }*/
+        }
         case ENDTURN_FIRST_EVENT_BLOCK: {
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_FIRST_EVENT_BLOCK\n");
