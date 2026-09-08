@@ -314,7 +314,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             && sp->battlemon[BATTLER_ENEMY].species == SPECIES_GYARADOS) {
                 sp->temp_work = (sp->total_turn + 1) % 3;
                 if (sp->temp_work) { // There are turns remaining until tempest hits.
-                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
+                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_TOTEM_TEMPEST);
                     sp->next_server_seq_no = sp->server_seq_no;
                     sp->server_seq_no = 22;
                     ret = 1;
@@ -361,7 +361,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 
                             sp->futureSightSTAB = HasType(sp, sp->attack_client, TYPE_FLYING);
 
-                            LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_TEMPEST);
+                            LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_TOTEM_TEMPEST);
                             sp->waza_out_check_on_off |= (SYSCTL_SKIP_STATUS_CHECK | SYSCTL_SKIP_OBEDIENCE_CHECK | SYSCTL_SKIP_PP_DECREMENT);
                             sp->next_server_seq_no = CONTROLLER_COMMAND_23;
                             //sp->wb_seq_no = BEFORE_MOVE_STATE_TYPE_CHART_IMMUNITY;
@@ -539,7 +539,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 
                 if ((sp->scc_work & ((1 << 3) - 1)) >= CLIENT_MAX) {
                     if (sp->scc_work & (1 << 3)) {
-                        sp->mp.id = 1785;  // The roaring winds extinguished the burning Pokémon!
+                        sp->mp.id = BATTLE_MSG_TOTEM_TEMPEST_BURN_HEAL;  // The roaring winds extinguished the burning Pokémon!
                         sp->mp.tag = TAG_NONE;
                         LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_SHOW_PREPARED_MESSAGE);
 
@@ -1932,7 +1932,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                             break;
                         }
                     }
-                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_STAT_RESTORE);
+                    LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_TOTEM_STAT_RESTORE);
                     sp->next_server_seq_no = sp->server_seq_no;
                     sp->server_seq_no = 22;
                     ret = 1;
@@ -1947,6 +1947,31 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             debugsyscall(buf);
             #endif
 
+            int parkItems[22][2] = { 
+                { ITEM_LUM_BERRY,           BATTLE_MSG_PARK_PICKUP_DEFAULT          }, // An Aipom hands {0} a {1}!
+                { ITEM_FANCY_APPLE,         BATTLE_MSG_PARK_PICKUP_CRISP            }, // An Aipom hands {0} a perfectly crisp {1}!
+                { ITEM_COMET_SHARD,         BATTLE_MSG_PARK_PICKUP_GLITTERING       }, // An Aipom hands {0} a glittering {1}!
+                { ITEM_RARE_CANDY,          BATTLE_MSG_PARK_PICKUP_DEFAULT          },
+                { ITEM_CASTELIACONE,        BATTLE_MSG_PARK_PICKUP_MELTING          }, // An Aipom hands {0} a {1}! Hurry, or it’ll melt!
+                { ITEM_HEART_SCALE,         BATTLE_MSG_PARK_PICKUP_GLITTERING       },
+                { ITEM_TOXIC_ORB,           BATTLE_MSG_PARK_PICKUP_CAUTIOUS         }, // An Aipom cautiously hands {0} a {1}!
+                { ITEM_SNOWBALL,            BATTLE_MSG_PARK_PICKUP_OUT_OF_SEASON    }, // An Aipom hands {0} a {1}! At this time of year?
+                { ITEM_KINGS_ROCK,          BATTLE_MSG_PARK_PICKUP_POINTY           }, // An Aipom hands {0} a {1}! Pointy!
+                { ITEM_LIGHT_BALL,          BATTLE_MSG_PARK_PICKUP_BRIGHT           }, // An Aipom hands {0} a blindingly bright {1}!
+                { ITEM_DUBIOUS_DISC,        BATTLE_MSG_PARK_PICKUP_DEFAULT          },
+                { ITEM_LEEK,                BATTLE_MSG_PARK_PICKUP_LEAK             }, // An Aipom hands {0} a {1}! Watch your step!
+                { ITEM_UTILITY_UMBRELLA,    BATTLE_MSG_PARK_PICKUP_WEATHER          }, // An Aipom hands {0} a {1}! How’s the weather over there?
+                { ITEM_HEAT_ROCK,           BATTLE_MSG_PARK_PICKUP_WARM             }, // An Aipom hands {0} a pleasantly warm {1}!
+                { ITEM_POISON_BARB,         BATTLE_MSG_PARK_PICKUP_CAUTIOUS         },
+                { ITEM_TIN_OF_BEANS,        BATTLE_MSG_PARK_PICKUP_WELL_CHEWED      }, // An Aipom hands {0} a well-chewed {1}!
+                { ITEM_ODD_KEYSTONE,        BATTLE_MSG_PARK_PICKUP_SURPRISING       }, // An Aipom hands {0} an... {1}? Where did they get that?!
+                { ITEM_CHIPPED_POT,         BATTLE_MSG_PARK_PICKUP_DEFAULT          },
+                { ITEM_THICK_CLUB,          BATTLE_MSG_PARK_PICKUP_HEFTY            }, // An Aipom hands {0} a hefty {1}!
+                { ITEM_RARE_BONE,           BATTLE_MSG_PARK_PICKUP_HEFTY            },
+                { ITEM_HARD_STONE,          BATTLE_MSG_PARK_PICKUP_HEFTY            },
+                { ITEM_IRON_BALL,           BATTLE_MSG_PARK_PICKUP_VERY_HEAVY       }, // An Aipom, with considerable strain, hoists an {1} into {0}’s hands!
+            };
+
             if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM 
             && sp->battlemon[BATTLER_ENEMY].species == SPECIES_AMBIPOM
             && sp->battlemon[BATTLER_ENEMY].item == ITEM_NONE) {
@@ -1954,16 +1979,25 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                 // If the Totem Pokemon has any other non-volatile status, there is a 1 in 3 chance instead.
                 if ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_BAD_POISON)
                 || ((sp->battlemon[BATTLER_ENEMY].condition & STATUS_ANY_PERSISTENT) && (BattleRand(bw) % 3 == 0))) {
-                    sp->item_work = ITEM_LUM_BERRY;
+                    sp->item_work = parkItems[0][0];
+                    sp->mp.id = parkItems[0][1];
                 }
-                else { // Otherwise, pick a random item from a set list.
-                    int parkItems[22] = {ITEM_LUM_BERRY, ITEM_FANCY_APPLE, ITEM_COMET_SHARD, ITEM_RARE_CANDY, ITEM_CASTELIACONE, ITEM_HEART_SCALE, ITEM_TOXIC_ORB, ITEM_SNOWBALL, ITEM_KINGS_ROCK, ITEM_LIGHT_BALL, ITEM_DUBIOUS_DISC, ITEM_LEEK, ITEM_UTILITY_UMBRELLA, ITEM_HEAT_ROCK, ITEM_POISON_BARB, ITEM_TIN_OF_BEANS, ITEM_ODD_KEYSTONE, ITEM_CHIPPED_POT, ITEM_THICK_CLUB, ITEM_RARE_BONE, ITEM_HARD_STONE, ITEM_IRON_BALL};
-                    sp->item_work = parkItems[BattleRand(bw) % 22];
+                else { // Otherwise, pick a random item and corresponding message from a set list.
+                    
+                    u8 entry = BattleRand(bw) % 22;
+                    sp->item_work = parkItems[entry][0];
+                    sp->mp.id = parkItems[entry][1];
                 }
                 sp->battlemon[BATTLER_ENEMY].item = sp->item_work;
                 sp->battlerIdTemp = BATTLER_ENEMY; // TODO: Check if this one is necessary.
-                sp->state_client = BATTLER_ENEMY; 
-                LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, SUB_SEQ_TOTEM_PARK_PICKUP);
+                sp->state_client = BATTLER_ENEMY;
+
+                sp->mp.tag = TAG_NICKNAME_ITEM;
+                sp->mp.param[0] = CreateNicknameTag(sp, BATTLER_ENEMY);
+                sp->mp.param[1] = sp->item_work;
+                
+                LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_SHOW_PREPARED_MESSAGE);
+
                 sp->next_server_seq_no = sp->server_seq_no;
                 sp->server_seq_no = 22;
                 ret = 1;
