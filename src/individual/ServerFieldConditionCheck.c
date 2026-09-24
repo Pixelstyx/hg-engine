@@ -1900,6 +1900,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
             debugsyscall(buf);
 #endif
 
+#ifdef TOTEM_STAT_RESTORE
             if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) == BATTLE_TYPE_TOTEM) {
                 int targetStatArray[8] = {6, 6, 6, 6, 6, 6, 6, 6};
                 switch (sp->battlemon[BATTLER_ENEMY].species) {
@@ -1938,6 +1939,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                     ret = 1;
                 }
             }
+#endif
             sp->fcc_seq_no++;
             break;
         }

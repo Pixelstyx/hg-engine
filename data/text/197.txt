@@ -1813,3 +1813,6 @@ The {STRVAR_1 8, 1, 0} lowered\nthe opposing {STRVAR_1 1, 0, 0}’s {STRVAR_1 13
 {STRVAR_1 1, 0, 0} was cursed\nby the {STRVAR_1 8, 1, 0}!
 The wild {STRVAR_1 1, 0, 0} was cursed\nby the {STRVAR_1 8, 1, 0}!
 The opposing {STRVAR_1 1, 0, 0} was cursed\nby the {STRVAR_1 8, 1, 0}!
+{STRVAR_1 1, 0, 0} was too strong\nto be taken down by\f{STRVAR_1 6, 1, 0}!
+The wild {STRVAR_1 1, 0, 0} was\ntoo strong to be taken down\fby {STRVAR_1 6, 1, 0}!
+The opposing {STRVAR_1 1, 0, 0} was\ntoo strong to be taken down\fby {STRVAR_1 6, 1, 0}!
