@@ -564,5 +564,11 @@ arm9 020649B4 64 E2 0F 02
 0053 080016BA FC 00
 #endif
 
+# GetBoxmonSpriteCharAndPlttNarcIds always call GetMonSpriteCharAndPlttNarcIdsEx
+arm9 020701AC 08 E0
+
+# sub_02070854 always call GetMonPicHeightBySpeciesGenderForm
+arm9 020708B0 06 E0
+
 # add BATTLE_TYPE_TOTEM to list of ai flag candidates
 0012 0225E4C8 01 41 00 00
