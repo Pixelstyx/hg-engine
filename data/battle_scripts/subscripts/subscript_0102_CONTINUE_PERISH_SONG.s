@@ -1,4 +1,5 @@
 #include "constants/battle_constants.h"
+#include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
 
 .data
@@ -9,7 +10,8 @@ _Start:
     Wait 
     WaitButtonABTime 30
     CompareMonDataToValue OPCODE_FLAG_SET, BATTLER_CATEGORY_MSG_TEMP, BMON_DATA_MOVE_EFFECT, MOVE_EFFECT_FLAG_PERISH_SONG, _End
-    CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _CheckTotemThreshold
+    CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FaintMon
+    GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemThreshold
 
 _FaintMon:
     Call BATTLE_SUBSCRIPT_UPDATE_HP
@@ -20,7 +22,7 @@ _End:
 _CheckTotemThreshold:
     // Check if we are at the execution threshold (25% HP or less).
     // This is slightly imprecise due to integer division.
-    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_MAX_HP, BSCRIPT_VAR_HP_CALC
+    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_MAXHP, BSCRIPT_VAR_HP_CALC
     DivideVarByValue BSCRIPT_VAR_HP_CALC, 4
     CompareMonDataToVar OPCODE_LTE, BATTLER_CATEGORY_DEFENDER, BMON_DATA_HP, BSCRIPT_VAR_HP_CALC, _FaintMon
     // TODO: Get correct move name.

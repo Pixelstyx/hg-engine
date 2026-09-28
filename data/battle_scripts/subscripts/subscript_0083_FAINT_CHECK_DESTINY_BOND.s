@@ -1,4 +1,5 @@
 #include "constants/battle_constants.h"
+#include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
 
 .data
@@ -7,7 +8,8 @@ _Start:
     CompareMonDataToValue OPCODE_FLAG_NOT, BATTLER_CATEGORY_FAINTED_MON, BMON_DATA_STATUS2, STATUS2_DESTINY_BOND, _CheckGrudge
     IfSameSide BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_FAINTED_MON, _CheckGrudge
     CompareMonDataToValue OPCODE_EQU, BATTLER_CATEGORY_ATTACKER, BMON_DATA_HP, 0, _CheckGrudge
-    CompareVarToValue OPCODE_FLAG_SET, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _CheckTotemThreshold
+    CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FaintMon
+    GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemThreshold
 
 _HandleDestinyBond:
     // {0} took {1} down with it!
@@ -43,12 +45,9 @@ _FaintMon:
     End 
 
 _CheckTotemThreshold:
-    // TODO: Check if defender slot contains a valid Totem Pokemon. Needs a custom macro.
-    // Skipping for now since Totems probably won't ever use Destiny Bond, but SOS/adds that can would be affected.
-
     // Check if we are at the execution threshold (25% HP or less).
     // This is slightly imprecise due to integer division.
-    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_MAX_HP, BSCRIPT_VAR_HP_CALC
+    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_MAXHP, BSCRIPT_VAR_HP_CALC
     DivideVarByValue BSCRIPT_VAR_HP_CALC, 4
     CompareMonDataToVar OPCODE_LTE, BATTLER_CATEGORY_DEFENDER, BMON_DATA_HP, BSCRIPT_VAR_HP_CALC, _HandleDestinyBond
     // {0} was too strong to be taken down by {1}!

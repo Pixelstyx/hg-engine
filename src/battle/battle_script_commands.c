@@ -140,6 +140,7 @@ BOOL btl_scr_cmd_127_ActivateHealingWish(void *bsys UNUSED, struct BattleStruct 
 BOOL btl_scr_cmd_128_IsFieldCondition2On(void *bsys UNUSED, struct BattleStruct *ctx);
 BOOL btl_scr_cmd_129_SetFieldCondition2(void *bsys UNUSED, struct BattleStruct *ctx);
 BOOL btl_scr_cmd_12A_GoToIfMoveConditionFlagSet(void *bsys, struct BattleStruct *ctx);
+BOOL btl_scr_cmd_custom_0_iftotem(void *bsys, struct BattleStruct *ctx);
 BOOL BtlCmd_GoToMoveScript(struct BattleSystem *bsys, struct BattleStruct *ctx);
 BOOL BtlCmd_WeatherHPRecovery(void *bw, struct BattleStruct *sp);
 BOOL BtlCmd_CalcWeatherBallParams(void *bw, struct BattleStruct *sp);
@@ -483,14 +484,14 @@ const u8 *BattleScrCmdNames[] = {
     "IsFieldCondition2On",
     "SetFieldCondition2",
     "GoToIfMoveConditionFlagSet",
-    // "YourCustomCommand",
+    "GoToIfTotem",
 };
 
 u32 cmdAddress = 0;
 #pragma GCC diagnostic pop
 #endif // DEBUG_BATTLE_SCRIPT_COMMANDS
 
-#define BASE_ENGINE_BTL_SCR_CMDS_MAX 0x11D
+#define BASE_ENGINE_BTL_SCR_CMDS_MAX 0x12A
 
 // clang-format off
 const btl_scr_cmd_func NewBattleScriptCmdTable[] = {
@@ -568,7 +569,7 @@ const btl_scr_cmd_func NewBattleScriptCmdTable[] = {
     [0x128 - START_OF_NEW_BTL_SCR_CMDS] = btl_scr_cmd_128_IsFieldCondition2On,
     [0x129 - START_OF_NEW_BTL_SCR_CMDS] = btl_scr_cmd_129_SetFieldCondition2,
     [0x12A - START_OF_NEW_BTL_SCR_CMDS] = btl_scr_cmd_12A_GoToIfMoveConditionFlagSet,
-    // [BASE_ENGINE_BTL_SCR_CMDS_MAX - START_OF_NEW_BTL_SCR_CMDS + 1] = btl_scr_cmd_custom_01_your_custom_command,
+    [(BASE_ENGINE_BTL_SCR_CMDS_MAX + 1) - START_OF_NEW_BTL_SCR_CMDS] = btl_scr_cmd_custom_0_iftotem,
 };
 
 // clang-format on
@@ -5912,6 +5913,27 @@ BOOL btl_scr_cmd_12A_GoToIfMoveConditionFlagSet(void *bsys, struct BattleStruct 
         break;
     default:
         break;
+    }
+
+    return FALSE;
+}
+
+BOOL btl_scr_cmd_custom_0_iftotem(void *bsys, struct BattleStruct *ctx)
+{
+    IncrementBattleScriptPtr(ctx, 1);
+
+    u32 category = read_battle_script_param(ctx);
+    u32 battlerID = GrabClientFromBattleScriptParam(bsys, ctx, category);
+    int jumpAddress = read_battle_script_param(ctx);
+
+    if (BATTLER_IS_ENEMY(battlerID)) {
+        u32 adjustedSpecies = PokeOtherFormMonsNoGet(ctx->battlemon[battlerID].species, ctx->battlemon[battlerID].form_no);
+        for (u32 totemID = 0; totemID < NELEMS(TotemSpecies); totemID++) {
+            if (adjustedSpecies == TotemSpecies[totemID][0]) {
+                IncrementBattleScriptPtr(ctx, jumpAddress);
+                break;
+            }
+        }
     }
 
     return FALSE;

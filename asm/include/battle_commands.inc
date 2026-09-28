@@ -1635,9 +1635,10 @@
 
     .equ BASE_ENGINE_BTL_SCR_CMDS_MAX, 298
 
-    // .macro YourCustomCommand
-    // .long (BASE_ENGINE_BTL_SCR_CMDS_MAX + 1)
-    // .endm
-
+    .macro GoToIfTotem arg_0, arg_1
+    .long (BASE_ENGINE_BTL_SCR_CMDS_MAX + 1)
+    .long \arg_0
+    .long (((\arg_1 - .) / 4) - 1)
+    .endm
 
 .endif
