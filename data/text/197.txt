@@ -1824,3 +1824,10 @@ The opposing {STRVAR_1 1, 0, 0} was cursed\nby the {STRVAR_1 8, 1, 0}!
 {STRVAR_1 1, 0, 0} was too strong\nto be taken down by\f{STRVAR_1 6, 1, 0}!
 The wild {STRVAR_1 1, 0, 0} was\ntoo strong to be taken down\fby {STRVAR_1 6, 1, 0}!
 The opposing {STRVAR_1 1, 0, 0} was\ntoo strong to be taken down\fby {STRVAR_1 6, 1, 0}!
+{STRVAR_1 1, 0, 0} cannot\ngrasp the power of\f{STRVAR_1 1, 0, 0}’s aura!
+{STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fwild {STRVAR_1 1, 0, 0}’s aura!
+{STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fopposing {STRVAR_1 1, 0, 0}’s aura!
+The wild {STRVAR_1 1, 0, 0} cannot\ngrasp the power of\f{STRVAR_1 1, 0, 0}’s aura!
+The wild {STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fwild {STRVAR_1 1, 0, 0}’s aura!
+The opposing {STRVAR_1 1, 0, 0} cannot\ngrasp the power of\f{STRVAR_1 1, 0, 0}’s aura!
+The opposing {STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fopposing {STRVAR_1 1, 0, 0}’s aura!
