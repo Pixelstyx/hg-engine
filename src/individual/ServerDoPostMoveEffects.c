@@ -1064,7 +1064,7 @@ int LONG_CALL Activate_Rowap_Jaboca(void *bsys UNUSED, struct BattleStruct *ctx)
                     && (GetBattlerAbility(ctx, ctx->attack_client) != ABILITY_MAGIC_GUARD)
                     // Attacker dealt physical damage
                     && (ctx->oneSelfFlag[client_no].physical_damage)) {
-                    if (BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(ctx->battlemon[ctx->attack_client].species)) {
+                    if (BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->attack_client].species, ctx->battlemon[ctx->attack_client].form_no))) {
                         ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[ctx->attack_client].maxhp * -1, itemPower * 2);
                     } else {
                         ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[ctx->attack_client].maxhp * -1, itemPower);
@@ -1085,7 +1085,7 @@ int LONG_CALL Activate_Rowap_Jaboca(void *bsys UNUSED, struct BattleStruct *ctx)
                     && (GetBattlerAbility(ctx, ctx->attack_client) != ABILITY_MAGIC_GUARD)
                     // Attacker dealt special damage
                     && (ctx->oneSelfFlag[client_no].special_damage)) {
-                    if (BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(ctx->battlemon[ctx->attack_client].species)) {
+                    if (BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->attack_client].species, ctx->battlemon[ctx->attack_client].form_no))) {
                         ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[ctx->attack_client].maxhp * -1, itemPower * 2);
                     } else {
                         ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[ctx->attack_client].maxhp * -1, itemPower);

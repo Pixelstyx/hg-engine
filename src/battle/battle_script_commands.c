@@ -5926,14 +5926,8 @@ BOOL btl_scr_cmd_custom_0_iftotem(void *bsys, struct BattleStruct *ctx)
     u32 battlerID = GrabClientFromBattleScriptParam(bsys, ctx, category);
     int jumpAddress = read_battle_script_param(ctx);
 
-    if (BATTLER_IS_ENEMY(battlerID)) {
-        u32 adjustedSpecies = PokeOtherFormMonsNoGet(ctx->battlemon[battlerID].species, ctx->battlemon[battlerID].form_no);
-        for (u32 totemID = 0; totemID < NELEMS(TotemSpecies); totemID++) {
-            if (adjustedSpecies == TotemSpecies[totemID][0]) {
-                IncrementBattleScriptPtr(ctx, jumpAddress);
-                break;
-            }
-        }
+    if (BATTLER_IS_ENEMY(battlerID) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[battlerID].species, ctx->battlemon[battlerID].form_no))) {
+        IncrementBattleScriptPtr(ctx, jumpAddress);
     }
 
     return FALSE;
