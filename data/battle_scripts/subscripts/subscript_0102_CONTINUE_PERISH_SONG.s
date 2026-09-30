@@ -1,3 +1,4 @@
+#include "config.h"
 #include "constants/battle_constants.h"
 #include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
@@ -10,8 +11,10 @@ _Start:
     Wait 
     WaitButtonABTime 30
     CompareMonDataToValue OPCODE_FLAG_SET, BATTLER_CATEGORY_MSG_TEMP, BMON_DATA_MOVE_EFFECT, MOVE_EFFECT_FLAG_PERISH_SONG, _End
+#ifdef TOTEM_OHKO_RESISTANCE
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FaintMon
     GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemThreshold
+#endif
 
 _FaintMon:
     Call BATTLE_SUBSCRIPT_UPDATE_HP

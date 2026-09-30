@@ -1,3 +1,4 @@
+#include "config.h"
 #include "constants/battle_constants.h"
 #include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
@@ -8,8 +9,10 @@ _Start:
     CompareMonDataToValue OPCODE_FLAG_NOT, BATTLER_CATEGORY_FAINTED_MON, BMON_DATA_STATUS2, STATUS2_DESTINY_BOND, _CheckGrudge
     IfSameSide BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_FAINTED_MON, _CheckGrudge
     CompareMonDataToValue OPCODE_EQU, BATTLER_CATEGORY_ATTACKER, BMON_DATA_HP, 0, _CheckGrudge
+#ifdef TOTEM_OHKO_RESISTANCE
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FaintMon
     GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemThreshold
+#endif
 
 _HandleDestinyBond:
     // {0} took {1} down with it!

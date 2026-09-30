@@ -276,10 +276,14 @@
 // Comment out this define if you want to disable this feature.
 #define TOTEM_STAT_RESTORE
 
-// TOTEM_OHKO_IMMUNITY causes Totem Pokemon to have immunity to Destiny Bond and Perish Song.
+// TOTEM_STAT_COPY_IMMUNITY causes Totem Pokemon to have immunity to Psych Up and Heart Swap.
+// Comment out this define if you want to disable this feature.
+#define TOTEM_STAT_COPY_IMMUNITY
+
+// TOTEM_OHKO_RESISTANCE causes Totem Pokemon to only be affected by Destiny Bond and Perish Song while at 25% HP or less.
 // Regular OHKO moves are also converted to 200BP.
 // Comment out this define if you want to disable this feature.
-#define TOTEM_OHKO_IMMUNITY
+#define TOTEM_OHKO_RESISTANCE
 
 // TOTEM_FIXED_DAMAGE_REDUCTION reduces all fixed damage taken by Totem Pokemon.
 // Most sources are reduced by half, except:

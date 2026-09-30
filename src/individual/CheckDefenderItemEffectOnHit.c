@@ -1,3 +1,4 @@
+#include "config.h"
 #include "debug.h"
 #include "types.h"
 
@@ -133,11 +134,12 @@ BOOL CheckDefenderItemEffectOnHit(void *bw, struct BattleStruct *sp, int *seq_no
                 || (sp->oneSelfFlag[sp->defence_client].special_damage))
             // Attacker used a move that makes contact
             && (IsContactBeingMade(GetBattlerAbility(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->defence_client), sp->current_move_index, sp->moveTbl[sp->current_move_index].flag))) {
+            sp->hp_calc_work = BattleDamageDivide(sp->battlemon[sp->attack_client].maxhp * -1, itemPower);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
             if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->attack_client].species, sp->battlemon[sp->attack_client].form_no))) {
-                sp->hp_calc_work = BattleDamageDivide(sp->battlemon[sp->attack_client].maxhp * -1, itemPower * 2);
-            } else {
-                sp->hp_calc_work = BattleDamageDivide(sp->battlemon[sp->attack_client].maxhp * -1, itemPower);
+                sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
             }
+#endif
             seq_no[0] = BATTLE_SUBSCRIPT_HELD_ITEM_RECOIL_WHEN_HIT;
             ret = TRUE;
         }

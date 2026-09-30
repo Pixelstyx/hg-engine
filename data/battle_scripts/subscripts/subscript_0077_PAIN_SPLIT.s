@@ -1,3 +1,4 @@
+#include "config.h"
 #include "constants/battle_constants.h"
 .include "battle_commands.inc"
 
@@ -12,8 +13,10 @@ _Start:
     // Store the average in BSCRIPT_VAR_CALC_TEMP.
     UpdateVarFromVar OPCODE_ADD, BSCRIPT_VAR_CALC_TEMP, BSCRIPT_VAR_HP_CALC
     UpdateVar OPCODE_DIV, BSCRIPT_VAR_CALC_TEMP, 2
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _AverageHP
     GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemDamageCap
+#endif
 
 _AverageHP:
     // Disable blinking because it's technically not damage.

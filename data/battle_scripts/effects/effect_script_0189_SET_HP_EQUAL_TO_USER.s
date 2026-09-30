@@ -1,3 +1,4 @@
+#include "config.h"
 #include "constants/battle_constants.h"
 .include "battle_commands.inc"
 
@@ -10,8 +11,10 @@ _Start:
     UpdateVarFromVar OPCODE_SUB, BSCRIPT_VAR_DAMAGE, BSCRIPT_VAR_CALC_TEMP
     UpdateVar OPCODE_MUL, BSCRIPT_VAR_DAMAGE, -1
     UpdateVar OPCODE_FLAG_ON, BSCRIPT_VAR_BATTLE_STATUS, BATTLE_STATUS_IGNORE_TYPE_EFFECTIVENESS
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _End
     GoToIfTotem BATTLER_CATEGORY_DEFENDER, _HandleTotem
+#endif
 
 _End:
     End 
@@ -28,3 +31,4 @@ _HandleTotem:
     CompareVarToVar OPCODE_LTE, BSCRIPT_VAR_DAMAGE, BSCRIPT_VAR_CALC_TEMP, _End
     UpdateVarFromVar OPCODE_SET, BSCRIPT_VAR_DAMAGE, BSCRIPT_VAR_CALC_TEMP
     End
+    
