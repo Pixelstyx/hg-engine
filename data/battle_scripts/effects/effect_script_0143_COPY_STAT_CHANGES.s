@@ -1,3 +1,4 @@
+#include "config.h"
 #include "constants/battle_constants.h"
 #include "constants/battle_message_constants.h"
 .include "battle_commands.inc"
@@ -5,8 +6,10 @@
 .data
 
 _Start:
+#ifdef TOTEM_STAT_COPY_IMMUNITY
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _CopyStatStages
     GoToIfTotem BATTLER_CATEGORY_DEFENDER, _MoveFailedTotem
+#endif
 
 _CopyStatStages:
     CopyStatStages 
