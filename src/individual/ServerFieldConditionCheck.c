@@ -840,6 +840,11 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                 if ((sp->battlemon[battlerId].condition & STATUS_POISON) && sp->battlemon[battlerId].hp != 0) {
                     sp->battlerIdTemp = battlerId;
                     sp->hp_calc_work = BattleDamageDivide(sp->battlemon[battlerId].maxhp * -1, 8);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                    if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->battlerIdTemp) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->battlerIdTemp].species, sp->battlemon[sp->battlerIdTemp].form_no))) {
+                        sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
+                    }
+#endif
                     LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_POISON_DAMAGE);
                     sp->next_server_seq_no = sp->server_seq_no;
                     sp->server_seq_no = 22;
@@ -852,6 +857,17 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                     }
                     sp->hp_calc_work *= ((sp->battlemon[battlerId].condition & STATUS_POISON_COUNT) >> 8);
                     sp->hp_calc_work *= -1;
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                    if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->battlerIdTemp) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->battlerIdTemp].species, sp->battlemon[sp->battlerIdTemp].form_no))) {
+                        sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
+
+                        // Toxic damage on Totems under this config caps at 25% per turn.
+                        int damageCap = BattleDamageDivide(sp->battlemon[battlerId].maxhp * -1, 4);
+                        if (sp->hp_calc_work < damageCap) {
+                            sp->hp_calc_work = damageCap;
+                        }
+                    }
+#endif
                     LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_POISON_DAMAGE);
                     sp->next_server_seq_no = sp->server_seq_no;
                     sp->server_seq_no = 22;
