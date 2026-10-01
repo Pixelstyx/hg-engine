@@ -841,7 +841,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                     sp->battlerIdTemp = battlerId;
                     sp->hp_calc_work = BattleDamageDivide(sp->battlemon[battlerId].maxhp * -1, 8);
 #ifdef TOTEM_FIXED_DAMAGE_REDUCTION
-                    if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->battlerIdTemp) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->battlerIdTemp].species, sp->battlemon[sp->battlerIdTemp].form_no))) {
+                    if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[battlerId].species, sp->battlemon[battlerId].form_no))) {
                         sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
                     }
 #endif
@@ -858,7 +858,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                     sp->hp_calc_work *= ((sp->battlemon[battlerId].condition & STATUS_POISON_COUNT) >> 8);
                     sp->hp_calc_work *= -1;
 #ifdef TOTEM_FIXED_DAMAGE_REDUCTION
-                    if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->battlerIdTemp) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->battlerIdTemp].species, sp->battlemon[sp->battlerIdTemp].form_no))) {
+                    if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[battlerId].species, sp->battlemon[battlerId].form_no))) {
                         sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
 
                         // Toxic damage on Totems under this config caps at 25% per turn.
@@ -983,6 +983,11 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                     sp->binding_turns[battlerId]--;
                     if (sp->binding_turns[battlerId]) {
                         sp->hp_calc_work = BattleDamageDivide(sp->battlemon[battlerId].maxhp * -1, 8);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                        if ((BattleTypeGet(bw) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[battlerId].species, sp->battlemon[battlerId].form_no))) {
+                            sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
+                        }
+#endif
                         LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_BIND_EFFECT);
                     } else {
                         LoadBattleSubSeqScript(sp, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_BIND_END);

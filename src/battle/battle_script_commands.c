@@ -1677,6 +1677,17 @@ BOOL btl_scr_cmd_54_ohko_move_handle(void *bw, struct BattleStruct *sp)
             }
             sp->waza_status_flag |= MOVE_STATUS_BYPASSED_ACCURACY;
         }
+
+#ifdef TOTEM_OHKO_RESISTANCE
+        if (hit 
+        && (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM)
+        && BATTLER_IS_ENEMY(sp->defence_client)
+        && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->defence_client].species, sp->battlemon[sp->defence_client].form_no))
+        && sp->battlemon[sp->defence_client].hp > (s32)(sp->battlemon[sp->defence_client].maxhp / 4)) {
+            hit = FALSE;
+        }
+#endif
+
         if (hit) {
             sp->damage = sp->battlemon[sp->defence_client].hp * -1;
             sp->waza_status_flag |= MOVE_STATUS_ONE_HIT_KO;
@@ -3208,6 +3219,11 @@ BOOL btl_scr_cmd_103_checkprotectcontactmoves(void *bsys UNUSED, struct BattleSt
         case MOVE_SPIKY_SHIELD:
             if (GetBattlerAbility(ctx, ctx->attack_client) != ABILITY_MAGIC_GUARD) {
                 ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[ctx->attack_client].maxhp * -1, 8);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->attack_client].species, ctx->battlemon[ctx->attack_client].form_no))) {
+                    ctx->hp_calc_work = BattleDamageDivide(ctx->hp_calc_work, 2);
+                }
+#endif
                 ctx->battlerIdTemp = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_SPIKY_SHIELD);
             }
@@ -3395,12 +3411,22 @@ BOOL BtlCmd_EndOfTurnWeatherEffect(struct BattleSystem *bsys, struct BattleStruc
             && hold_effect != HOLD_EFFECT_SPORE_POWDER_IMMUNITY && !(ctx->battlemon[battlerId].effect_of_moves & 0x40080)) {
             ctx->waza_work = MOVE_SANDSTORM;
             ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[battlerId].maxhp * -1, 16);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+            if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[battlerId].species, ctx->battlemon[battlerId].form_no))) {
+                ctx->hp_calc_work = BattleDamageDivide(ctx->hp_calc_work, 2);
+            }
+#endif
         }
     }
     if (weather & FIELD_CONDITION_SUN_ALL) {
         if (ctx->battlemon[battlerId].hp && !(ctx->battlemon[battlerId].effect_of_moves & 0x40080)) {
             if (ability == ABILITY_DRY_SKIN || ability == ABILITY_SOLAR_POWER) {
                 ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[battlerId].maxhp * -1, 8);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[battlerId].species, ctx->battlemon[battlerId].form_no))) {
+                    ctx->hp_calc_work = BattleDamageDivide(ctx->hp_calc_work, 2);
+                }
+#endif
             }
             if (ability == ABILITY_SOLAR_POWER) {
                 ctx->temp_work = 2;
@@ -3416,6 +3442,11 @@ BOOL BtlCmd_EndOfTurnWeatherEffect(struct BattleSystem *bsys, struct BattleStruc
             } else if (!HasType(ctx, battlerId, TYPE_ICE) && ability != ABILITY_SNOW_CLOAK && ability != ABILITY_MAGIC_GUARD && ability != ABILITY_OVERCOAT && hold_effect != HOLD_EFFECT_SPORE_POWDER_IMMUNITY) {
                 ctx->waza_work = MOVE_HAIL;
                 ctx->hp_calc_work = BattleDamageDivide(ctx->battlemon[battlerId].maxhp * -1, 16);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+                if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(battlerId) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[battlerId].species, ctx->battlemon[battlerId].form_no))) {
+                    ctx->hp_calc_work = BattleDamageDivide(ctx->hp_calc_work, 2);
+                }
+#endif
             }
         }
     }
