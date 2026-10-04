@@ -655,4 +655,10 @@ arm9 EncounterSlot_WildMonSlotRoll_Headbutt 022477C0 0
 0012 BattleSystem_AdjustMessageForSide 0223C558 2
 
 0012 PlayerTrainerVictoryBGM_hook 0224DA9E 3
-0010 TrainerAI_Init_AssignAIFlags_hook 0221BEBC 0
+
+arm9 FieldSystem_RestoreMapObjectsFromSave 0203B9F4 1
+
+0010 TrainerAI_Init_AssignAIFlags_hook 0221BEBC 
+0012 BtlCmd_Counter 022409B8 3
+0012 BtlCmd_MirrorCoat 02240AB4 3
+0012 BtlCmd_TryMetalBurst 02243798 3

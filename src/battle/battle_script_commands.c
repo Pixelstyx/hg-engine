@@ -56,7 +56,7 @@ BOOL btl_scr_cmd_27_shouldgetexp(void *bw, struct BattleStruct *sp);
 void Task_DistributeExp_Extend(void *arg0, void *work);
 BOOL Task_DistributeExp_capture_experience(void *arg0, void *work, u32 get_client_no);
 BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp);
-BOOL btl_scr_cmd_54_ohko_move_handle(void *bw, struct BattleStruct *sp);
+BOOL btl_scr_cmd_54_ohko_move_handle(void *bw UNUSED, struct BattleStruct *sp);
 BOOL btl_scr_cmd_5f_trysleeptalk(void *bw, struct BattleStruct *sp);
 BOOL btl_scr_cmd_6f_fury_cutter_damage_calc(void *bw, struct BattleStruct *sp);
 BOOL btl_scr_cmd_7c_beat_up_hit_count(void *bw, struct BattleStruct *sp);
@@ -165,6 +165,9 @@ BOOL BtlCmd_Transform(struct BattleSystem *bsys UNUSED, struct BattleStruct *ctx
 BOOL BtlCmd_MagicCoat(struct BattleSystem *bsys, struct BattleStruct *ctx);
 BOOL BtlCmd_TryFeint(struct BattleSystem *bsys UNUSED, struct BattleStruct *ctx);
 BOOL BtlCmd_TryPerishSong(struct BattleSystem *bsys, struct BattleStruct *ctx);
+BOOL BtlCmd_Counter(struct BattleSystem *bsys, struct BattleStruct *ctx);
+BOOL BtlCmd_MirrorCoat(struct BattleSystem *bsys, struct BattleStruct *ctx);
+BOOL BtlCmd_TryMetalBurst(struct BattleSystem *bsys, struct BattleStruct *ctx);
 BOOL LONG_CALL BtlCmd_PrintMessage(struct BattleSystem *bsys, struct BattleStruct *ctx);
 BOOL LONG_CALL BtlCmd_PrintAttackMessage(struct BattleSystem *bsys, struct BattleStruct *ctx);
 BOOL LONG_CALL BtlCmd_PrintGlobalMessage(struct BattleSystem *bsys, struct BattleStruct *ctx);
@@ -1640,65 +1643,11 @@ BOOL btl_scr_cmd_33_statbuffchange(void *bw, struct BattleStruct *sp)
  *  @param sp global battle structure
  *  @return FALSE
  */
-BOOL btl_scr_cmd_54_ohko_move_handle(void *bw, struct BattleStruct *sp)
+BOOL btl_scr_cmd_54_ohko_move_handle(void *bw UNUSED, struct BattleStruct *sp)
 {
-    u16 hit;
     IncrementBattleScriptPtr(sp, 1);
-
-    sp->server_status_flag |= SERVER_STATUS_FLAG_OTHER_ACCURACY_CALC;
-
-    if (MoldBreakerAbilityCheck(sp, sp->attack_client, sp->defence_client, ABILITY_STURDY) == TRUE) {
-        sp->waza_status_flag |= MOVE_STATUS_STURDY;
-    } else {
-        if (((sp->battlemon[sp->defence_client].effect_of_moves & MOVE_EFFECT_FLAG_LOCK_ON) == 0)
-            && (GetBattlerAbility(sp, sp->attack_client) != ABILITY_NO_GUARD)
-            && (GetBattlerAbility(sp, sp->defence_client) != ABILITY_NO_GUARD)) {
-            hit = sp->moveTbl[sp->current_move_index].accuracy + (sp->battlemon[sp->attack_client].level - sp->battlemon[sp->defence_client].level);
-            if (((BattleRand(bw) % 100) < hit)
-                && (sp->battlemon[sp->attack_client].level >= sp->battlemon[sp->defence_client].level)) {
-                hit = 1;
-            } else {
-                hit = 0;
-            }
-        } else {
-            if ((((sp->battlemon[sp->defence_client].moveeffect.battlerIdLockOn == sp->attack_client) && (sp->battlemon[sp->defence_client].effect_of_moves & MOVE_EFFECT_FLAG_LOCK_ON))
-                    || (GetBattlerAbility(sp, sp->attack_client) == ABILITY_NO_GUARD)
-                    || (GetBattlerAbility(sp, sp->defence_client) == ABILITY_NO_GUARD))
-                && (sp->battlemon[sp->attack_client].level >= sp->battlemon[sp->defence_client].level)) {
-                hit = 1;
-            } else {
-                hit = sp->moveTbl[sp->current_move_index].accuracy + (sp->battlemon[sp->attack_client].level - sp->battlemon[sp->defence_client].level);
-                if (((BattleRand(bw) % 100) < hit)
-                    && (sp->battlemon[sp->attack_client].level >= sp->battlemon[sp->defence_client].level)) {
-                    hit = 1;
-                } else {
-                    hit = 0;
-                }
-            }
-            sp->waza_status_flag |= MOVE_STATUS_BYPASSED_ACCURACY;
-        }
-
-#ifdef TOTEM_OHKO_RESISTANCE
-        if (hit 
-        && (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM)
-        && BATTLER_IS_ENEMY(sp->defence_client)
-        && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->defence_client].species, sp->battlemon[sp->defence_client].form_no))
-        && sp->battlemon[sp->defence_client].hp > (s32)(sp->battlemon[sp->defence_client].maxhp / 4)) {
-            hit = FALSE;
-        }
-#endif
-
-        if (hit) {
-            sp->damage = sp->battlemon[sp->defence_client].hp * -1;
-            sp->waza_status_flag |= MOVE_STATUS_ONE_HIT_KO;
-        } else {
-            if (sp->battlemon[sp->attack_client].level >= sp->battlemon[sp->defence_client].level) {
-                sp->waza_status_flag |= FLAG_CONTACT;
-            } else {
-                sp->waza_status_flag |= MOVE_STATUS_ONE_HIT_KO_FAILED;
-            }
-        }
-    }
+    sp->damage = sp->battlemon[sp->defence_client].hp * -1;
+    sp->waza_status_flag |= MOVE_STATUS_ONE_HIT_KO;
 
     return FALSE;
 }
@@ -5949,6 +5898,115 @@ BOOL btl_scr_cmd_custom_0_iftotem(void *bsys, struct BattleStruct *ctx)
 
     if (BATTLER_IS_ENEMY(battlerID) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[battlerID].species, ctx->battlemon[battlerID].form_no))) {
         IncrementBattleScriptPtr(ctx, jumpAddress);
+    }
+
+    return FALSE;
+}
+
+BOOL BtlCmd_Counter(struct BattleSystem *bsys, struct BattleStruct *ctx) {
+    IncrementBattleScriptPtr(ctx, 1);
+
+    int battlerId = ctx->oneSelfFlag[ctx->attack_client].physical_damager;
+
+    int sideA = IsClientEnemy(bsys, ctx->attack_client);
+    int sideB = IsClientEnemy(bsys, battlerId);
+
+    if (ctx->oneSelfFlag[ctx->attack_client].physical_damage && sideA != sideB && ctx->battlemon[battlerId].hp) {        
+        ctx->damage = ctx->oneSelfFlag[ctx->attack_client].physical_damage * 2;
+        if (ctx->scw[sideB].followMeFlag && ctx->battlemon[ctx->scw[sideB].battlerIdFollowMe].hp) {
+            ctx->defence_client = ctx->scw[sideB].battlerIdFollowMe;
+        } else {
+            ctx->defence_client = battlerId;
+        }
+
+        if (ctx->battlemon[ctx->defence_client].hp == 0) {
+            ctx->defence_client = Battler_GetRandomOpposingBattlerId(bsys, ctx, ctx->attack_client);
+            if (ctx->battlemon[ctx->defence_client].hp == 0) {
+                ctx->next_server_seq_no = CONTROLLER_COMMAND_39;
+                JumpToMoveEffectScript(ctx, 1, BATTLE_SUBSCRIPT_NO_TARGET);
+            }
+        }
+        CheckPressureForPPDecrease(ctx, ctx->attack_client, ctx->defence_client);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+        if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(ctx->defence_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->defence_client].species, ctx->battlemon[ctx->defence_client].form_no))) {
+            ctx->damage = BattleDamageDivide(ctx->damage, 4);
+        }
+#endif
+    } else {
+        ctx->oneSelfFlag[ctx->attack_client].no_pressure_flag = 1;
+        ctx->waza_status_flag |= MOVE_STATUS_FAILED;
+    }
+
+    return FALSE;
+}
+
+BOOL BtlCmd_MirrorCoat(struct BattleSystem *bsys, struct BattleStruct *ctx) {
+    IncrementBattleScriptPtr(ctx, 1);
+
+    int battlerId = ctx->oneSelfFlag[ctx->attack_client].special_damager;
+
+    int sideA = IsClientEnemy(bsys, ctx->attack_client);
+    int sideB = IsClientEnemy(bsys, battlerId);
+
+    if (ctx->oneSelfFlag[ctx->attack_client].special_damage && sideA != sideB && ctx->battlemon[battlerId].hp) {
+        ctx->damage = ctx->oneSelfFlag[ctx->attack_client].special_damage * 2;
+        if (ctx->scw[sideB].followMeFlag && ctx->battlemon[ctx->scw[sideB].battlerIdFollowMe].hp) {
+            ctx->defence_client = ctx->scw[sideB].battlerIdFollowMe;
+        } else {
+            ctx->defence_client = battlerId;
+        }
+        if (ctx->battlemon[ctx->defence_client].hp == 0) {
+            ctx->defence_client = Battler_GetRandomOpposingBattlerId(bsys, ctx, ctx->attack_client);
+            if (ctx->battlemon[ctx->defence_client].hp == 0) {
+                ctx->next_server_seq_no = CONTROLLER_COMMAND_39;
+                JumpToMoveEffectScript(ctx, 1, BATTLE_SUBSCRIPT_NO_TARGET);
+            }
+        }
+        CheckPressureForPPDecrease(ctx, ctx->attack_client, ctx->defence_client);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+        if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(ctx->defence_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->defence_client].species, ctx->battlemon[ctx->defence_client].form_no))) {
+            ctx->damage = BattleDamageDivide(ctx->damage, 4);
+        }
+#endif
+    } else {
+        ctx->oneSelfFlag[ctx->attack_client].no_pressure_flag = 1;
+        ctx->waza_status_flag |= MOVE_STATUS_FAILED;
+    }
+
+    return FALSE;
+}
+
+BOOL BtlCmd_TryMetalBurst(struct BattleSystem *bsys, struct BattleStruct *ctx) {
+    IncrementBattleScriptPtr(ctx, 1);
+
+    int adrs = read_battle_script_param(ctx);
+
+    // TODO: Change to oneSelfFlag parameters for consistency.
+    int sideA = IsClientEnemy(bsys, ctx->attack_client);
+    int sideB = IsClientEnemy(bsys, ctx->oneTurnFlag[ctx->attack_client].last_damager);
+
+    if (ctx->oneTurnFlag[ctx->attack_client].last_damage && sideA != sideB && ctx->battlemon[ctx->oneTurnFlag[ctx->attack_client].last_damager].hp) {
+        ctx->damage = ctx->oneTurnFlag[ctx->attack_client].last_damage * 15 / 10;
+        if (ctx->scw[sideB].followMeFlag && ctx->battlemon[ctx->scw[sideB].battlerIdFollowMe].hp) {
+            ctx->defence_client = ctx->scw[sideB].battlerIdFollowMe;
+        } else {
+            ctx->defence_client = ctx->oneTurnFlag[ctx->attack_client].last_damager;
+        }
+        if (ctx->battlemon[ctx->defence_client].hp == 0) {
+            ctx->defence_client = Battler_GetRandomOpposingBattlerId(bsys, ctx, ctx->attack_client);
+            if (ctx->battlemon[ctx->defence_client].hp == 0) {
+                ctx->next_server_seq_no = CONTROLLER_COMMAND_39;
+                JumpToMoveEffectScript(ctx, 1, BATTLE_SUBSCRIPT_NO_TARGET);
+            }
+        }
+        CheckPressureForPPDecrease(ctx, ctx->attack_client, ctx->defence_client);
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+        if ((BattleTypeGet(bsys) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(ctx->defence_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->defence_client].species, ctx->battlemon[ctx->defence_client].form_no))) {
+            ctx->damage = BattleDamageDivide(ctx->damage, 4);
+        }
+#endif
+    } else {
+        IncrementBattleScriptPtr(ctx, adrs);
     }
 
     return FALSE;
