@@ -569,3 +569,7 @@ arm9 020701AC 08 E0
 
 # sub_02070854 always call GetMonPicHeightBySpeciesGenderForm
 arm9 020708B0 06 E0
+
+# FieldInput_Process nop out waterfall anti-softlock check for performance
+# The beq on the following line should never be true as a result
+0001 021E6BBE 00 00 00 00

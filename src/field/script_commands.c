@@ -460,8 +460,7 @@ int ScrCmd_GetIdxOfFirstPartyMonWithMove(struct Party *party, u16 move) {
             || GetMonData(mon, MON_DATA_MOVE4, NULL) == move) {
             return i;
         }*/
-        if (CanAccessFieldMove(mon, move, HEAPID_MAIN_HEAP))
-        {
+        if (CanAccessFieldMove(mon, move, HEAPID_MAIN_HEAP)) {
             return i;
         }
     }
