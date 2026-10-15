@@ -3161,6 +3161,7 @@ BOOL btl_scr_cmd_103_checkprotectcontactmoves(void *bsys UNUSED, struct BattleSt
             if (ctx->battlemon[ctx->attack_client].states[STAT_ATTACK] > 0) {
                 // King's Shield lowers Attack by two stages in Generation 6 and 7.
                 ctx->addeffect_param = (GEN_LATEST > 7) ? MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_1_STAGE : MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_2_STAGES;
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_CONTACT_PROTECTED;
                 ctx->state_client = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE);
             }
@@ -3173,13 +3174,14 @@ BOOL btl_scr_cmd_103_checkprotectcontactmoves(void *bsys UNUSED, struct BattleSt
                     ctx->hp_calc_work = BattleDamageDivide(ctx->hp_calc_work, 2);
                 }
 #endif
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_CONTACT_PROTECTED;
                 ctx->battlerIdTemp = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_SPIKY_SHIELD);
             }
             break;
         case MOVE_BANEFUL_BUNKER:
             if (ctx->battlemon[ctx->attack_client].condition == 0) {
-                ctx->addeffect_type = ADD_STATUS_MOVE_EFFECT;
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_MOVE_EFFECT;
                 ctx->state_client = ctx->attack_client;
                 // Swap atk client to defender so it checks the protect users ability for Corrosion
                 ctx->attack_client = ctx->defence_client;
@@ -3189,6 +3191,7 @@ BOOL btl_scr_cmd_103_checkprotectcontactmoves(void *bsys UNUSED, struct BattleSt
         case MOVE_OBSTRUCT:
             if (ctx->battlemon[ctx->attack_client].states[STAT_DEFENSE] > 0) {
                 ctx->addeffect_param = MOVE_SUBSCRIPT_PTR_DEFENSE_DOWN_2_STAGES;
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_CONTACT_PROTECTED;
                 ctx->state_client = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE);
             }
@@ -3196,13 +3199,14 @@ BOOL btl_scr_cmd_103_checkprotectcontactmoves(void *bsys UNUSED, struct BattleSt
         case MOVE_SILK_TRAP:
             if (ctx->battlemon[ctx->attack_client].states[STAT_SPEED] > 0) {
                 ctx->addeffect_param = MOVE_SUBSCRIPT_PTR_SPEED_DOWN_1_STAGE;
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_CONTACT_PROTECTED;
                 ctx->state_client = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE);
             }
             break;
         case MOVE_BURNING_BULWARK:
             if (ctx->battlemon[ctx->attack_client].condition == 0) {
-                ctx->addeffect_type = ADD_STATUS_MOVE_EFFECT;
+                ctx->addeffect_type = SIDE_EFFECT_TYPE_MOVE_EFFECT;
                 ctx->state_client = ctx->attack_client;
                 SkillSequenceGosub(ctx, ARC_BATTLE_SUB_SEQ, BATTLE_SUBSCRIPT_BURN);
             }
@@ -5171,7 +5175,7 @@ BOOL btl_scr_cmd_11A_TrySynchronizeStatus(void *bsys UNUSED, struct BattleStruct
     int seq_no = 0;
 
     if (TryGetSynchronizeStatusSubsequence(ctx, &seq_no) == TRUE) {
-        ctx->addeffect_type = ADD_STATUS_ABILITY;
+        ctx->addeffect_type = SIDE_EFFECT_TYPE_ABILITY;
         ctx->temp_work = seq_no;
     } else {
         IncrementBattleScriptPtr(ctx, failAddress);
@@ -5713,6 +5717,22 @@ BOOL BtlCmd_Metronome(struct BattleSystem *bsys, struct BattleStruct *ctx)
         ctx->current_move_index = moveNo;
 
         break;
+    }
+
+    return FALSE;
+}
+
+BOOL BtlCmd_TryCopycat(struct BattleSystem *bsys, struct BattleStruct *ctx)
+{
+    IncrementBattleScriptPtr(ctx, 1);
+    int adrs = read_battle_script_param(ctx);
+
+    if (ctx->lastSuccessfulMove && CheckLegalMetronomeMove(bsys, ctx, ctx->attack_client, ctx->lastSuccessfulMove)) {
+        ctx->waza_work = ctx->lastSuccessfulMove;
+        ctx->moveNoTemp = ctx->lastSuccessfulMove;
+        ctx->current_move_index = ctx->lastSuccessfulMove;
+    } else {
+        IncrementBattleScriptPtr(ctx, adrs);
     }
 
     return FALSE;
