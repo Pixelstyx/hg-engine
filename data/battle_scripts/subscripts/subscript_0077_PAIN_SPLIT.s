@@ -15,7 +15,7 @@ _Start:
     UpdateVar OPCODE_DIV, BSCRIPT_VAR_CALC_TEMP, 2
 #ifdef TOTEM_FIXED_DAMAGE_REDUCTION
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _AverageHP
-    GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemDamageCap
+    GoToIfTotem BATTLER_CATEGORY_DEFENDER, _TotemAverageHP
 #endif
 
 _AverageHP:
@@ -48,7 +48,7 @@ _MoveFailed:
     End 
 
 // Make sure Totems only lose 1/4 of their max HP at most; set the attacker's HP gain to the same number.
-_CheckTotemDamageCap:
+_TotemAverageHP:
     // Do the regular calculation for modification to the defender's HP.
     UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_HP, BSCRIPT_VAR_HP_CALC
     UpdateVarFromVar OPCODE_SUB, BSCRIPT_VAR_HP_CALC, BSCRIPT_VAR_CALC_TEMP

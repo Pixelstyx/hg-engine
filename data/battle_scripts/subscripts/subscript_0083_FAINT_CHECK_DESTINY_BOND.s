@@ -11,7 +11,7 @@ _Start:
     CompareMonDataToValue OPCODE_EQU, BATTLER_CATEGORY_ATTACKER, BMON_DATA_HP, 0, _CheckGrudge
 #ifdef TOTEM_OHKO_RESISTANCE
     CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FaintMon
-    GoToIfTotem BATTLER_CATEGORY_DEFENDER, _CheckTotemThreshold
+    GoToIfTotem BATTLER_CATEGORY_ATTACKER, _CheckTotemThreshold
 #endif
 
 _HandleDestinyBond:
@@ -50,11 +50,11 @@ _FaintMon:
 _CheckTotemThreshold:
     // Check if we are at the execution threshold (25% HP or less).
     // This is slightly imprecise due to integer division.
-    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_DEFENDER, BMON_DATA_MAXHP, BSCRIPT_VAR_HP_CALC
-    DivideVarByValue BSCRIPT_VAR_HP_CALC, 4
-    CompareMonDataToVar OPCODE_LTE, BATTLER_CATEGORY_DEFENDER, BMON_DATA_HP, BSCRIPT_VAR_HP_CALC, _HandleDestinyBond
+    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_ATTACKER, BMON_DATA_MAXHP, BSCRIPT_VAR_CALC_TEMP
+    DivideVarByValue BSCRIPT_VAR_CALC_TEMP, 4
+    CompareMonDataToVar OPCODE_LTE, BATTLER_CATEGORY_ATTACKER, BMON_DATA_HP, BSCRIPT_VAR_CALC_TEMP, _HandleDestinyBond
     // {0} was too strong to be taken down by {1}!
-    PrintMessage BATTLE_MSG_TOTEM_OHKO_IMMUNITY, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_DEFENDER, BATTLER_CATEGORY_ATTACKER
+    PrintMessage BATTLE_MSG_TOTEM_OHKO_IMMUNITY, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_ATTACKER
     Wait 
     WaitButtonABTime 30
     GoTo _FaintMon

@@ -57,7 +57,7 @@ BOOL __attribute__((section(".init"))) MoveHitDefenderAbilityCheckInternal(struc
             && (IsContactBeingMade(GetBattlerAbility(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->attack_client), HeldItemHoldEffectGet(sp, sp->defence_client), sp->current_move_index, sp->moveTbl[sp->current_move_index].flag))) {
             sp->hp_calc_work = BattleDamageDivide(sp->battlemon[sp->attack_client].maxhp * -1, 8);
 #ifdef TOTEM_FIXED_DAMAGE_REDUCTION
-            if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->battlerIdTemp) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->battlerIdTemp].species, sp->battlemon[sp->battlerIdTemp].form_no))) {
+            if (BattleTypeGet(bw) & BATTLE_TYPE_TOTEM && BATTLER_IS_ENEMY(sp->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(sp->battlemon[sp->attack_client].species, sp->battlemon[sp->attack_client].form_no))) {
                 sp->hp_calc_work = BattleDamageDivide(sp->hp_calc_work, 2);
             }
 #endif
