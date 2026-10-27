@@ -39,7 +39,14 @@ _TryHealing:
     PrintMessage 296, TAG_NICKNAME, BATTLER_CATEGORY_MSG_DEFENDER
     Wait 
     WaitButtonABTime 30
-    Call BATTLE_SUBSCRIPT_SWITCH_IN_ABILITY_CHECK
+    UpdateVarFromVar OPCODE_SET, BSCRIPT_VAR_MSG_BATTLER_TEMP, BSCRIPT_VAR_MSG_DEFENDER
+    UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_MSG_DEFENDER, BMON_DATA_MAXHP, BSCRIPT_VAR_HP_CALC
+    DivideVarByValue BSCRIPT_VAR_HP_CALC, 8
+    UpdateVar OPCODE_MUL, BSCRIPT_VAR_HP_CALC, -1
+    TryActivateEmergencyExit BATTLER_CATEGORY_MSG_BATTLER_TEMP, _noActivation //needs ctx->hp_calc_work
+    Call BATTLE_SUBSCRIPT_HANDLE_WIMP_OUT_EMERGENCY_EXIT
+
+_noActivation:
     End 
 
 _HealBlockMessage:
@@ -48,7 +55,6 @@ _HealBlockMessage:
     PrintMessage 1054, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_MSG_TEMP, BATTLER_CATEGORY_MSG_TEMP
     Wait 
     WaitButtonABTime 30
-    Call BATTLE_SUBSCRIPT_SWITCH_IN_ABILITY_CHECK
     End 
 
 _HandleLiquidOoze:
@@ -59,7 +65,6 @@ _HandleLiquidOoze:
     PrintMessage 720, TAG_NONE
     Wait 
     WaitButtonABTime 30
-    Call BATTLE_SUBSCRIPT_SWITCH_IN_ABILITY_CHECK
     End 
 
 _LiquidOozeSuppressedMessage:
@@ -71,7 +76,6 @@ _LiquidOozeSuppressedMessage:
     PrintMessage 727, TAG_NICKNAME_ABILITY_NICKNAME_ABILITY, BATTLER_CATEGORY_MSG_ATTACKER, BATTLER_CATEGORY_MSG_ATTACKER, BATTLER_CATEGORY_MSG_DEFENDER, BATTLER_CATEGORY_MSG_DEFENDER
     Wait 
     WaitButtonABTime 30
-    Call BATTLE_SUBSCRIPT_SWITCH_IN_ABILITY_CHECK
     End 
 
 _TotemDivide:
