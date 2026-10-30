@@ -1286,9 +1286,9 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
         case ENDTURN_PERISH_COUNT: {
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_PERISH_COUNT\n");
-
 #endif
-
+            sp->moveTemp = MOVE_PERISH_SONG;
+            
             while (sp->scc_work < client_set_max) {
                 battlerId = sp->turnOrder[sp->scc_work];
                 if (sp->no_reshuffle_client & No2Bit(battlerId)) {
