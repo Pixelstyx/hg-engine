@@ -530,8 +530,13 @@
 #define BATTLE_SUBSCRIPT_HEAVY_RECOIL                           (521)
 #define BATTLE_SUBSCRIPT_PREVENT_INTIMIDATE                     (522)
 #define BATTLE_SUBSCRIPT_RECEIVER                               (523)
+#define BATTLE_SUBSCRIPT_SEND_OUT_PENDING_SWITCHES              (524)
+#define BATTLE_SUBSCRIPT_PASTEL_VEIL                            (525)
+#define BATTLE_SUBSCRIPT_COMATOSE                               (526)
+#define BATTLE_SUBSCRIPT_DOESNT_AFFECT_ALLY_ABILITY             (527)
+#define BATTLE_SUBSCRIPT_TRY_CLEAR_UNNERVE                      (528)
 
-#define MAX_BASE_SUBSCRIPT_NUM 523
+#define MAX_BASE_SUBSCRIPT_NUM 528
 
 #define BATTLE_SUBSCRIPT_TOTEM_STAT_RESTORE                     (MAX_BASE_SUBSCRIPT_NUM + 1)
 #define BATTLE_SUBSCRIPT_TOTEM_TEMPEST                          (MAX_BASE_SUBSCRIPT_NUM + 2)

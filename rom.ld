@@ -223,8 +223,6 @@ IsMovingAfterClient = 0x0225561C | 1;
 GetHeldItemFlingEffect = 0x022558D0 | 1;
 GetHeldItemFlingPower = 0x022558F8 | 1;
 GetHeldItemModifier = 0x02255844 | 1;
-GetNaturalGiftPower = 0x02255890 | 1;
-GetNaturalGiftType = 0x022558A4 | 1;
 CalculateTypeEffectiveness = 0x0225264C | 1;
 CanSwitchMon = 0x02252890 | 1;
 InitSwitchWork = 0x022510BC | 1;
@@ -689,6 +687,7 @@ AddWindow = 0x0201D4F8 | 1;
 
 ov12_0224DD18 = 0x0224DD18 | 1;
 ov12_0224D7EC = 0x0224D7EC | 1;
+BattleSystem_GetBattleStyle = 0x0223B740 | 1;
 ov12_0224E130 = 0x0224E130 | 1;
 ov12_0224DC0C = 0x0224DC0C | 1;
 SortExecutionOrderBySpeed = 0x02257EC0 | 1;

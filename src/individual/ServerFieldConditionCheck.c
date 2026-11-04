@@ -1287,7 +1287,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
 #ifdef DEBUG_ENDTURN_LOGIC
             debug_printf("In ENDTURN_PERISH_COUNT\n");
 #endif
-            sp->moveTemp = MOVE_PERISH_SONG;
+            sp->moveNoTemp = MOVE_PERISH_SONG;
             
             while (sp->scc_work < client_set_max) {
                 battlerId = sp->turnOrder[sp->scc_work];
@@ -1792,7 +1792,8 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                             sp->addeffect_param = MOVE_SUBSCRIPT_PTR_SPEED_UP_1_STAGE;
                             sp->addeffect_type = SIDE_EFFECT_TYPE_ABILITY;
                             sp->state_client = battlerId;
-                            seq_no = BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE;
+                            sp->battlerIdTemp = battlerId;
+                            seq_no = BATTLE_SUBSCRIPT_HANDLE_ABILITY_STAT_CHANGE;
                             ret = TRUE;
                         }
                         break;
@@ -2225,6 +2226,7 @@ void ServerFieldConditionCheck(void *bw, struct BattleStruct *sp)
                 sp->moveConditionsFlags[i].moveFailureLastTurn = sp->moveConditionsFlags[i].moveFailureThisTurn;
                 sp->moveConditionsFlags[i].moveFailureThisTurn = 0;
                 sp->moveConditionsFlags[i].powderBlockingFireMove = 0;
+                sp->moveConditionsFlags[i].usedRagePowder = 0;
                 if (sp->moveConditionsFlags[i].laserFocusTimer > 0) {
                     sp->moveConditionsFlags[i].laserFocusTimer--;
                 }
