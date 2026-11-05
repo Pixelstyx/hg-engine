@@ -670,3 +670,4 @@ arm9 FieldSystem_RestoreMapObjectsFromSave 0203B9F4 1
 0012 BtlCmd_Counter 022409B8 3
 0012 BtlCmd_MirrorCoat 02240AB4 3
 0012 BtlCmd_TryMetalBurst 02243798 3
+0012 BtlCmd_TryGrudge 02243148 3

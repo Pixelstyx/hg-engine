@@ -36,8 +36,21 @@ _HandleDestinyBond:
 
 _CheckGrudge:
     TryGrudge _FaintMon
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+    CompareVarToValue OPCODE_FLAG_NOT, BSCRIPT_VAR_BATTLE_TYPE, BATTLE_TYPE_TOTEM, _FullGrudge
+    GoToIfTotem BATTLER_CATEGORY_ATTACKER, _HalfGrudge
+#endif
+
+_FullGrudge:
     // {0}’s {1} lost all its PP due to the grudge!
     PrintMessage 568, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_MSG_TEMP
+    GoTo _PostGrudgeMessage
+
+_HalfGrudge:
+    // {0}’s {1} lost half its PP due to the grudge!
+    PrintMessage BATTLE_MSG_TOTEM_HALF_GRUDGE, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_MSG_TEMP
+
+_PostGrudgeMessage:
     Wait 
     WaitButtonABTime 30
 
@@ -53,8 +66,9 @@ _CheckTotemThreshold:
     UpdateMonDataFromVar OPCODE_GET, BATTLER_CATEGORY_ATTACKER, BMON_DATA_MAXHP, BSCRIPT_VAR_CALC_TEMP
     DivideVarByValue BSCRIPT_VAR_CALC_TEMP, 4
     CompareMonDataToVar OPCODE_LTE, BATTLER_CATEGORY_ATTACKER, BMON_DATA_HP, BSCRIPT_VAR_CALC_TEMP, _HandleDestinyBond
+    UpdateVar OPCODE_SET, BSCRIPT_VAR_MOVE_NO_TEMP, MOVE_DESTINY_BOND
     // {0} was too strong to be taken down by {1}!
-    PrintMessage BATTLE_MSG_TOTEM_OHKO_IMMUNITY, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_ATTACKER
+    PrintMessage BATTLE_MSG_TOTEM_OHKO_IMMUNITY, TAG_NICKNAME_MOVE, BATTLER_CATEGORY_ATTACKER, BATTLER_CATEGORY_MSG_TEMP
     Wait 
     WaitButtonABTime 30
     GoTo _FaintMon

@@ -1873,6 +1873,42 @@ BOOL btl_scr_cmd_87_tryknockoff(void *bw UNUSED, struct BattleStruct *sp)
 }
 
 /**
+ *  @brief script command to carry out the effects of grudge
+ *
+ *  @param battleSystem battle work structure
+ *  @param ctx global battle structure
+ *  @return FALSE
+ */
+BOOL BtlCmd_TryGrudge(struct BattleSystem *battleSystem, struct BattleStruct *ctx) {
+    int pos;
+
+    IncrementBattleScriptPtr(ctx, 1);
+
+    int adrs = read_battle_script_param(ctx);
+
+    IsClientEnemy(battleSystem, ctx->defence_client);
+
+    if (ctx->battlemon[ctx->fainting_client].effect_of_moves & MOVE_EFFECT_FLAG_GRUDGE && IsClientEnemy(battleSystem, ctx->attack_client) != IsClientEnemy(battleSystem, ctx->fainting_client) && ctx->battlemon[ctx->attack_client].hp && ctx->moveNoTemp != MOVE_STRUGGLE) {
+        pos = ctx->waza_no_pos[ctx->attack_client];
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+        if ((BattleTypeGet(battleSystem) & BATTLE_TYPE_TOTEM) && BATTLER_IS_ENEMY(ctx->attack_client) && IS_SPECIES_TOTEM(PokeOtherFormMonsNoGet(ctx->battlemon[ctx->attack_client].species, ctx->battlemon[ctx->attack_client].form_no))) {
+            ctx->battlemon[ctx->attack_client].pp[pos] = ctx->battlemon[ctx->attack_client].pp[pos] / 2;
+        } else {
+#endif
+            ctx->battlemon[ctx->attack_client].pp[pos] = 0;
+#ifdef TOTEM_FIXED_DAMAGE_REDUCTION
+        }
+#endif
+        ctx->moveNoTemp = ctx->battlemon[ctx->attack_client].move[pos];
+        CopyBattleMonToPartyMon(battleSystem, ctx, ctx->attack_client);
+    } else {
+        IncrementBattleScriptPtr(ctx, adrs);
+    }
+
+    return FALSE;
+}
+
+/**
  *  @brief grab a battler's weight
  *
  *  @param bw battle work structure
