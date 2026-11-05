@@ -1837,3 +1837,6 @@ The wild {STRVAR_1 1, 0, 0} cannot\ngrasp the power of\f{STRVAR_1 1, 0, 0}’s a
 The wild {STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fwild {STRVAR_1 1, 0, 0}’s aura!
 The opposing {STRVAR_1 1, 0, 0} cannot\ngrasp the power of\f{STRVAR_1 1, 0, 0}’s aura!
 The opposing {STRVAR_1 1, 0, 0} cannot\ngrasp the power of the\fopposing {STRVAR_1 1, 0, 0}’s aura!
+{STRVAR_1 1, 0, 0}’s {STRVAR_1 6, 1, 0} lost\nhalf its PP due to the grudge!
+The wild {STRVAR_1 1, 0, 0}’s\n{STRVAR_1 6, 1, 0} lost half its PP\fdue to the grudge!
+The opposing {STRVAR_1 1, 0, 0}’s\n{STRVAR_1 6, 1, 0} lost half its PP\fdue to the grudge!
